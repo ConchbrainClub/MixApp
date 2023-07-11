@@ -13,35 +13,20 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <FluentDataGrid Items="@forecasts">
+        <PropertyColumn Property="@(i => i.TemperatureC)" Sortable="true" />
+        <PropertyColumn Property="@(i => i.TemperatureF)" Sortable="true" />
+        <PropertyColumn Property="@(i => i.Summary)" Sortable="true" />
+        <PropertyColumn Property="@(i => i.Date)" Format="yyyy-MM-dd" Sortable="true" />
+    </FluentDataGrid>
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private IQueryable<WeatherForecast>? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        forecasts = (await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json"))?.AsQueryable();
     }
 
     public class WeatherForecast
