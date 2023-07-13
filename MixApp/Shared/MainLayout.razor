@@ -1,27 +1,40 @@
 ﻿@inherits LayoutComponentBase
 
-<h2>Collapsible Navigation Example</h2>
+<FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="#333333" BaseLayerLuminance="0">
 
-<FluentStack Orientation="Orientation.Horizontal" Width="100%">
+    <FluentStack Orientation="Orientation.Horizontal" style="height: 100vh;">
 
-    <div class="sidebar">
-        <FluentNavMenu @bind-Expanded="@Expanded" Width="200">
-            <FluentNavMenuLink Class="level1" Icon="@(new Icons.Regular.Size24.Home())" Text="Item 1" Href="/" />
-            <FluentNavMenuLink Class="level1" Icon="@(new Icons.Regular.Size24.Cloud())" Text="Item 2" Href="counter" />
-            <FluentNavMenuGroup Text="Item 3">
-                <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.LeafOne())" Text="Item 3.1" Href="fetchdata" />
-                <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.LeafTwo())" Text="Item 3.2" />
-            </FluentNavMenuGroup>
-            <FluentNavMenuLink Class="level1" Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Text="Item 4"
-                Disabled="true" />
-        </FluentNavMenu>
-    </div>
+        <div class="sidebar">
+            <FluentNavMenu @bind-Expanded="@Expanded" Width="200">
+                <FluentNavMenuLink Class="level1" Icon="@(new Icons.Regular.Size24.Home())" Text="Item 1" Href="/" />
+                <FluentNavMenuLink Class="level1" Icon="@(new Icons.Regular.Size24.Cloud())" Text="Item 2"
+                    Href="counter" />
+                <FluentNavMenuGroup Text="Item 3">
+                    <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.LeafOne())" Text="Item 3.1" Href="fetchdata" />
+                    <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.LeafTwo())" Text="Item 3.2" />
+                </FluentNavMenuGroup>
+                <FluentNavMenuLink Class="level1" Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Text="Item 4"
+                    Disabled="true" />
+            </FluentNavMenu>
+        </div>
 
-    <div style="width: 100%;">
-        @Body
-    </div>
-</FluentStack>
+        <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"
+            VerticalAlignment="VerticalAlignment.Center"
+            style="width: calc(100% - 210px); margin: 0 auto; overflow-y: scroll;">
+            
+            <FluentTextField @bind-Value=keyWord Placeholder="Search" style="width: 50%; margin-top: 20px;" />
+
+            <div>
+                @Body
+            </div>
+        </FluentStack>
+
+    </FluentStack>
+</FluentDesignSystemProvider>
+
 
 @code {
     bool Expanded = true;
+
+    string keyWord = string.Empty;
 }
