@@ -3,7 +3,7 @@
 <BaseLayerLuminance Value="(float?)0.15">
 
     <FluentHorizontalScroll class="banner" Speed="600" Easing=ScrollEasing.EaseInOut
-        style="width: 100%; max-width: 1620px;">
+        style="width: 100%;">
         <FluentCard>Card number 1</FluentCard>
         <FluentCard>Card number 2</FluentCard>
         <FluentCard>Card number 3</FluentCard>
@@ -16,7 +16,7 @@
         <FluentCard>Card number 10</FluentCard>
     </FluentHorizontalScroll>
 
-    <FluentStack class="contents" style="display: flex; flex-wrap: wrap; max-width: 1640px; margin: 0 auto;">
+    <FluentStack class="contents" style="display: flex; flex-wrap: wrap;">
 
         <FluentCard BackReference="@context">
             <div>
@@ -107,16 +107,18 @@
 
 
 <style>
+    fluent-card {
+        margin: 10px;
+        padding: 20px;
+    }
+
     .banner fluent-card {
         height: 400px;
         width: 600px;
-        margin: 10px;
     }
 
     .contents fluent-card {
-        padding: 20px;
-        width: 300px;
-        margin: 10px;
         height: 200px;
+        max-width: 300px;
     }
 </style>

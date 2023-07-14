@@ -13,7 +13,7 @@
 }
 else
 {
-    <FluentDataGrid Items="@forecasts">
+    <FluentDataGrid Items="@forecasts" style="width: 50%;">
         <PropertyColumn Property="@(i => i.TemperatureC)" Sortable="true" />
         <PropertyColumn Property="@(i => i.TemperatureF)" Sortable="true" />
         <PropertyColumn Property="@(i => i.Summary)" Sortable="true" />

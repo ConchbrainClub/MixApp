@@ -4,19 +4,12 @@
 
     <FluentStack Orientation="Orientation.Horizontal" style="height: 100vh;">
 
-        <div class="sidebar">
-            <FluentNavMenu @bind-Expanded="@Expanded" Width="200">
-                <FluentNavMenuLink Class="level1" Icon="@(new Icons.Regular.Size24.Home())" Text="Item 1" Href="/" />
-                <FluentNavMenuLink Class="level1" Icon="@(new Icons.Regular.Size24.Cloud())" Text="Item 2"
-                    Href="counter" />
-                <FluentNavMenuGroup Text="Item 3">
-                    <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.LeafOne())" Text="Item 3.1" Href="fetchdata" />
-                    <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.LeafTwo())" Text="Item 3.2" />
-                </FluentNavMenuGroup>
-                <FluentNavMenuLink Class="level1" Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Text="Item 4"
-                    Disabled="true" />
-            </FluentNavMenu>
-        </div>
+        <FluentNavMenu class="sidebar" Width="160" style="margin-left: 40px; margin-top: 80px;">
+            <FluentNavMenuLink Text="Home" Icon="@(new Icons.Regular.Size24.Home())" Href="/" />
+            <FluentNavMenuLink Text="Cloud" Icon="@(new Icons.Regular.Size24.Cloud())" Href="counter" />
+            <FluentNavMenuLink Text="Calendar" Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Href="fetchdata" />
+            <FluentNavMenuLink Text="Bettery" Icon="@(new Icons.Regular.Size24.LeafOne())" />
+        </FluentNavMenu>
 
         <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"
             VerticalAlignment="VerticalAlignment.Center" style="width: calc(100% - 210px); margin: 0 auto;">
