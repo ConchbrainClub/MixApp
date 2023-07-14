@@ -19,14 +19,15 @@
         </div>
 
         <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"
-            VerticalAlignment="VerticalAlignment.Center"
-            style="width: calc(100% - 210px); margin: 0 auto; overflow-y: scroll;">
-            
+            VerticalAlignment="VerticalAlignment.Center" style="width: calc(100% - 210px); margin: 0 auto;">
+
             <FluentTextField @bind-Value=keyWord Placeholder="Search" style="width: 50%; margin-top: 20px;" />
 
-            <div>
+            <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"
+                style=" padding: 0 20px; height: calc(100vh - 70px); overflow-y: scroll;">
                 @Body
-            </div>
+            </FluentStack>
+
         </FluentStack>
 
     </FluentStack>
