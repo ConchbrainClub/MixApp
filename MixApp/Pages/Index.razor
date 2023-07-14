@@ -16,7 +16,7 @@
         <FluentCard>Card number 10</FluentCard>
     </FluentHorizontalScroll>
 
-    <FluentStack class="contents" style="display: flex; flex-wrap: wrap;">
+    <div class="contents">
 
         <FluentCard BackReference="@context">
             <div>
@@ -101,12 +101,31 @@
             </div>
         </FluentCard>
 
-    </FluentStack>
+    </div>
 
 </BaseLayerLuminance>
 
 
 <style>
+    .contents {
+        display: grid; 
+        grid-template-columns: repeat(5, 1fr); 
+        grid-gap: 1em;
+    }
+
+    
+    @@media only screen and (max-width: 1200px) {
+        .contents {
+            grid-template-columns: repeat(3, 1fr); 
+        }
+    }
+
+    @@media only screen and (max-width: 950px) {
+        .contents {
+            grid-template-columns: repeat(2, 1fr); 
+        }
+    }
+
     fluent-card {
         margin: 10px;
         padding: 20px;
@@ -115,10 +134,5 @@
     .banner fluent-card {
         height: 400px;
         width: 600px;
-    }
-
-    .contents fluent-card {
-        height: 200px;
-        max-width: 300px;
     }
 </style>

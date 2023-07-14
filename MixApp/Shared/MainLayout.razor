@@ -1,9 +1,9 @@
 ﻿@inherits LayoutComponentBase
 
 <FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="#333333" BaseLayerLuminance="0">
-    <FluentStack Orientation="Orientation.Horizontal" style="height: 100vh;">
+    <div class="main">
 
-        <FluentNavMenu @bind-Expanded="@Expanded" class="sidebar">
+        <FluentNavMenu class="sidebar" @bind-Expanded="@Expanded" >
             <FluentNavMenuLink Text="Home" Icon="@(new Icons.Regular.Size24.Home())" Href="/" />
             <FluentNavMenuLink Text="Cloud" Icon="@(new Icons.Regular.Size24.Cloud())" Href="counter" />
             <FluentNavMenuLink Text="Calendar" Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Href="fetchdata" />
@@ -11,24 +11,43 @@
             <FluentNavMenuLink Text="Bettery" Icon="@(new Icons.Regular.Size24.Settings())" />
         </FluentNavMenu>
 
-        <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center"
-            style="width: calc(100% - 210px); margin: 0 auto;">
+        <div class="content">
 
             <FluentTextField class="search" @bind-Value=keyWord Placeholder="Search" />
 
-            <FluentStack class="content" Orientation="Orientation.Vertical"
+            <FluentStack class="page" Orientation="Orientation.Vertical"
                 HorizontalAlignment="HorizontalAlignment.Center">
                 @Body
             </FluentStack>
+        </div>
 
-        </FluentStack>
-
-    </FluentStack>
+    </div>
 </FluentDesignSystemProvider>
 
 <style>
+    .main {
+        height: 100vh; display: flex;
+    }
+
     .sidebar {
         width: 200px;
+    }
+
+    .content {
+        text-align: center; 
+        width: calc(100% - 210px); 
+        margin: 0 auto;
+    }
+
+    @@media only screen and (max-width: 950px) {
+        .sidebar {
+            display: none;
+        }
+
+        .content {
+            width: calc(100% - 10px);
+            margin: 0;
+        }
     }
 
     .search {
@@ -36,10 +55,11 @@
         margin-top: 20px;
     }
 
-    .content {
+    .page {
         padding: 0 20px;
         height: calc(100vh - 70px);
         overflow-y: scroll;
+        text-align: left;
     }
 </style>
 
