@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace MixApp.Pages
 {
-    public partial class CounterBase : ComponentBase
+    public partial class SoftwareBase : ComponentBase
     {
         public int currentCount = 0;
 

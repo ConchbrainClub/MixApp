@@ -1,20 +1,8 @@
-﻿@page "/"
-@inherits MixApp.Pages.IndexBase
+﻿@page "/software"
+@inherits MixApp.Pages.SoftwareBase
+
 
 <BaseLayerLuminance>
-
-    <FluentHorizontalScroll class="banner" Speed="600" Easing=ScrollEasing.EaseInOut >
-        <FluentCard>Card number 1</FluentCard>
-        <FluentCard>Card number 2</FluentCard>
-        <FluentCard>Card number 3</FluentCard>
-        <FluentCard>Card number 4</FluentCard>
-        <FluentCard>Card number 5</FluentCard>
-        <FluentCard>Card number 6</FluentCard>
-        <FluentCard>Card number 7</FluentCard>
-        <FluentCard>Card number 8</FluentCard>
-        <FluentCard>Card number 9</FluentCard>
-        <FluentCard>Card number 10</FluentCard>
-    </FluentHorizontalScroll>
 
     <div class="contents">
 
@@ -98,6 +86,26 @@
             </div>
         </FluentCard>
 
+        <FluentCard BackReference="@context">
+            <div>
+                <p>Dark</p>
+                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
+                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
+                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
+                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
+            </div>
+        </FluentCard>
+        
+        <FluentCard BackReference="@context">
+            <div>
+                <p>Dark</p>
+                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
+                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
+                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
+                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
+            </div>
+        </FluentCard>
+
     </div>
 
 </BaseLayerLuminance>
@@ -108,6 +116,7 @@
         display: grid; 
         grid-template-columns: repeat(5, 1fr); 
         grid-gap: 1em;
+        margin-top: 20px;
     }
 
     
@@ -131,15 +140,5 @@
 
     fluent-card {
         padding: 20px;
-    }
-
-    .banner {
-        width: 100%;
-    }
-
-    .banner fluent-card {
-        margin: 10px;
-        height: 400px;
-        width: 600px;
     }
 </style>
