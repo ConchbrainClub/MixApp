@@ -1,0 +1,56 @@
+﻿@page "/softwares"
+@inherits MixApp.Pages.SoftwaresBase
+
+@using MixApp.Models
+
+<BaseLayerLuminance>
+
+    <div class="contents">
+        @foreach (Software software in Softwares)
+        {
+            <FluentCard BackReference="@context">
+                <div>
+                    <p>Dark</p>
+                    <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
+                    <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
+                    <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
+                    <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
+                </div>
+            </FluentCard>
+        }
+    </div>
+
+</BaseLayerLuminance>
+
+
+<style>
+    .contents {
+        display: grid; 
+        grid-template-columns: repeat(5, 1fr); 
+        grid-gap: 1em;
+        margin-top: 20px;
+    }
+
+    
+    @@media only screen and (max-width: 1200px) {
+        .contents {
+            grid-template-columns: repeat(4, 1fr); 
+        }
+    }
+
+    @@media only screen and (max-width: 950px) {
+        .contents {
+            grid-template-columns: repeat(3, 1fr); 
+        }
+    }
+
+    @@media only screen and (max-width: 700px) {
+        .contents {
+            grid-template-columns: repeat(2, 1fr); 
+        }
+    }
+
+    fluent-card {
+        padding: 20px;
+    }
+</style>
