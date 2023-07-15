@@ -1,5 +1,5 @@
 ﻿@page "/fetchdata"
-@inject HttpClient Http
+@inherits MixApp.Pages.FetchDataBase
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -7,36 +7,16 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (forecasts == null)
+@if (Forecasts == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <FluentDataGrid Items="@forecasts" style="width: 50%;">
+    <FluentDataGrid Items="@Forecasts" style="width: 50%;">
         <PropertyColumn Property="@(i => i.TemperatureC)" Sortable="true" />
         <PropertyColumn Property="@(i => i.TemperatureF)" Sortable="true" />
         <PropertyColumn Property="@(i => i.Summary)" Sortable="true" />
         <PropertyColumn Property="@(i => i.Date)" Format="yyyy-MM-dd" Sortable="true" />
     </FluentDataGrid>
-}
-
-@code {
-    private IQueryable<WeatherForecast>? forecasts;
-
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = (await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json"))?.AsQueryable();
-    }
-
-    public class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
 }
