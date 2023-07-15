@@ -1,7 +1,7 @@
 ﻿@page "/"
 @inherits MixApp.Pages.IndexBase
 
-<BaseLayerLuminance Value="(float?)0.15">
+<BaseLayerLuminance>
 
     <FluentHorizontalScroll class="banner" Speed="600" Easing=ScrollEasing.EaseInOut >
         <FluentCard>Card number 1</FluentCard>
@@ -68,7 +68,6 @@
             </div>
         </FluentCard>
 
-
         <FluentCard BackReference="@context">
             <div>
                 <p>Dark</p>
@@ -79,7 +78,6 @@
             </div>
         </FluentCard>
 
-
         <FluentCard BackReference="@context">
             <div>
                 <p>Dark</p>
@@ -89,7 +87,6 @@
                 <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
             </div>
         </FluentCard>
-
 
         <FluentCard BackReference="@context">
             <div>
