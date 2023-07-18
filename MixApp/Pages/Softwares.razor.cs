@@ -18,14 +18,14 @@ namespace MixApp.Pages
         protected override async Task OnInitializedAsync()
         {
             Softwares = await HttpClient.GetFromJsonAsync<List<Software>>("/softwares") ?? new();
+            await JSRunTime!.InvokeVoidAsync("InitPageSoftware", DotNetObjectReference.Create(this));
         }
 
-        public async void UserScroll()
-        {            
-            int PageHeight = await JSRunTime!.InvokeAsync<int>("PageHeight").AsTask();
-            int PageScrollHeight = await JSRunTime!.InvokeAsync<int>("PageScrollHeight").AsTask();
-
-            Console.WriteLine(PageScrollHeight > PageHeight);
+        [JSInvokable]
+        public void OnScrollEnd(bool scrollEnd)
+        {
+            if (!scrollEnd) return;
+            Console.WriteLine("Scroll to end.");
         }
     }
 }

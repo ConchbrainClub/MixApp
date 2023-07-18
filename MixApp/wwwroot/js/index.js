@@ -1,7 +1,10 @@
-
-window.PageScrollHeight = () => {
+window.InitPageSoftware = (dotnet) => {
     let scrollBox = document.querySelector('.page')
-    return scrollBox.scrollTop + scrollBox.clientHeight
-}
 
-window.PageHeight = () => document.querySelector('.page > .content').clientHeight
+    scrollBox.onscrollend = () => {
+        let pageScrollHeight = scrollBox.scrollTop + scrollBox.clientHeight
+        let pageHeight = document.querySelector('.page > .content').clientHeight
+
+        dotnet.invokeMethodAsync('OnScrollEnd', pageScrollHeight > pageHeight)
+    }
+}
