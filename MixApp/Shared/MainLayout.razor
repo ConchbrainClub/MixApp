@@ -1,7 +1,7 @@
 ﻿@inherits MixApp.Shared.MainLayoutBase
 
 <FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="#333333" BaseLayerLuminance="0">
-    <div class="main">
+    <div class="layout">
 
         <FluentNavMenu class="sidebar" @bind-Expanded="@Expanded" >
             <FluentNavMenuLink Text="Home" Icon="@(new Icons.Regular.Size24.Home())" Href="/" />
@@ -10,8 +10,7 @@
             <FluentNavMenuLink Text="Bettery" Icon="@(new Icons.Regular.Size24.Settings())" />
         </FluentNavMenu>
 
-        <div class="content">
-
+        <div class="main">
             <FluentTextField class="search" @bind-Value=KeyWord Placeholder="Search" />
 
             <FluentStack class="page" Orientation="Orientation.Vertical"
@@ -24,7 +23,7 @@
 </FluentDesignSystemProvider>
 
 <style>
-    .main {
+    .layout {
         height: 100vh; display: flex;
     }
 
@@ -32,7 +31,7 @@
         width: 200px;
     }
 
-    .content {
+    .main {
         text-align: center; 
         width: calc(100% - 210px); 
         margin: 0 auto;
@@ -43,7 +42,7 @@
             display: none;
         }
 
-        .content {
+        .main {
             width: calc(100% - 10px);
             margin: 0;
         }

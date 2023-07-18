@@ -5,7 +5,7 @@
 
 <BaseLayerLuminance>
 
-    <div class="contents">
+    <div class="content">
         @foreach (Software software in Softwares)
         {
             <FluentCard BackReference="@context">
@@ -32,11 +32,12 @@
         }
     </div>
 
+    <FluentProgressRing style="width: 42px; height: 42px;"></FluentProgressRing>
+    
 </BaseLayerLuminance>
 
-
 <style>
-    .contents {
+    .content {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         grid-gap: 1em;
@@ -44,19 +45,19 @@
     }
 
     @@media only screen and (max-width: 1400px) {
-        .contents {
+        .content {
             grid-template-columns: repeat(4, 1fr);
         }
     }
 
     @@media only screen and (max-width: 1200px) {
-        .contents {
+        .content {
             grid-template-columns: repeat(3, 1fr);
         }
     }
 
     @@media only screen and (max-width: 950px) {
-        .contents {
+        .content {
             grid-template-columns: repeat(2, 1fr);
         }
     }
@@ -68,6 +69,10 @@
 
     .title {
         margin: 0.75rem 0;
+    }
+
+    .desc {
+        margin-top: 10px;
     }
 
     .action {
