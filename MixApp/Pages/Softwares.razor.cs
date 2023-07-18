@@ -19,10 +19,5 @@ namespace MixApp.Pages
         {
             Softwares = await HttpClient.GetFromJsonAsync<List<Software>>("/softwares") ?? new();
         }
-
-        public void UserScroll()
-        {
-            
-        }
     }
 }
