@@ -13,19 +13,37 @@ namespace MixApp.Pages
         [Inject]
         IJSRuntime? JSRunTime { get; set; }
 
+        public int PageIndex { get; set; } = -1;
+
         public List<Software> Softwares { get; set; } = new();
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            Softwares = await HttpClient.GetFromJsonAsync<List<Software>>("/softwares") ?? new();
+            LoadData();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
             await JSRunTime!.InvokeVoidAsync("InitPageSoftware", DotNetObjectReference.Create(this));
+        }
+
+        private async void LoadData()
+        {
+            List<Software> softwares = await HttpClient
+                .GetFromJsonAsync<List<Software>>($"/softwares?index={++PageIndex}") 
+                ?? new();
+            
+            Console.WriteLine(PageIndex);
+            Softwares.AddRange(softwares);
+            StateHasChanged();
         }
 
         [JSInvokable]
         public void OnScrollEnd(bool scrollEnd)
         {
             if (!scrollEnd) return;
-            Console.WriteLine("Scroll to end.");
+            Console.WriteLine("Scroll to end");
+            LoadData();
         }
     }
 }
