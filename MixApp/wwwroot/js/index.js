@@ -4,4 +4,4 @@ window.PageScrollHeight = () => {
     return scrollBox.scrollTop + scrollBox.clientHeight
 }
 
-window.PageHeight = () => document.querySelector('.page > div').clientHeight
+window.PageHeight = () => document.querySelector('.page > .content').clientHeight

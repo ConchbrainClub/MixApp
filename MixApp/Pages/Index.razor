@@ -16,7 +16,7 @@
         <FluentCard>Card number 10</FluentCard>
     </FluentHorizontalScroll>
 
-    <div class="contents">
+    <div class="content">
 
         <FluentCard BackReference="@context">
             <div>
@@ -118,7 +118,7 @@
         width: 600px;
     }
 
-    .contents {
+    .content {
         display: grid; 
         grid-template-columns: repeat(5, 1fr); 
         grid-gap: 1em;
@@ -126,19 +126,19 @@
 
     
     @@media only screen and (max-width: 1400px) {
-        .contents {
+        .content {
             grid-template-columns: repeat(4, 1fr); 
         }
     }
 
     @@media only screen and (max-width: 1200px) {
-        .contents {
+        .content {
             grid-template-columns: repeat(3, 1fr); 
         }
     }
     
     @@media only screen and (max-width: 950px) {
-        .contents {
+        .content {
             grid-template-columns: repeat(2, 1fr);
         }
     }
