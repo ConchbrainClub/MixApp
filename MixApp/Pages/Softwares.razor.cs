@@ -24,6 +24,7 @@ namespace MixApp.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            if (!firstRender) return;
             await JSRunTime!.InvokeVoidAsync("InitPageSoftware", DotNetObjectReference.Create(this));
         }
 
@@ -33,7 +34,6 @@ namespace MixApp.Pages
                 .GetFromJsonAsync<List<Software>>($"/softwares?index={++PageIndex}") 
                 ?? new();
             
-            Console.WriteLine(PageIndex);
             Softwares.AddRange(softwares);
             StateHasChanged();
         }
@@ -42,7 +42,6 @@ namespace MixApp.Pages
         public void OnScrollEnd(bool scrollEnd)
         {
             if (!scrollEnd) return;
-            Console.WriteLine("Scroll to end");
             LoadData();
         }
     }
