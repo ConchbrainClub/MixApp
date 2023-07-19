@@ -1,16 +1,16 @@
 ﻿@inherits MixApp.Shared.MainLayoutBase
 
 <FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="#333333" BaseLayerLuminance="0">
-    <div id="layout">
+    <div class="layout">
 
-        <FluentNavMenu id="sidebar" @bind-Expanded="@Expanded" >
+        <FluentNavMenu class="sidebar" @bind-Expanded="@Expanded" >
             <FluentNavMenuLink Text="Home" Icon="@(new Icons.Regular.Size24.Home())" Href="/" />
             <FluentNavMenuLink Text="Software" Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Href="/softwares" />
             <FluentNavMenuLink Text="Cloud" Icon="@(new Icons.Regular.Size24.Cloud())" Href="/counter" />
             <FluentNavMenuLink Text="Bettery" Icon="@(new Icons.Regular.Size24.Settings())" />
         </FluentNavMenu>
 
-        <div id="main">
+        <div class="main">
             <FluentTextField class="search" @bind-Value=KeyWord Placeholder="Search" />
 
             <FluentStack class="container" Orientation="Orientation.Vertical"
@@ -23,37 +23,37 @@
 </FluentDesignSystemProvider>
 
 <style>
-    #layout {
+    .layout {
         height: 100vh; display: flex;
     }
 
-    #sidebar {
+    .sidebar {
         width: 200px;
     }
 
-    #main {
+    .main {
         text-align: center; 
         width: calc(100% - 210px); 
         margin: 0 auto;
     }
 
     @@media only screen and (max-width: 950px) {
-        #sidebar {
+        .sidebar {
             display: none;
         }
 
-        #main {
+        .main {
             width: calc(100% - 10px);
             margin: 0;
         }
     }
 
-    #main > .search {
+    .main > .search {
         width: 50%; 
         margin-top: 20px;
     }
 
-    #main > .container {
+    .main > .container {
         padding: 10px 20px;
         height: calc(100vh - 70px);
         overflow-y: scroll;

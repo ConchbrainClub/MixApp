@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "jsdelivr",
+  "libraries": [
+    {
+      "library": "animate.css@4.1.1",
+      "destination": "MixApp/wwwroot/lib/animate.css"
+    }
+  ]
+}

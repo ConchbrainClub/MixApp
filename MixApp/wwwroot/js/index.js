@@ -5,7 +5,7 @@ window.InitPageSoftware = (dotnet) => {
         let pageScrollHeight = scrollBox.scrollTop + scrollBox.clientHeight
         let pageHeight = document.querySelector('.page > .content').clientHeight
 
-        let scrollEnd = (pageHeight - pageScrollHeight) < 400
+        let scrollEnd = (pageHeight - pageScrollHeight) < 500
         dotnet.invokeMethodAsync('OnScrollEnd', scrollEnd)
     }
 }

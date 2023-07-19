@@ -9,7 +9,7 @@
         <div class="content">
             @foreach (Software software in Softwares)
             {
-                <FluentCard BackReference="@context">
+                <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
                     <div>
                         <p>@software.PackageIdentifier?.Split(".").First()</p>
                         <FluentDivider></FluentDivider>
@@ -34,7 +34,7 @@
             }
         </div>
 
-        <FluentProgressRing style="margin: 10px; width: 42px; height: 42px;"></FluentProgressRing>
+        <FluentProgressRing class="progress"></FluentProgressRing>
 
     </FluentStack>
 </BaseLayerLuminance>
@@ -92,5 +92,11 @@
     
     .action fluent-button {
         margin-right: 5px;
+    }
+
+    .progress {
+        margin: 10px; 
+        width: 42px;
+        height: 42px;
     }
 </style>
