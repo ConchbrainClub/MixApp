@@ -9,7 +9,15 @@ builder.RootComponents.Add<App>("#app");
 
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5000/") });
+builder.Services.AddScoped(sp => 
+{
+    string? baseAddress = builder.Configuration.GetSection("BaseAddress").Value;
+    
+    return new HttpClient 
+    {
+        BaseAddress = new Uri(baseAddress ?? string.Empty) 
+    };
+});
 
 builder.Services.AddFluentToasts();
 
