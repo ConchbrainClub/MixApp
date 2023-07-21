@@ -1,0 +1,26 @@
+@inherits MixApp.Components.DetailBase
+
+<FluentDialog @ref="Dialog" @ondialogdismiss="OnDismiss" Modal="true" >
+    <img src="@Software?.Cover" class="cover" >
+
+    <div class="info">
+        <h2>@Software?.PackageIdentifier</h2>
+        <p>The 'Close dialog' button is automatically focussed.</p>
+        <p>The 'Another button' doesn't do anything other than showing receiving focus.</p>
+        <FluentButton Appearance="Appearance.Accent" Autofocus="true">Close dialog</FluentButton>
+        <FluentButton>Another button</FluentButton>
+    </div>
+</FluentDialog>
+
+<style>
+    fluent-dialog::part(control) {
+        --dialog-width: 80vw;
+        --dialog-height: 80vh;
+        padding-top: 20px;
+    }
+    
+    .cover {
+        width: 100%;
+        border-radius: 5px;
+    }
+</style>

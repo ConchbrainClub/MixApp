@@ -17,6 +17,8 @@ namespace MixApp.Pages
 
         public List<Software> Softwares { get; set; } = new();
 
+        public Software? SelectedSoftware { get; set; }
+
         protected override void OnInitialized()
         {
             LoadData();
@@ -30,11 +32,17 @@ namespace MixApp.Pages
 
         private async void LoadData()
         {
+            SelectedSoftware = null;
+
             List<Software> softwares = await HttpClient
                 .GetFromJsonAsync<List<Software>>($"/softwares?index={++PageIndex}") 
                 ?? new();
             
-            Softwares.AddRange(softwares);
+            softwares.ForEach(i => {
+                i.Cover = HttpClient.BaseAddress?.ToString() + i.Cover;
+                Softwares.Add(i);
+            });
+
             StateHasChanged();
         }
 
