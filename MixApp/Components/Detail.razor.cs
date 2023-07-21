@@ -15,6 +15,8 @@ namespace MixApp.Components
         [Parameter]
         public Software? Software { get; set; }
 
+        public Manifest Latest { get; set; } = new();
+
         public List<Manifest> Manifests { get; set; } = new();
 
         protected override void OnAfterRender(bool firstRender)
@@ -30,7 +32,11 @@ namespace MixApp.Components
 
             Manifests = await HttpClient
                 .GetFromJsonAsync<List<Manifest>>($"/softwares/{Software?.PackageIdentifier}") 
-                ?? new();   
+                ?? new();
+
+            Latest = Manifests.OrderBy(i => i.PackageVersion).FirstOrDefault() ?? new();
+
+            StateHasChanged();
         }
 
         public void OnDismiss(DialogEventArgs args)
@@ -43,7 +49,6 @@ namespace MixApp.Components
 
         public void Hide()
         {
-            Manifests = new();
             Dialog?.Hide();
         }
     }

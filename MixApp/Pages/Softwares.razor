@@ -11,9 +11,9 @@
             {
                 <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
                     <div>
-                        <p>@software.PackageIdentifier?.Split(".").First()</p>
+                        <p>@software.PackageIdentifier</p>
                         <FluentDivider></FluentDivider>
-                        <h3 class="title">@software.PackageIdentifier?.Split(".").Last()</h3>
+                        <h3 class="title">@software.PackageName</h3>
 
                         <FluentBadge Appearance="Appearance.Neutral">
                             @software.Publisher

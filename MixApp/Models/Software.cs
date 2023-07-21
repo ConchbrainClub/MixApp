@@ -3,6 +3,8 @@ namespace MixApp.Models
     public class Software
     {
         public string? PackageIdentifier { get; set; }
+
+        public string? PackageName { get; set; }
         
         public string? Publisher { get; set; }
 
