@@ -1,4 +1,4 @@
-name: Deploy mixStore prod
+name: Deploy MixApp
 
 on:
   push:
