@@ -18,9 +18,9 @@ jobs:
           wget https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh
           chmod +x ./dotnet-install.sh
           ./dotnet-install.sh -v 8.0.100-preview.6.23330.14
-          /home/runner/.dotnet/dotnet publish -c Release
           dotnet tool install microsoft.web.librarymanager.cli --global
           /home/runner/.dotnet/tools/libman restore
+          /home/runner/.dotnet/dotnet publish -c Release
 
       - name: trans code to the server
         uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
