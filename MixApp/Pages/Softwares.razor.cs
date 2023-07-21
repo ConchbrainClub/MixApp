@@ -24,10 +24,10 @@ namespace MixApp.Pages
             LoadData();
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override void OnAfterRender(bool firstRender)
         {
             if (!firstRender) return;
-            await JSRunTime!.InvokeVoidAsync("InitPageSoftware", DotNetObjectReference.Create(this));
+            JSRunTime!.InvokeVoidAsync("InitPageSoftware", DotNetObjectReference.Create(this));
         }
 
         private async void LoadData()
