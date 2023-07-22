@@ -20,21 +20,22 @@ namespace MixApp.Components
         [Parameter]
         public Software? Software { get; set; }
 
+        public List<Manifest> Manifests { get; set; } = new();
+
         public Manifest Latest { get; set; } = new();
 
-        public List<Manifest> Manifests { get; set; } = new();
+        public List<Installer> Installers { get; set; } = new();
 
         protected async override void OnParametersSet()
         {
             if (Software == null) return;
 
-            Dialog?.Show();
-
             Manifests = (await HttpClient
                 .GetFromJsonAsync<IEnumerable<Manifest>>($"/softwares/{Software?.PackageIdentifier}") ?? Array.Empty<Manifest>())
                 .OrderByDescending(i => i.PackageVersion).ToList();
 
-            Latest = Manifests.FirstOrDefault() ?? new();
+            Latest = Manifests.First();
+            Installers = JsonSerializer.Deserialize<List<Installer>>(Latest.Installers!) ?? new();
 
             StateHasChanged();
         }

@@ -40,51 +40,76 @@
                 <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
 
                 <div class="desc">
+                    
+                    <div>
+                        <h4>Installers</h4>
 
-                    <h4>WinGet</h4>
+                        <FluentDataGrid Items="@Installers.AsQueryable()" GridTemplateColumns="1fr 5fr 7fr" ResizableColumns=true Virtualize="true" >
+                            <PropertyColumn Title="Arch" Property=@(i => i!.Architecture) />
+                            <TemplateColumn Title="Url">
+                                <a href="@context.InstallerUrl" target="_blank">@context.InstallerUrl</a>
+                            </TemplateColumn>
+                            <PropertyColumn Title="Sha256" Property=@(i => i!.InstallerSha256) />
+                        </FluentDataGrid>
+                    </div>
 
-                    <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) >
-                        <FluentIcon Icon="Icons.Regular.Size16.Copy" Slot="end" Color=Color.Neutral />
-                    </FluentTextField>
+                    <div>
+                        <h4>WinGet</h4>
 
-                    <br/><br/>
+                        <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) >
+                            <FluentIcon Icon="Icons.Regular.Size16.Copy" Slot="end" Color=Color.Neutral />
+                        </FluentTextField>
+                    </div>
 
-                    <h4>Tags</h4>
+                    <div>
+                        <h4>Tags</h4>
 
-                    @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
-                    {
-                        <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
-                            @tags
-                        </FluentBadge>
-                    }
+                        @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
+                        {
+                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                                @tags
+                            </FluentBadge>
+                        }
+                    </div>
 
-                    <br/><br/>
+                    <div>
+                        <h4>Versions</h4>
 
-                    <h4>Versions</h4>
+                        <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 4fr 1fr 1fr" ResizableColumns=true Virtualize="true" >
+                            <PropertyColumn Title="PackageVersion" Property=@(i => i!.PackageVersion) Sortable="true" />
+                            <PropertyColumn Title="ReleaseNotes" Property=@(i => i!.ReleaseNotes ?? "None") Sortable="true" />
+                            <PropertyColumn Title="ReleaseDate" Property=@(i => i!.ReleaseDate ?? "-") Sortable="true" />
+                            <TemplateColumn Title="Dwonload">
+                                <FluentBadge @onclick="(_ => Download(context.Installers))" Appearance="Appearance.Accent" Fill="highlight" Color="highlight">Download</FluentBadge>
+                            </TemplateColumn>
+                        </FluentDataGrid>
+                    </div>
+                    
+                    <div>
+                        <h4>License</h4>
 
-                    <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 4fr 1fr 1fr" ResizableColumns=true>
-                        <PropertyColumn Property=@(i => i!.PackageVersion) Sortable="true" />
-                        <PropertyColumn Property=@(i => i!.ReleaseNotes ?? "None") Sortable="true" />
-                        <PropertyColumn Property=@(i => i!.ReleaseDate ?? "-") Sortable="true" />
-                        
-                        <TemplateColumn Title="Dwonload">
-                            <FluentBadge @onclick="(_ => Download(context.Installers))" Appearance="Appearance.Accent" Fill="highlight" Color="highlight">Download</FluentBadge>
-                        </TemplateColumn>
-                    </FluentDataGrid>
+                        <a href="@Latest.LicenseUrl" target="_blank">
+                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                                @Latest.License
+                            </FluentBadge>
+                        </a>
+                    </div>
 
-                    <br/><br/>
+                    <div>
+                        <h4>Privacy</h4>
 
-                    <h4>License</h4>
+                        <a href="@Latest.PrivacyUrl" target="_blank">
+                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                                @Latest.PrivacyUrl
+                            </FluentBadge>
+                        </a>
+                    </div>
 
-                    <a href="@Latest.LicenseUrl" target="_blank">
-                        <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
-                            @Latest.License
-                        </FluentBadge>
-                    </a>
-
-                    <br/><br/>
-
-                    <p>@Latest.Copyright</p>
+                    <div>
+                        <a href="@Latest.CopyrightUrl" target="_blank">
+                            @Latest.Copyright
+                        </a>
+                    </div>
 
                 </div>
             </div>
@@ -125,11 +150,28 @@
         min-width: 250px;
     }
 
+    .head > div:last-child p {
+        margin: 5px;
+    }
+
     .desc {
         padding: 20px;
     }
 
+    .desc > div {
+        margin-bottom: 20px;
+    }
+
     .desc fluent-text-field {
         width: 300px;
+    }
+
+    .desc fluent-data-grid {
+        max-height: 400px; 
+        overflow-y: scroll;
+    }
+
+    .desc div:last-child {
+        text-align: center;
     }
 </style>
