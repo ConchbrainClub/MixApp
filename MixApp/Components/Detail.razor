@@ -39,7 +39,7 @@
 
                 <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
 
-                <div class="desc">
+                <div class="info">
                     
                     <div>
                         <h4>Installers</h4>
@@ -105,7 +105,7 @@
                         </a>
                     </div>
 
-                    <div>
+                    <div class="copyright">
                         <a href="@Latest.CopyrightUrl" target="_blank">
                             @Latest.Copyright
                         </a>
@@ -154,24 +154,24 @@
         margin: 5px;
     }
 
-    .desc {
+    .info {
         padding: 20px;
     }
 
-    .desc > div {
+    .info > div {
         margin-bottom: 20px;
     }
 
-    .desc fluent-text-field {
+    .info fluent-text-field {
         width: 300px;
     }
 
-    .desc fluent-data-grid {
+    .info fluent-data-grid {
         max-height: 400px; 
         overflow-y: scroll;
     }
 
-    .desc div:last-child {
+    .copyright {
         text-align: center;
     }
 </style>

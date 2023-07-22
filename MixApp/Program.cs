@@ -19,6 +19,8 @@ builder.Services.AddScoped(sp =>
     };
 });
 
+builder.Services.AddScoped<GlobalState>();
+
 builder.Services.AddFluentToasts();
 
 builder.Services.AddFluentUIComponents(options =>

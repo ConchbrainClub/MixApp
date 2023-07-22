@@ -9,6 +9,7 @@ namespace MixApp.Pages
     {
         [Inject]
         HttpClient HttpClient { get; set; } = new HttpClient();
+        
         public Software? SelectedSoftware { get; set; }
 
         public List<Software> Softwares { get; set; } = new();
