@@ -1,5 +1,7 @@
 @inherits MixApp.Components.DetailBase
 
+@using System.Text.Json
+
 <FluentDialog @ref="Dialog" @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn" >
     <div class="detail">
         <img src="@Software?.Cover" class="cover animate__animated animate__fadeInDown" >
@@ -23,19 +25,44 @@
 
                 <div class="animate__animated animate__fadeInRight">
                     <p>Identifier: @Software?.PackageIdentifier</p>
-                    <p>Version: @Latest.PackageVersion</p>
-                    <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
+                    <p>Latest: @Latest.PackageVersion</p>
+                    <p>
+                        <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
+                    </p>
+                    <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">访问官网</FluentBadge>
                 </div>
             </div>
 
             <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
 
             <div class="desc">
+
+                <h5>WinGet</h5>
+
+                <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) >
+                    <FluentIcon Icon="Icons.Regular.Size16.Copy" Slot="end" Color=Color.Neutral />
+                </FluentTextField>
+
+                <br/><br/>
+
+                <h5>Tags</h5>
+
+                @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
+                {
+                    <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                        @tags
+                    </FluentBadge>
+                }
+
+                <br/><br/>
+
                 <h5>Versions</h5>
 
-                @foreach (Manifest manifest in Manifests)
+                @foreach (Manifest manifest in Manifests.OrderByDescending(i => i.PackageVersion))
                 {
-                    <p>@manifest.PackageVersion</p>
+                    <FluentButton  @onclick="@(_ => Download(manifest.Installers))" Appearance="Appearance.Stealth" >
+                        @manifest.PackageVersion
+                    </FluentButton>
                 }
             </div>
         </div>
@@ -44,12 +71,13 @@
 
 <style scoped>
     fluent-dialog::part(control) {
-        --dialog-width: 80vw;
+        --dialog-width: 60vw;
+        padding: 20px 0;
     }
     
     .cover {
         object-fit: cover;
-        height: 60vh;
+        height: 50vh;
         width: 100%;
         border-radius: 5px;
     }
@@ -58,7 +86,7 @@
         height: 80vh;
     }
 
-    .info > .head {
+    .head {
         display: flex;
         justify-content: space-between;
         padding: 20px;
@@ -74,7 +102,11 @@
         min-width: 250px;
     }
 
-    .info > .desc {
-        margin: 20px;
+    .desc {
+        padding: 20px;
+    }
+
+    .desc fluent-text-field {
+        width: 300px;
     }
 </style>

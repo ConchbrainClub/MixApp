@@ -39,7 +39,7 @@ namespace MixApp.Components
                 .GetFromJsonAsync<List<Manifest>>($"/softwares/{Software?.PackageIdentifier}") 
                 ?? new();
 
-            Latest = Manifests.OrderBy(i => i.PackageVersion).FirstOrDefault() ?? new();
+            Latest = Manifests.OrderByDescending(i => i.PackageVersion).FirstOrDefault() ?? new();
 
             StateHasChanged();
         }
