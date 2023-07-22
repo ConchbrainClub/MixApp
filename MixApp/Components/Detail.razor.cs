@@ -2,6 +2,8 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Fast.Components.FluentUI;
 using MixApp.Models;
+using System.Text.Json;
+using Microsoft.JSInterop;
 
 namespace MixApp.Components
 {
@@ -9,6 +11,9 @@ namespace MixApp.Components
     {
         [Inject]
         HttpClient HttpClient { get; set; } = new HttpClient();
+
+        [Inject]
+        IJSRuntime? JSRunTime { get; set; }
 
         public FluentDialog? Dialog;
 
@@ -50,6 +55,18 @@ namespace MixApp.Components
         public void Hide()
         {
             Dialog?.Hide();
+        }
+
+        public void Download(string? installers)
+        {
+            if (string.IsNullOrEmpty(installers)) return;
+
+            Installer? installer = JsonSerializer.Deserialize<List<Installer>>(installers)?.Find(i =>
+            {
+                return i.Architecture == "x86" || i.Architecture == "x64";
+            });
+
+            JSRunTime?.InvokeVoidAsync("open", installer?.InstallerUrl);
         }
     }
 }
