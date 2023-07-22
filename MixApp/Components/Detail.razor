@@ -7,7 +7,7 @@
         <div class="info">
             <div class="head">
                 <div class="animate__animated animate__fadeInLeft">
-                    <h3>@Software?.PackageName</h3>
+                    <h1>@Software?.PackageName</h1>
 
                     <p>@Software?.ShortDescription</p>
                     <p>@Latest.Description</p>
@@ -28,8 +28,15 @@
                 </div>
             </div>
 
-            <div>
+            <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
 
+            <div class="desc">
+                <h5>Versions</h5>
+
+                @foreach (Manifest manifest in Manifests)
+                {
+                    <p>@manifest.PackageVersion</p>
+                }
             </div>
         </div>
     </div>
@@ -38,7 +45,6 @@
 <style scoped>
     fluent-dialog::part(control) {
         --dialog-width: 80vw;
-        padding: 20px 0;
     }
     
     .cover {
@@ -52,14 +58,10 @@
         height: 80vh;
     }
 
-    .info {
-        padding: 10px;
-        overflow: hidden;
-    }
-
     .info > .head {
         display: flex;
         justify-content: space-between;
+        padding: 20px;
     }
 
     .head > div:first-child {
@@ -70,5 +72,9 @@
         text-align: right;
         padding: 20px;
         min-width: 250px;
+    }
+
+    .info > .desc {
+        margin: 20px;
     }
 </style>
