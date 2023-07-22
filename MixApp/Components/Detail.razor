@@ -19,7 +19,7 @@
                 <p>@Software?.ShortDescription</p>
                 <p>@Latest.Description</p>
                 
-                <FluentButton Appearance="Appearance.Accent" Autofocus="true">Close dialog</FluentButton>
+                <FluentButton @onclick="@(_ => Download(Latest.Installers))" Appearance="Appearance.Accent" Autofocus="true">Download</FluentButton>
                 <FluentButton>Another button</FluentButton>
             </div>
         </div>
