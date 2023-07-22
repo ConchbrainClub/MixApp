@@ -3,7 +3,7 @@
 @using System.Text.Json
 
 @if (Software != null) {
-    <FluentDialog @ref="Dialog" @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn" >
+    <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn" >
         <div class="detail">
             <img src="@Software?.Cover" class="cover animate__animated animate__fadeInDown" >
 

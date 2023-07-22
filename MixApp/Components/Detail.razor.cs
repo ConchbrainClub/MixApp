@@ -15,7 +15,8 @@ namespace MixApp.Components
         [Inject]
         IJSRuntime? JSRunTime { get; set; }
 
-        public FluentDialog? Dialog;
+        [Parameter]
+        public Action<DialogEventArgs> OnDismiss { get; set; }
 
         [Parameter]
         public Software? Software { get; set; }
@@ -25,6 +26,11 @@ namespace MixApp.Components
         public Manifest Latest { get; set; } = new();
 
         public List<Installer> Installers { get; set; } = new();
+
+        public DetailBase()
+        {
+            OnDismiss = (args) => Software = null;
+        }
 
         protected async override void OnParametersSet()
         {
@@ -38,11 +44,6 @@ namespace MixApp.Components
             Installers = JsonSerializer.Deserialize<List<Installer>>(Latest.Installers!) ?? new();
 
             StateHasChanged();
-        }
-
-        public void OnDismiss(DialogEventArgs args)
-        {
-            Software = null;
         }
 
         public void Download(string? installers)
