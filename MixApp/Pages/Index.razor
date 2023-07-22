@@ -1,19 +1,16 @@
 ﻿@page "/"
 @inherits MixApp.Pages.IndexBase
+@using MixApp.Models
 
 <BaseLayerLuminance>
-
-    <FluentHorizontalScroll class="banner" Speed="600" Easing=ScrollEasing.EaseInOut >
-        <FluentCard>Card number 1</FluentCard>
-        <FluentCard>Card number 2</FluentCard>
-        <FluentCard>Card number 3</FluentCard>
-        <FluentCard>Card number 4</FluentCard>
-        <FluentCard>Card number 5</FluentCard>
-        <FluentCard>Card number 6</FluentCard>
-        <FluentCard>Card number 7</FluentCard>
-        <FluentCard>Card number 8</FluentCard>
-        <FluentCard>Card number 9</FluentCard>
-        <FluentCard>Card number 10</FluentCard>
+    <FluentHorizontalScroll class="banner" Speed="2000" Easing=ScrollEasing.EaseInOut >
+         @foreach (Software software in Softwares)
+        {
+            <FluentCard>
+                <lable class="packageName">@software.PackageName</lable>
+                <img src=@software.Cover class="cover">
+            </FluentCard>
+        }
     </FluentHorizontalScroll>
 
     <div class="content">
@@ -77,45 +74,21 @@
                 <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
             </div>
         </FluentCard>
-
-        <FluentCard BackReference="@context">
-            <div>
-                <p>Dark</p>
-                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
-                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
-                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
-                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
-            </div>
-        </FluentCard>
-
-        <FluentCard BackReference="@context">
-            <div>
-                <p>Dark</p>
-                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
-                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
-                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
-                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
-            </div>
-        </FluentCard>
-
     </div>
 
 </BaseLayerLuminance>
 
 <style>
-    fluent-card {
-        padding: 20px;
-    }
-
     .banner {
         width: 100%;
         margin-top: 10px;
     }
 
     .banner fluent-card {
-        margin: 10px;
-        height: 400px;
-        width: 600px;
+        margin-right: 10px;
+        height: 390px;
+        width: 710px;
+        position: relative;
     }
 
     .content {
@@ -124,6 +97,29 @@
         grid-gap: 1em;
     }
 
+    .cover{
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 1), transparent);
+    }
+
+    .packageName {
+        font-size: 20px;
+        font-weight: bold;
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        z-index: 1;
+    }
+
+    .banner fluent-card:hover {
+        -webkit-box-shadow: 0 0 6px #999;
+        box-shadow: 0 0 6px #999;
+        -webkit-transition: all .5s ease-out;
+        transition: all .5s ease-out;
+    }
     
     @@media only screen and (max-width: 1400px) {
         .content {
