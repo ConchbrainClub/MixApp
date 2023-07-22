@@ -5,22 +5,31 @@
         <img src="@Software?.Cover" class="cover animate__animated animate__fadeInDown" >
 
         <div class="info">
-            <div style="float: right; padding: 20px;" class="animate__animated animate__fadeInRight">
-                <p>@Latest.PackageVersion</p>
-                <p>@Software?.PackageIdentifier</p>
-                <FluentBadge Appearance="Appearance.Accent">
-                    @Software?.Publisher
-                </FluentBadge>
+            <div class="head">
+                <div class="animate__animated animate__fadeInLeft">
+                    <h3>@Software?.PackageName</h3>
+
+                    <p>@Software?.ShortDescription</p>
+                    <p>@Latest.Description</p>
+                    
+                    <FluentButton @onclick="@(_ => Download(Latest.Installers))" 
+                        IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())" 
+                        Autofocus="true">
+                        Download
+                    </FluentButton>
+                    
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Star())" Appearance="Appearance.Stealth" />
+                </div>
+
+                <div class="animate__animated animate__fadeInRight">
+                    <p>Identifier: @Software?.PackageIdentifier</p>
+                    <p>Version: @Latest.PackageVersion</p>
+                    <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
+                </div>
             </div>
 
-            <div class="animate__animated animate__fadeInLeft">
-                <h3>@Software?.PackageName</h3>
+            <div>
 
-                <p>@Software?.ShortDescription</p>
-                <p>@Latest.Description</p>
-                
-                <FluentButton @onclick="@(_ => Download(Latest.Installers))" Appearance="Appearance.Accent" Autofocus="true">Download</FluentButton>
-                <FluentButton>Another button</FluentButton>
             </div>
         </div>
     </div>
@@ -46,5 +55,20 @@
     .info {
         padding: 10px;
         overflow: hidden;
+    }
+
+    .info > .head {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .head > div:first-child {
+        text-align: left;
+    }
+
+    .head > div:last-child {
+        text-align: right;
+        padding: 20px;
+        min-width: 250px;
     }
 </style>
