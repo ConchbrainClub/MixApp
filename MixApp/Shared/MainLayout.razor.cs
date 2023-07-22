@@ -1,15 +1,28 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.Fast.Components.FluentUI;
+using MixApp.Models;
 
 namespace MixApp.Shared
 {
     public partial class MainLayoutBase : LayoutComponentBase 
     {
         [Inject]
-        GlobalState GlobalState { get; set; } = default!;
+        private GlobalEvent GlobalEvent { get; set; } = new();
 
         public bool Expanded { get; set; } = false;
 
         public string KeyWord { get; set; } = string.Empty;
+
+        public Software? Software { get; set; }
+
+        protected override void OnInitialized()
+        {
+            GlobalEvent.OnOpenSoftware += (software) => 
+            {
+                Software = software;
+                StateHasChanged();
+            };
+
+            base.OnInitialized();
+        }
     }
 }

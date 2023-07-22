@@ -27,7 +27,7 @@
                             Star
                         </FluentButton>
 
-                        <FluentButton @onclick=@(_ => SelectedSoftware = software) Appearance="Appearance.Accent">
+                        <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
                             More Info
                         </FluentButton>
                     </div>
@@ -38,8 +38,6 @@
         <FluentProgressRing class="progress"></FluentProgressRing>
 
     </FluentStack>
-
-    <Detail Software=@SelectedSoftware />
 </BaseLayerLuminance>
 
 <style>

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Fast.Components.FluentUI;
 using MixApp;
+using MixApp.Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -19,7 +20,7 @@ builder.Services.AddScoped(sp =>
     };
 });
 
-builder.Services.AddScoped<GlobalState>();
+builder.Services.AddSingleton<GlobalEvent>();
 
 builder.Services.AddFluentToasts();
 
