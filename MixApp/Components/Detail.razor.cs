@@ -24,37 +24,24 @@ namespace MixApp.Components
 
         public List<Manifest> Manifests { get; set; } = new();
 
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender) Hide();
-        }
-
         protected async override void OnParametersSet()
         {
             if (Software == null) return;
 
             Dialog?.Show();
 
-            Manifests = await HttpClient
-                .GetFromJsonAsync<List<Manifest>>($"/softwares/{Software?.PackageIdentifier}") 
-                ?? new();
+            Manifests = (await HttpClient
+                .GetFromJsonAsync<IEnumerable<Manifest>>($"/softwares/{Software?.PackageIdentifier}") ?? Array.Empty<Manifest>())
+                .OrderByDescending(i => i.PackageVersion).ToList();
 
-            Latest = Manifests.OrderByDescending(i => i.PackageVersion).FirstOrDefault() ?? new();
+            Latest = Manifests.FirstOrDefault() ?? new();
 
             StateHasChanged();
         }
 
         public void OnDismiss(DialogEventArgs args)
         {
-            if (args?.Reason == "dismiss")
-            {
-                Hide();
-            }
-        }
-
-        public void Hide()
-        {
-            Dialog?.Hide();
+            Software = null;
         }
 
         public void Download(string? installers)

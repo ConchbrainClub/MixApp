@@ -2,86 +2,95 @@
 
 @using System.Text.Json
 
-<FluentDialog @ref="Dialog" @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn" >
-    <div class="detail">
-        <img src="@Software?.Cover" class="cover animate__animated animate__fadeInDown" >
+@if (Software != null) {
+    <FluentDialog @ref="Dialog" @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn" >
+        <div class="detail">
+            <img src="@Software?.Cover" class="cover animate__animated animate__fadeInDown" >
 
-        <div class="info">
-            <div class="head">
-                <div class="animate__animated animate__fadeInLeft">
-                    <h1>@Software?.PackageName</h1>
+            <div class="info">
+                <div class="head">
+                    <div class="animate__animated animate__fadeInLeft">
+                        <h1>@Software?.PackageName</h1>
 
-                    <p>@Software?.ShortDescription</p>
-                    <p>@Latest.Description</p>
-                    
-                    <FluentButton @onclick="@(_ => Download(Latest.Installers))" 
-                        IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())" 
-                        Autofocus="true">
-                        Download
-                    </FluentButton>
-                    
-                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Star())" Appearance="Appearance.Stealth" />
+                        <p>@Software?.ShortDescription</p>
+                        <p>@Latest.Description</p>
+                        
+                        <FluentButton @onclick="(_ => Download(Latest.Installers))" 
+                            IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())" 
+                            Autofocus="true">
+                            Download
+                        </FluentButton>
+                        
+                        <FluentButton IconEnd="@(new Icons.Regular.Size16.Star())" Appearance="Appearance.Stealth" />
+                    </div>
+
+                    <div class="animate__animated animate__fadeInRight">
+                        <p>Identifier: @Software?.PackageIdentifier</p>
+                        <p>Latest: @Latest.PackageVersion</p>
+                        <p>Date: @Latest.ReleaseDate</p>
+                        <p>
+                            <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
+                        </p>
+                        <a href="@Latest.PublisherUrl" target="_blank">
+                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">访问官网</FluentBadge>
+                        </a>
+                    </div>
                 </div>
 
-                <div class="animate__animated animate__fadeInRight">
-                    <p>Identifier: @Software?.PackageIdentifier</p>
-                    <p>Latest: @Latest.PackageVersion</p>
-                    <p>Date: @Latest.ReleaseDate</p>
-                    <p>
-                        <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
-                    </p>
-                    <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">访问官网</FluentBadge>
+                <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
+
+                <div class="desc">
+
+                    <h4>WinGet</h4>
+
+                    <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) >
+                        <FluentIcon Icon="Icons.Regular.Size16.Copy" Slot="end" Color=Color.Neutral />
+                    </FluentTextField>
+
+                    <br/><br/>
+
+                    <h4>Tags</h4>
+
+                    @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
+                    {
+                        <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                            @tags
+                        </FluentBadge>
+                    }
+
+                    <br/><br/>
+
+                    <h4>Versions</h4>
+
+                    <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 4fr 1fr 1fr" ResizableColumns=true>
+                        <PropertyColumn Property=@(i => i!.PackageVersion) Sortable="true" />
+                        <PropertyColumn Property=@(i => i!.ReleaseNotes ?? "None") Sortable="true" />
+                        <PropertyColumn Property=@(i => i!.ReleaseDate ?? "-") Sortable="true" />
+                        
+                        <TemplateColumn Title="Dwonload">
+                            <FluentBadge @onclick="(_ => Download(context.Installers))" Appearance="Appearance.Accent" Fill="highlight" Color="highlight">Download</FluentBadge>
+                        </TemplateColumn>
+                    </FluentDataGrid>
+
+                    <br/><br/>
+
+                    <h4>License</h4>
+
+                    <a href="@Latest.LicenseUrl" target="_blank">
+                        <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                            @Latest.License
+                        </FluentBadge>
+                    </a>
+
+                    <br/><br/>
+
+                    <p>@Latest.Copyright</p>
+
                 </div>
-            </div>
-
-            <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
-
-            <div class="desc">
-
-                <h4>WinGet</h4>
-
-                <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) >
-                    <FluentIcon Icon="Icons.Regular.Size16.Copy" Slot="end" Color=Color.Neutral />
-                </FluentTextField>
-
-                <br/><br/>
-
-                <h4>Tags</h4>
-
-                @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
-                {
-                    <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
-                        @tags
-                    </FluentBadge>
-                }
-
-                <br/><br/>
-
-                <h4>Versions</h4>
-
-                @foreach (Manifest manifest in Manifests.OrderByDescending(i => i.PackageVersion))
-                {
-                    <FluentButton  @onclick="@(_ => Download(manifest.Installers))" Appearance="Appearance.Stealth" >
-                        @manifest.PackageVersion
-                    </FluentButton>
-                }
-
-                <br/><br/>
-
-                <h4>License</h4>
-
-                <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
-                    @Latest.License
-                </FluentBadge>
-
-                <br/><br/>
-
-                <p>@Latest.Copyright</p>
-
             </div>
         </div>
-    </div>
-</FluentDialog>
+    </FluentDialog>
+}
 
 <style scoped>
     fluent-dialog::part(control) {
