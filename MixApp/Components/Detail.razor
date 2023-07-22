@@ -26,6 +26,7 @@
                 <div class="animate__animated animate__fadeInRight">
                     <p>Identifier: @Software?.PackageIdentifier</p>
                     <p>Latest: @Latest.PackageVersion</p>
+                    <p>Date: @Latest.ReleaseDate</p>
                     <p>
                         <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
                     </p>
@@ -37,7 +38,7 @@
 
             <div class="desc">
 
-                <h5>WinGet</h5>
+                <h4>WinGet</h4>
 
                 <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) >
                     <FluentIcon Icon="Icons.Regular.Size16.Copy" Slot="end" Color=Color.Neutral />
@@ -45,7 +46,7 @@
 
                 <br/><br/>
 
-                <h5>Tags</h5>
+                <h4>Tags</h4>
 
                 @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
                 {
@@ -56,7 +57,7 @@
 
                 <br/><br/>
 
-                <h5>Versions</h5>
+                <h4>Versions</h4>
 
                 @foreach (Manifest manifest in Manifests.OrderByDescending(i => i.PackageVersion))
                 {
@@ -64,6 +65,19 @@
                         @manifest.PackageVersion
                     </FluentButton>
                 }
+
+                <br/><br/>
+
+                <h4>License</h4>
+
+                <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                    @Latest.License
+                </FluentBadge>
+
+                <br/><br/>
+
+                <p>@Latest.Copyright</p>
+
             </div>
         </div>
     </div>
