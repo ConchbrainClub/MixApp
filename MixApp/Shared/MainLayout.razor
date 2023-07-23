@@ -11,7 +11,7 @@
         </FluentNavMenu>
 
         <div class="main">
-            <FluentSearch class="search" @bind-Value=KeyWord Placeholder="Search" />
+            <SearchBox />
 
             <FluentStack class="container" Orientation="Orientation.Vertical"
                 HorizontalAlignment="HorizontalAlignment.Center">
@@ -36,11 +36,6 @@
         text-align: center; 
         width: calc(100% - 210px); 
         margin: 0 auto;
-    }
-
-    .main > .search {
-        width: 50%; 
-        margin-top: 20px;
     }
 
     .main > .container {

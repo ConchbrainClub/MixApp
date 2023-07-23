@@ -10,8 +10,6 @@ namespace MixApp.Shared
 
         public bool Expanded { get; set; } = false;
 
-        public string KeyWord { get; set; } = string.Empty;
-
         public Software? Software { get; set; }
 
         protected override void OnInitialized()

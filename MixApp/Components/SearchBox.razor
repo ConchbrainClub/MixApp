@@ -1,0 +1,61 @@
+@inherits MixApp.Components.SearchBoxBase
+
+<div class="searchBox">
+    <FluentSearch Value="@KeyWord" @onchange="UserInput" @oninput="UserInput" class="search" Placeholder="Search" />
+
+    @if(SearchResults.Count != 0 && !string.IsNullOrEmpty(KeyWord))
+    {
+        <div class="searchContent animate__animated animate__fadeInDown">
+            <FluentDataGrid class="searchResult" Items="@SearchResults.AsQueryable()" GridTemplateColumns="1fr 1fr 2fr 1fr" ResizableColumns=true Virtualize="true" >
+                <PropertyColumn Title="Identifier" Property="@(i => i.PackageIdentifier)" />
+                <PropertyColumn Title="Name" Property="@(i => i.PackageName)" />
+                <PropertyColumn Title="Description" Property="@(i => i.ShortDescription)" />
+                <PropertyColumn Title="Publisher" Property="@(i => i.Publisher)" />
+                
+                <TemplateColumn Title="Open">
+                    <FluentBadge @onclick=@(_ => OpenSoftware(context)) Appearance="Appearance.Accent" Fill="highlight" Color="highlight">Open</FluentBadge>
+                </TemplateColumn>
+            </FluentDataGrid>
+        </div>
+    }
+</div>
+
+<style>
+    .searchBox {
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .searchBox .search {
+        width: 50%; 
+        margin-top: 20px;
+    }
+
+    .searchBox .searchContent {
+        position: absolute;
+        margin-top: 70px;
+        overflow-y: scroll;
+        text-align: left;
+        max-height: 50vh;
+        z-index: 10;
+        box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+        background-color: rgb(61 61 61 / 50%);
+        backdrop-filter: saturate(110%) blur(10px);
+        border-radius: 5px;
+    }
+
+    .searchBox ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .searchBox .searchResult {
+        padding: 20px;
+    }
+
+    @@media only screen and (max-width: 950px) {
+        .searchBox .search {
+            display: none;
+        }
+    }
+</style>

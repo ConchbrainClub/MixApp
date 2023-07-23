@@ -5,9 +5,9 @@
 @if (Software != null) {
     <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn" >
         <div class="detail">
-            <img src="@Software?.Cover" class="cover animate__animated animate__fadeInDown" >
+            <img src="@Cover" class="cover animate__animated animate__fadeInDown" >
 
-            <div class="info">
+            <div>
                 <div class="head">
                     <div class="animate__animated animate__fadeInLeft">
                         <h1>@Software?.PackageName</h1>
@@ -76,7 +76,7 @@
                         <h4>Versions</h4>
 
                         <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 4fr 1fr 1fr" ResizableColumns=true Virtualize="true" >
-                            <PropertyColumn Title="PackageVersion" Property=@(i => i!.PackageVersion) Sortable="true" />
+                            <PropertyColumn Title="Version" Property=@(i => i!.PackageVersion) Sortable="true" />
                             <PropertyColumn Title="ReleaseNotes" Property=@(i => i!.ReleaseNotes ?? "None") Sortable="true" />
                             <PropertyColumn Title="ReleaseDate" Property=@(i => i!.ReleaseDate ?? "-") Sortable="true" />
                             <TemplateColumn Title="Dwonload">
@@ -125,7 +125,7 @@
     
     .cover {
         object-fit: cover;
-        height: 50vh;
+        height: 55vh;
         width: 100%;
         border-radius: 5px;
     }

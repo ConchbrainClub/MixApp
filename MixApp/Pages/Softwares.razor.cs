@@ -40,12 +40,8 @@ namespace MixApp.Pages
             List<Software> softwares = await HttpClient
                 .GetFromJsonAsync<List<Software>>($"/softwares?index={++PageIndex}") 
                 ?? new();
-            
-            softwares.ForEach(i => {
-                i.Cover = HttpClient.BaseAddress?.ToString() + i.Cover;
-                Softwares.Add(i);
-            });
 
+            softwares.ForEach(i => Softwares.Add(i));
             StateHasChanged();
         }
 
