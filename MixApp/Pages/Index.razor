@@ -6,74 +6,37 @@
     <FluentHorizontalScroll class="banner" Speed="2000" Easing=ScrollEasing.EaseInOut >
          @foreach (Software software in Softwares)
         {
-            <FluentCard>
+            <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
                 <lable class="packageName">@software.PackageName</lable>
+                <lable class="shortDescription">@software.ShortDescription</lable>
                 <img src=@software.Cover class="cover">
             </FluentCard>
         }
     </FluentHorizontalScroll>
 
     <div class="content">
-
-        <FluentCard BackReference="@context">
+         @foreach (Software software in RandomSoftwares)
+        {
+        <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
             <div>
-                <p>Dark</p>
-                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
-                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
-                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
-                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
+                <p>@software.PackageIdentifier</p>
+                <FluentDivider></FluentDivider>
+                <h3 class="title">@software.PackageName</h3>
+
+                <FluentBadge Appearance="Appearance.Neutral">
+                    @software.Publisher
+                </FluentBadge>
+
+                <p class="desc">@software.ShortDescription</p>
+            </div>
+
+            <div class="action">
+                <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
+                    More Info
+                </FluentButton>
             </div>
         </FluentCard>
-
-        <FluentCard BackReference="@context">
-            <div>
-                <p>Dark</p>
-                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
-                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
-                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
-                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
-            </div>
-        </FluentCard>
-
-        <FluentCard BackReference="@context">
-            <div>
-                <p>Dark</p>
-                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
-                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
-                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
-                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
-            </div>
-        </FluentCard>
-
-        <FluentCard BackReference="@context">
-            <div>
-                <p>Dark</p>
-                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
-                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
-                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
-                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
-            </div>
-        </FluentCard>
-
-        <FluentCard BackReference="@context">
-            <div>
-                <p>Dark</p>
-                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
-                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
-                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
-                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
-            </div>
-        </FluentCard>
-
-        <FluentCard BackReference="@context">
-            <div>
-                <p>Dark</p>
-                <FluentButton Appearance="Appearance.Accent">Accent</FluentButton>
-                <FluentButton Appearance="Appearance.Stealth">Stealth</FluentButton>
-                <FluentButton Appearance="Appearance.Outline">Outline</FluentButton>
-                <FluentButton Appearance="Appearance.Lightweight">Lightweight</FluentButton>
-            </div>
-        </FluentCard>
+        }
     </div>
 
 </BaseLayerLuminance>
@@ -103,14 +66,14 @@
         max-width: 100%;
         max-height: 100%;
         -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 1), transparent);
-    }
+     }
 
     .packageName {
         font-size: 20px;
         font-weight: bold;
         position: absolute;
-        top: 50%;
-        left: 10%;
+        top: 45%;
+        left: 6%;
         z-index: 1;
     }
 
@@ -121,6 +84,14 @@
         transition: all .5s ease-out;
     }
     
+    .shortDescription{
+        max-width: 400px;
+        font-size: 14px;
+        position: absolute;
+        top: 55%;
+        left: 6%;
+        z-index: 1;
+    }
     @@media only screen and (max-width: 1400px) {
         .content {
             grid-template-columns: repeat(4, 1fr); 
@@ -144,5 +115,30 @@
             width: 100%;
             grid-template-columns: repeat(1, 1fr);
         }
+    }
+
+    
+    .title {
+        margin: 0.75rem 0;
+    }
+
+    .desc {
+        margin-top: 10px;
+    }
+
+    .action {
+        margin: 1.2rem 0;
+        position: absolute;
+        bottom: 0;
+    }
+    
+    .action fluent-button {
+        margin-right: 5px;
+    }
+
+    .progress {
+        margin: 10px; 
+        width: 42px;
+        height: 42px;
     }
 </style>

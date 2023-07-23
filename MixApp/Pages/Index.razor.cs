@@ -9,17 +9,24 @@ namespace MixApp.Pages
     {
         [Inject]
         HttpClient HttpClient { get; set; } = new HttpClient();
+
+        
+        [Inject]
+        public GlobalEvent GlobalEvent { get; set; } = new();
         
         public Software? SelectedSoftware { get; set; }
 
         public List<Software> Softwares { get; set; } = new();
 
+        public List<Software> RandomSoftwares { get; set; } = new();
+
         protected override void OnInitialized()
         {
-            LoadData();
+            LoadTopData();
+            LoadRandomData();
         }
 
-        private async void LoadData()
+        private async void LoadTopData()
         {
             SelectedSoftware = null;
 
@@ -30,6 +37,22 @@ namespace MixApp.Pages
             softwares.ForEach(i => {
                 i.Cover = HttpClient.BaseAddress?.ToString() + i.Cover;
                 Softwares.Add(i);
+            });
+
+            StateHasChanged();
+        }
+
+        private async void LoadRandomData()
+        {
+            SelectedSoftware = null;
+
+            List<Software> softwares = await HttpClient
+                .GetFromJsonAsync<List<Software>>($"/random") 
+                ?? new();
+            
+            softwares.ForEach(i => {
+                i.Cover = HttpClient.BaseAddress?.ToString() + i.Cover;
+                RandomSoftwares.Add(i);
             });
 
             StateHasChanged();
