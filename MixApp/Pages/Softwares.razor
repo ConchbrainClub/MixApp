@@ -21,7 +21,7 @@
                                     @software.Publisher
                                 </FluentBadge>
                             </div>
-                            <img class="icons" src=@("http://" + new Uri(software.PackageUrl ?? string.Empty).Host + "/favicon.ico") />
+                            <img class="icons" src=@("http://" + new Uri(software.PackageUrl ??string.Empty).Host + "/favicon.ico") />
                         </div>
                         <p class="desc">@software.ShortDescription</p>
                     </div>
@@ -115,7 +115,7 @@
     .iconBox{
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
     }
     
     .icons{
