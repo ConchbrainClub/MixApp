@@ -16,7 +16,6 @@
                         <div class="iconBox">
                             <div>
                                 <h3 class="title">@software.PackageName</h3>
-
                                 <FluentBadge Appearance="Appearance.Neutral">
                                     @software.Publisher
                                 </FluentBadge>
@@ -116,11 +115,14 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
+        box-sizing: border-box;
     }
-    
+
     .icons{
         width: 40px;
         height: 40px;
-        margin-top: 10px ;
+        margin-top: 20px;
+        margin-left: 7px;
+        border-radius: 5px;
     }
 </style>
