@@ -37,10 +37,11 @@ namespace MixApp.Pages
         {
             SelectedSoftware = null;
 
-            Softwares = await HttpClient
+            List<Software> softwares = await HttpClient
                 .GetFromJsonAsync<List<Software>>($"/softwares?index={++PageIndex}") 
                 ?? new();
-        
+
+            softwares.ForEach(i => Softwares.Add(i));
             StateHasChanged();
         }
 
