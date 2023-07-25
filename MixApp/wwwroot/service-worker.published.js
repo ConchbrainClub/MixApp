@@ -20,7 +20,9 @@ async function onInstall(event) {
     const assetsRequests = self.assetsManifest.assets
         .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
         .filter(asset => !offlineAssetsExclude.some(pattern => pattern.test(asset.url)))
-        .map(asset => new Request(asset.url, { integrity: asset.hash, cache: 'no-cache' }));
+        // .map(asset => new Request(asset.url, { integrity: asset.hash, cache: 'no-cache' }))
+        .map(asset => asset.url)
+
     await caches.open(cacheName).then(cache => cache.addAll(assetsRequests));
 }
 
@@ -43,7 +45,9 @@ async function onFetch(event) {
         const shouldServeIndexHtml = event.request.mode === 'navigate'
             && !manifestUrlList.some(url => url === event.request.url);
 
-        const request = shouldServeIndexHtml ? 'index.html' : event.request;
+        // const request = shouldServeIndexHtml ? 'index.html' : event.request;
+        const request = shouldServeIndexHtml ? 'index.html' : event.request.url;
+        
         const cache = await caches.open(cacheName);
         cachedResponse = await cache.match(request);
     }
