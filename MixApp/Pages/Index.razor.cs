@@ -8,9 +8,8 @@ namespace MixApp.Pages
     public partial class IndexBase : ComponentBase
     {
         [Inject]
-        HttpClient HttpClient { get; set; } = new HttpClient();
+        public HttpClient HttpClient { get; set; } = new HttpClient();
 
-        
         [Inject]
         public GlobalEvent GlobalEvent { get; set; } = new();
         
@@ -34,11 +33,7 @@ namespace MixApp.Pages
                 .GetFromJsonAsync<List<Software>>($"/top") 
                 ?? new();
             
-            softwares.ForEach(i => {
-                i.Cover = HttpClient.BaseAddress?.ToString() + i.Cover;
-                Softwares.Add(i);
-            });
-
+            softwares.ForEach(i => Softwares.Add(i));
             StateHasChanged();
         }
 
@@ -50,11 +45,7 @@ namespace MixApp.Pages
                 .GetFromJsonAsync<List<Software>>($"/random") 
                 ?? new();
             
-            softwares.ForEach(i => {
-                i.Cover = HttpClient.BaseAddress?.ToString() + i.Cover;
-                RandomSoftwares.Add(i);
-            });
-
+            softwares.ForEach(i => RandomSoftwares.Add(i));
             StateHasChanged();
         }
     }

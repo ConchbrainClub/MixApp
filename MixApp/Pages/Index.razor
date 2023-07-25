@@ -9,7 +9,7 @@
             <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
                 <lable class="packageName">@software.PackageName</lable>
                 <lable class="shortDescription">@software.ShortDescription</lable>
-                <img src=@software.Cover class="cover">
+                <img src=@(HttpClient?.BaseAddress + software.Cover) class="cover">
                 <div class="mask">
 
                 </div>
@@ -18,27 +18,34 @@
     </FluentHorizontalScroll>
 
     <div class="content">
-         @foreach (Software software in RandomSoftwares)
+        @foreach (Software software in RandomSoftwares)
         {
-        <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
-            <div>
-                <p>@software.PackageIdentifier</p>
-                <FluentDivider></FluentDivider>
-                <h3 class="title">@software.PackageName</h3>
+            <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
+                <div>
+                    <p>@software.PackageIdentifier</p>
+                    <FluentDivider></FluentDivider>
+                    <div class="iconBox">
+                        <div>
+                            <h3 class="title">@software.PackageName</h3>
+                            <FluentBadge Appearance="Appearance.Neutral">
+                                @software.Publisher
+                            </FluentBadge>
+                        </div>
+                        <img class="icons" src=@("http://" + new Uri(software.PackageUrl ??string.Empty).Host + "/favicon.ico") />
+                    </div>
+                    <p class="desc">@software.ShortDescription</p>
+                </div>
 
-                <FluentBadge Appearance="Appearance.Neutral">
-                    @software.Publisher
-                </FluentBadge>
+                <div class="action">
+                    <FluentButton IconEnd="@(new Icons.Regular.Size16.Star())">
+                        Star
+                    </FluentButton>
 
-                <p class="desc">@software.ShortDescription</p>
-            </div>
-
-            <div class="action">
-                <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
-                    More Info
-                </FluentButton>
-            </div>
-        </FluentCard>
+                    <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
+                        More Info
+                    </FluentButton>
+                </div>
+            </FluentCard>
         }
     </div>
 
@@ -61,6 +68,12 @@
         display: grid; 
         grid-template-columns: repeat(5, 1fr); 
         grid-gap: 1em;
+    }
+
+    .content fluent-card {
+        padding: 20px 20px 60px 20px;
+        position: relative;
+        overflow: hidden;
     }
 
     .cover{
@@ -104,6 +117,7 @@
         left: 6%;
         z-index: 4;
     }
+
     @@media only screen and (max-width: 1400px) {
         .content {
             grid-template-columns: repeat(4, 1fr); 
@@ -129,7 +143,6 @@
         }
     }
 
-    
     .title {
         margin: 0.75rem 0;
     }
@@ -152,5 +165,20 @@
         margin: 10px; 
         width: 42px;
         height: 42px;
+    }
+    
+    .iconBox{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        box-sizing: border-box;
+    }
+
+    .icons{
+        width: 40px;
+        height: 40px;
+        margin-top: 20px;
+        margin-left: 7px;
+        border-radius: 5px;
     }
 </style>

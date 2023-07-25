@@ -5,7 +5,7 @@
 @if (Software != null) {
     <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn" >
         <div class="detail">
-            <img src="@Cover" class="cover animate__animated animate__fadeInDown" >
+            <img src="@(HttpClient?.BaseAddress + Software?.Cover)" class="cover animate__animated animate__fadeInDown" >
 
             <div>
                 <div class="head">

@@ -10,7 +10,7 @@ namespace MixApp.Components
     public partial class DetailBase : ComponentBase
     {
         [Inject]
-        HttpClient HttpClient { get; set; } = new HttpClient();
+        public HttpClient HttpClient { get; set; } = new HttpClient();
 
         [Inject]
         IJSRuntime? JSRunTime { get; set; }
@@ -20,8 +20,6 @@ namespace MixApp.Components
 
         [Parameter]
         public Software? Software { get; set; }
-
-        public string Cover { get; set; } = string.Empty;
 
         public List<Manifest> Manifests { get; set; } = new();
 
@@ -37,8 +35,6 @@ namespace MixApp.Components
         protected async override void OnParametersSet()
         {
             if (Software == null) return;
-
-            Cover = HttpClient.BaseAddress?.ToString() + Software?.Cover;
 
             Manifests = (await HttpClient
                 .GetFromJsonAsync<IEnumerable<Manifest>>($"/softwares/{Software?.PackageIdentifier}") ?? Array.Empty<Manifest>())
