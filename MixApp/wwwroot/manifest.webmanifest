@@ -1,6 +1,6 @@
 {
-  "name": "demo",
-  "short_name": "demo",
+  "name": "MixStore",
+  "short_name": "MixStore",
   "id": "./",
   "start_url": "./",
   "display": "standalone",
