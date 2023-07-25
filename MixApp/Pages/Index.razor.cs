@@ -1,6 +1,5 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using MixApp.Models;
 
 namespace MixApp.Pages
@@ -19,10 +18,14 @@ namespace MixApp.Pages
 
         public List<Software> RandomSoftwares { get; set; } = new();
 
+        public List<Software> RecentlyUpdatedSoftwares { get; set; } = new();
+
         protected override void OnInitialized()
         {
             LoadTopData();
             LoadRandomData();
+            LoadRecentlyUpdatedData();
+           
         }
 
         private async void LoadTopData()
@@ -32,9 +35,8 @@ namespace MixApp.Pages
             List<Software> softwares = await HttpClient
                 .GetFromJsonAsync<List<Software>>($"/top") 
                 ?? new();
-            
             softwares.ForEach(i => Softwares.Add(i));
-            StateHasChanged();
+             StateHasChanged();
         }
 
         private async void LoadRandomData()
@@ -46,6 +48,17 @@ namespace MixApp.Pages
                 ?? new();
             
             softwares.ForEach(i => RandomSoftwares.Add(i));
+             StateHasChanged();
+        }
+
+        private async void LoadRecentlyUpdatedData()
+        {
+            SelectedSoftware = null;
+            List<Software> softwares = await HttpClient
+                .GetFromJsonAsync<List<Software>>($"/recentlyUpdated") 
+                ?? new();
+            
+            softwares.ForEach(i => RecentlyUpdatedSoftwares.Add(i));
             StateHasChanged();
         }
     }

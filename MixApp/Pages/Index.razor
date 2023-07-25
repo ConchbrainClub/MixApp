@@ -4,7 +4,7 @@
 
 <BaseLayerLuminance>
     <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000" Easing=ScrollEasing.EaseInOut >
-        @foreach (Software software in Softwares)
+        @foreach (Software software in RecentlyUpdatedSoftwares)
         {
             <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
                 <div class="bannerDesc">
@@ -21,8 +21,30 @@
         }
     </FluentHorizontalScroll>
 
+
+     <div  class="recommended">
+        <p class="text">
+            Recommended for you &gt;
+        </p>
+    </div>
+
+
     <div class="content">
         @foreach (Software software in RandomSoftwares)
+        {
+            <SoftwareCard Software="software" />
+        }
+    </div>
+
+   <div  class="recommended">
+        <p class="text">
+            Top ten Software &gt;
+        </p>
+    </div>
+
+    <div class="content">
+       
+        @foreach (Software software in RecentlyUpdatedSoftwares)
         {
             <SoftwareCard Software="software" />
         }
@@ -30,9 +52,20 @@
 </BaseLayerLuminance>
 
 <style>
+    .recommended {
+        width:100%;
+        margin-top:20px;
+        text-align:left;
+    }
     .banner {
         width: 100%;
         margin-top: 10px;
+    }
+
+    .text{
+        font-weight:bold;
+        font-size:17px;
+        font-family: inherit;
     }
 
     .banner fluent-card {
