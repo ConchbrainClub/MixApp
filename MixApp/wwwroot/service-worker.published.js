@@ -5,8 +5,8 @@ self.addEventListener('fetch', event => event.respondWith(onFetch(event)));
 
 const cacheNamePrefix = 'MixStore-';
 const cacheName = `${cacheNamePrefix}${self.assetsManifest.version}`;
-const offlineAssetsInclude = [ /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/ ];
-const offlineAssetsExclude = [ /^service-worker\.js$/ ];
+const offlineAssetsInclude = [/\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/];
+const offlineAssetsExclude = [/^service-worker\.js$/];
 
 // Replace with your base path if you are hosting on a subfolder. Ensure there is a trailing '/'.
 const base = "/";
@@ -32,8 +32,7 @@ async function onActivate(event) {
     // Delete unused caches
     const cacheKeys = await caches.keys();
     await Promise.all(cacheKeys
-        // .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
-        .filter(key => key !== cacheName)
+        .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
         .map(key => caches.delete(key)));
 }
 
@@ -53,5 +52,25 @@ async function onFetch(event) {
         cachedResponse = await cache.match(request);
     }
 
-    return cachedResponse || fetch(event.request);
+    return cachedResponse || await cleanResponse(event.request);
+}
+
+async function cleanResponse(request) {
+    let response = await fetch(request)
+    const clonedResponse = response.clone();
+
+    // Not all browsers support the Response.body stream, so fall back to reading
+    // the entire body into memory as a blob.
+    const bodyPromise = 'body' in clonedResponse ?
+        Promise.resolve(clonedResponse.body) :
+        clonedResponse.blob();
+
+    return bodyPromise.then((body) => {
+        // new Response() is happy when passed either a stream or a Blob.
+        return new Response(body, {
+            headers: clonedResponse.headers,
+            status: clonedResponse.status,
+            statusText: clonedResponse.statusText,
+        });
+    });
 }
