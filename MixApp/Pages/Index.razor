@@ -3,12 +3,18 @@
 @using MixApp.Models
 
 <BaseLayerLuminance>
-    <FluentHorizontalScroll class="banner" Speed="2000" Easing=ScrollEasing.EaseInOut >
+    <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000" Easing=ScrollEasing.EaseInOut >
         @foreach (Software software in Softwares)
         {
             <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
-                <lable class="packageName">@software.PackageName</lable>
-                <lable class="shortDescription">@software.ShortDescription</lable>
+                <div class="bannerDesc">
+                    <h2>@software.PackageName</h2>
+                    <p>@software.ShortDescription</p>
+                    <FluentButton Appearance="Appearance.Outline">
+                        More Info
+                    </FluentButton>
+                </div>
+
                 <img src=@(HttpClient?.BaseAddress + software.Cover) class="cover" loading="lazy">
                 <div class="mask" />
             </FluentCard>
@@ -31,8 +37,8 @@
 
     .banner fluent-card {
         margin-right: 10px;
-        height: 500px;
-        width: 800px;
+        height: 550px;
+        width: 950px;
         position: relative;
     }
 
@@ -43,39 +49,32 @@
         transition: all .5s ease-out;
     }
     
-    .cover{
-        width: auto;
-        height: auto;
-        max-width: 100%;
-        max-height: 100%;
+    .banner .cover{
+        height: 100%;
      }
 
     .mask {
         width: 100%;
         height: 100%;
-        position:absolute;
-        top:0%;
+        position: absolute;
+        top: 0%;
         left: 0%;
         z-index: 3;
-        background: linear-gradient(to right, rgba(0, 0, 0, .5), rgba(255, 255, 255, 0));
+        background: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(255, 255, 255, 0));
     }
 
-    .packageName {
+    .bannerDesc {
         font-size: 20px;
         font-weight: bold;
+        max-width: 400px;
         position: absolute;
         top: 45%;
         left: 6%;
         z-index: 4;
     }
 
-    .shortDescription{
-        max-width: 400px;
-        font-size: 14px;
-        position: absolute;
-        top: 55%;
-        left: 6%;
-        z-index: 4;
+    .bannerDesc fluent-button {
+        backdrop-filter: saturate(110%) blur(10px);
     }
 
     .content {
