@@ -3,7 +3,7 @@ self.addEventListener('install', event => event.waitUntil(onInstall(event)));
 self.addEventListener('activate', event => event.waitUntil(onActivate(event)));
 self.addEventListener('fetch', event => event.respondWith(onFetch(event)));
 
-const cacheNamePrefix = 'mix-store';
+const cacheNamePrefix = 'MixStore-';
 const cacheName = `${cacheNamePrefix}${self.assetsManifest.version}`;
 const offlineAssetsInclude = [ /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/ ];
 const offlineAssetsExclude = [ /^service-worker\.js$/ ];
@@ -29,11 +29,12 @@ async function onInstall(event) {
 async function onActivate(event) {
     console.info('Service worker: Activate');
 
-    // // Delete unused caches
-    // const cacheKeys = await caches.keys();
-    // await Promise.all(cacheKeys
-    //     .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
-    //     .map(key => caches.delete(key)));
+    // Delete unused caches
+    const cacheKeys = await caches.keys();
+    await Promise.all(cacheKeys
+        // .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
+        .filter(key => key !== cacheName)
+        .map(key => caches.delete(key)));
 }
 
 async function onFetch(event) {
