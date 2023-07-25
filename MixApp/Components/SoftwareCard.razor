@@ -1,0 +1,61 @@
+@inherits MixApp.Components.SoftwareCardBase
+
+<BaseLayerLuminance>
+    <div class="card">
+        <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
+            <div>
+                <p>@Software.PackageIdentifier</p>
+                <FluentDivider></FluentDivider>
+                
+                <img class="icon" src=@(GetIcon()) onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" loading="lazy" />
+                <h3 class="title">@Software.PackageName</h3>
+                <FluentBadge Appearance="Appearance.Neutral">@Software.Publisher</FluentBadge>
+                <p class="desc">@Software.ShortDescription</p>
+            </div>
+
+            <div class="action">
+                <FluentButton IconEnd="@(new Icons.Regular.Size16.Star())">
+                    Star
+                </FluentButton>
+
+                <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(Software)) Appearance="Appearance.Accent">
+                    More Info
+                </FluentButton>
+            </div>
+        </FluentCard>
+    </div>
+</BaseLayerLuminance>
+
+<style>
+    .card fluent-card {
+        padding: 20px 20px 60px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .title {
+        margin: 0.75rem 0;
+    }
+
+    .card .desc {
+        margin-top: 10px;
+    }
+
+    .card .action {
+        margin: 1.2rem 0;
+        position: absolute;
+        bottom: 0;
+    }
+    
+    .card .action fluent-button {
+        margin-right: 5px;
+    }
+
+    .card .icon{
+        float: right;
+        width: 40px;
+        height: 40px;
+        margin: 10px;
+        border-radius: 5px;
+    }
+</style>

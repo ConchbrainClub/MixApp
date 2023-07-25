@@ -9,32 +9,7 @@
         <div class="content">
             @foreach (Software software in Softwares)
             {
-                <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
-                    <div>
-                        <p>@software.PackageIdentifier</p>
-                        <FluentDivider></FluentDivider>
-                        <div class="iconBox">
-                            <div>
-                                <h3 class="title">@software.PackageName</h3>
-                                <FluentBadge Appearance="Appearance.Neutral">
-                                    @software.Publisher
-                                </FluentBadge>
-                            </div>
-                            <img class="icons" src=@("http://" + new Uri(software.PackageUrl ??string.Empty).Host + "/favicon.ico") />
-                        </div>
-                        <p class="desc">@software.ShortDescription</p>
-                    </div>
-
-                    <div class="action">
-                        <FluentButton IconEnd="@(new Icons.Regular.Size16.Star())">
-                            Star
-                        </FluentButton>
-
-                        <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
-                            More Info
-                        </FluentButton>
-                    </div>
-                </FluentCard>
+                <SoftwareCard Software="software" />
             }
         </div>
 
@@ -51,78 +26,39 @@
 
     .content {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         grid-gap: 1em;
         margin-top: 20px;
     }
 
     @@media only screen and (max-width: 1400px) {
         .content {
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
         }
     }
 
     @@media only screen and (max-width: 1200px) {
         .content {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
         }
     }
 
     @@media only screen and (max-width: 950px) {
         .content {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 
     @@media only screen and (max-width: 700px) {
         .content {
             width: 100%;
-            grid-template-columns: repeat(1, 1fr);
+            grid-template-columns: repeat(1, minmax(0, 1fr));
         }
-    }
-
-    fluent-card {
-        padding: 20px 20px 60px 20px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .title {
-        margin: 0.75rem 0;
-    }
-
-    .desc {
-        margin-top: 10px;
-    }
-
-    .action {
-        margin: 1.2rem 0;
-        position: absolute;
-        bottom: 0;
-    }
-    
-    .action fluent-button {
-        margin-right: 5px;
     }
 
     .progress {
         margin: 10px; 
         width: 42px;
         height: 42px;
-    }
-
-    .iconBox{
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        box-sizing: border-box;
-    }
-
-    .icons{
-        width: 40px;
-        height: 40px;
-        margin-top: 20px;
-        margin-left: 7px;
-        border-radius: 5px;
     }
 </style>
