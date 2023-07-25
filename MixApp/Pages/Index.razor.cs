@@ -25,37 +25,32 @@ namespace MixApp.Pages
             LoadTopData();
             LoadRandomData();
             LoadRecentlyUpdatedData();
-           
         }
 
         private async void LoadTopData()
         {
-            SelectedSoftware = null;
-
             List<Software> softwares = await HttpClient
-                .GetFromJsonAsync<List<Software>>($"/top") 
+                .GetFromJsonAsync<List<Software>>("/top") 
                 ?? new();
+            
             softwares.ForEach(i => Softwares.Add(i));
-             StateHasChanged();
+            StateHasChanged();
         }
 
         private async void LoadRandomData()
         {
-            SelectedSoftware = null;
-
             List<Software> softwares = await HttpClient
-                .GetFromJsonAsync<List<Software>>($"/random") 
+                .GetFromJsonAsync<List<Software>>("/random") 
                 ?? new();
             
             softwares.ForEach(i => RandomSoftwares.Add(i));
-             StateHasChanged();
+            StateHasChanged();
         }
 
         private async void LoadRecentlyUpdatedData()
         {
-            SelectedSoftware = null;
             List<Software> softwares = await HttpClient
-                .GetFromJsonAsync<List<Software>>($"/recentlyUpdated") 
+                .GetFromJsonAsync<List<Software>>("/recentlyUpdated") 
                 ?? new();
             
             softwares.ForEach(i => RecentlyUpdatedSoftwares.Add(i));
