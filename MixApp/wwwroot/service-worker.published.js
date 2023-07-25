@@ -20,9 +20,7 @@ async function onInstall(event) {
     const assetsRequests = self.assetsManifest.assets
         .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
         .filter(asset => !offlineAssetsExclude.some(pattern => pattern.test(asset.url)))
-        // .map(asset => new Request(asset.url, { integrity: asset.hash, cache: 'no-cache' }))
-        .map(asset => asset.url)
-
+        .map(asset => new Request(asset.url, { integrity: asset.hash, cache: 'no-cache' }));
     await caches.open(cacheName).then(cache => cache.addAll(assetsRequests));
 }
 
@@ -45,32 +43,10 @@ async function onFetch(event) {
         const shouldServeIndexHtml = event.request.mode === 'navigate'
             && !manifestUrlList.some(url => url === event.request.url);
 
-        // const request = shouldServeIndexHtml ? 'index.html' : event.request;
-        const request = shouldServeIndexHtml ? 'index.html' : event.request.url;
-        
+        const request = shouldServeIndexHtml ? 'index.html' : event.request;
         const cache = await caches.open(cacheName);
         cachedResponse = await cache.match(request);
     }
 
-    return cachedResponse || await cleanResponse(event.request);
-}
-
-async function cleanResponse(request) {
-    let response = await fetch(request)
-    const clonedResponse = response.clone();
-
-    // Not all browsers support the Response.body stream, so fall back to reading
-    // the entire body into memory as a blob.
-    const bodyPromise = 'body' in clonedResponse ?
-        Promise.resolve(clonedResponse.body) :
-        clonedResponse.blob();
-
-    return bodyPromise.then((body) => {
-        // new Response() is happy when passed either a stream or a Blob.
-        return new Response(body, {
-            headers: clonedResponse.headers,
-            status: clonedResponse.status,
-            statusText: clonedResponse.statusText,
-        });
-    });
+    return cachedResponse || fetch(event.request);
 }
