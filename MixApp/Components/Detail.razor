@@ -5,7 +5,8 @@
 @if (Software != null) {
     <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn" >
         <div class="detail">
-            <img src="@(HttpClient?.BaseAddress + Software?.Cover)" loading="lazy" class="cover animate__animated animate__fadeInDown" >
+            <img src="@(HttpClient?.BaseAddress + Software?.Cover)" loading="lazy" class="cover animate__animated animate__fadeInDown" />
+            <div class="mask" />
 
             <div>
                 <div class="head">
@@ -123,6 +124,7 @@
 
     .detail {
         height: 80vh;
+        position: relative;
     }
 
     .detail .cover {
@@ -130,6 +132,14 @@
         height: 55vh;
         width: 100%;
         border-radius: 5px;
+    }
+
+    .detail .mask {
+        position: absolute;
+        top: 0;
+        height: 55vh;
+        width: 100%;
+        background: linear-gradient(to top, #333333, rgba(255, 255, 255, 0));
     }
     
     .head {
