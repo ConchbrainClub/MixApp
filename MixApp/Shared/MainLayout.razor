@@ -3,7 +3,7 @@
 <FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="#333333" BaseLayerLuminance="0">
     <div class="layout">
         <SideBar></SideBar>
-      
+
         <div class="main">
             <SearchBox />
 
@@ -19,11 +19,9 @@
 
 <style>
     .layout {
-        height: 100vh; 
+        height: 100vh;
         display: flex;
     }
-
-    
 
     .main {
         text-align: center;
@@ -32,8 +30,8 @@
         text-decoration: none;
     }
 
-    .main>.container {
-        height: calc(100vh - 70px);
+    .main > .container {
+        height: calc(100vh - 75px);
         overflow-y: scroll;
         text-align: left;
         padding: 0 10px;
@@ -49,12 +47,12 @@
             margin: 0;
         }
 
-        .main>.container {
+        .main > .container {
             padding: 10px 20px;
             height: 100vh;
         }
 
-        .main>.search {
+        .main > .search {
             display: none;
         }
     }
@@ -64,7 +62,7 @@
             width: 100%;
         }
 
-        .main>.container {
+        .main > .container {
             padding: 10px 20px;
             height: 100vh;
         }
