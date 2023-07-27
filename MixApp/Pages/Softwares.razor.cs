@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MixApp.Models;
+using MixApp.Services;
 
 namespace MixApp.Pages
 {
