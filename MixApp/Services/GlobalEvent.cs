@@ -1,4 +1,6 @@
-namespace MixApp.Models
+using MixApp.Models;
+
+namespace MixApp.Services
 {
     public class GlobalEvent
     {
