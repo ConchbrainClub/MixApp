@@ -2,14 +2,8 @@
 
 <FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="#333333" BaseLayerLuminance="0">
     <div class="layout">
-
-        <FluentNavMenu class="sidebar" @bind-Expanded="@Expanded" >
-            <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.Home())" Href="/" />
-            <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.CalendarAgenda())" Href="/softwares" />
-            <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.Cloud())" Href="/counter" />
-            <FluentNavMenuLink Icon="@(new Icons.Regular.Size24.Settings())" />
-        </FluentNavMenu>
-
+        <SideBar></SideBar>
+      
         <div class="main">
             <SearchBox />
 
@@ -25,20 +19,20 @@
 
 <style>
     .layout {
-        height: 100vh; display: flex;
+        height: 100vh; 
+        display: flex;
     }
 
-    .sidebar {
-        width: 200px;
-    }
+    
 
     .main {
-        text-align: center; 
-        width: calc(100% - 210px); 
+        text-align: center;
+        width: calc(100% - 210px);
         margin: 0 auto;
+        text-decoration: none;
     }
 
-    .main > .container {
+    .main>.container {
         height: calc(100vh - 70px);
         overflow-y: scroll;
         text-align: left;
@@ -55,12 +49,12 @@
             margin: 0;
         }
 
-        .main > .container {
+        .main>.container {
             padding: 10px 20px;
             height: 100vh;
         }
 
-        .main > .search {
+        .main>.search {
             display: none;
         }
     }
@@ -70,7 +64,7 @@
             width: 100%;
         }
 
-        .main > .container {
+        .main>.container {
             padding: 10px 20px;
             height: 100vh;
         }
