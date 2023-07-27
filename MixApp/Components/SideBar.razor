@@ -6,7 +6,7 @@
             <div @onclick=@(_ => ActivePage = "Home") class=@(ActivePage == "Home" ? "active":string.Empty)>
                 @if (ActivePage == "Home")
                 {
-                    <FluentIcon Value="@(new Icons.Regular.Size24.Home())" class="animate__animated animate__rubberBand" />
+                    <FluentIcon Value="@(new Icons.Filled.Size24.Home())" class="animate__animated animate__rubberBand" />
                 }
                 else
                 {
@@ -20,11 +20,11 @@
             <div @onclick=@(_ => ActivePage = "Apps") class=@(ActivePage == "Apps" ? "active":string.Empty)>
                 @if (ActivePage == "Apps")
                 {
-                    <FluentIcon Value="@(new Icons.Regular.Size24.AppFolder())" class="animate__animated animate__rubberBand" />
+                    <FluentIcon Value="@(new Icons.Filled.Size24.Apps())" class="animate__animated animate__rubberBand" />
                 }
                 else
                 {
-                    <FluentIcon Value="@(new Icons.Regular.Size24.AppFolder())" />
+                    <FluentIcon Value="@(new Icons.Regular.Size24.Apps())" />
                 }
                 <span>Apps</span>
             </div>
