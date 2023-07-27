@@ -5,35 +5,35 @@
         
         <nav class="sidebar">
             <div class="top">
-                <a href="/">
-
+                <NavLink Href="/">
                     <div>
                         <FluentButton IconEnd="@(new Icons.Regular.Size32.Home())" Appearance="Appearance.Stealth"></FluentButton>
                         <span>Home</span>
                     </div>
-                </a>
-                <a href="/software">
+                </NavLink>
+                
+                <NavLink Href="/softwares">
                     <div>
                         <FluentButton IconEnd="@(new Icons.Regular.Size32.Home())" Appearance="Appearance.Stealth"></FluentButton>
                         <span>Software</span>
                     </div>
-                </a>
+                </NavLink>
             </div>
+
             <div class="bottom">
-                <a href="/counter">
+                <NavLink Href="/counter">
                     <div>
                         <FluentButton IconEnd="@(new Icons.Regular.Size32.Cloud())" Appearance="Appearance.Stealth"></FluentButton>
-                         <span>
-                            Cloud
-                         </span>
+                        <span>Cloud</span>
                     </div>
-                </a>
-                <a href="/counter">
+                </NavLink>
+
+                <NavLink href="/counter">
                     <div>
                         <FluentButton IconEnd="@(new Icons.Regular.Size32.Settings())" Appearance="Appearance.Stealth"></FluentButton>
                         <span>Bettery</span>
                     </div>
-                </a>
+                </NavLink>
             </div>
         </nav>
         <div class="main">
