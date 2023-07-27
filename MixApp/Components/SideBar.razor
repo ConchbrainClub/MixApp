@@ -6,11 +6,11 @@
             <div @onclick=@(_ => ActivePage = "Home") class=@(ActivePage == "Home" ? "active":string.Empty)>
                 @if (ActivePage == "Home")
                 {
-                    <FluentIcon Icon="Icons.Filled.Size24.Home" class="animate__animated animate__rubberBand" />
+                    <FluentIcon Value="@(new Icons.Regular.Size24.Home())" class="animate__animated animate__rubberBand" />
                 }
                 else
                 {
-                    <FluentIcon Icon="Icons.Regular.Size24.Home" />
+                    <FluentIcon Value="@(new Icons.Regular.Size24.Home())" />
                 }
                 <span>Home</span>
             </div>
@@ -20,11 +20,11 @@
             <div @onclick=@(_ => ActivePage = "Apps") class=@(ActivePage == "Apps" ? "active":string.Empty)>
                 @if (ActivePage == "Apps")
                 {
-                    <FluentIcon Icon="Icons.Filled.Size24.AppFolder" class="animate__animated animate__rubberBand" />
+                    <FluentIcon Value="@(new Icons.Regular.Size24.AppFolder())" class="animate__animated animate__rubberBand" />
                 }
                 else
                 {
-                    <FluentIcon Icon="Icons.Regular.Size24.AppFolder" />
+                    <FluentIcon Value="@(new Icons.Regular.Size24.AppFolder())" />
                 }
                 <span>Apps</span>
             </div>
@@ -34,11 +34,11 @@
             <div @onclick=@(_ => ActivePage = "Library") class=@(ActivePage == "Library" ? "active":string.Empty)>
                 @if (ActivePage == "Library")
                 {
-                    <FluentIcon Icon="Icons.Filled.Size24.Library" class="animate__animated animate__rubberBand" />
+                    <FluentIcon Value="@(new Icons.Filled.Size24.Library())" class="animate__animated animate__rubberBand" />
                 }
                 else
                 {
-                    <FluentIcon Icon="Icons.Regular.Size24.Library" />
+                    <FluentIcon Value="@(new Icons.Regular.Size24.Library())" />
                 }
                 <span>Library</span>
             </div>
@@ -50,24 +50,25 @@
             <div @onclick=@(_ => ActivePage = "Setting") class=@(ActivePage == "Setting" ? "active":string.Empty)>
                 @if (ActivePage == "Setting")
                 {
-                    <FluentIcon Icon="Icons.Filled.Size24.Settings" class="animate__animated animate__rubberBand" />
+                    <FluentIcon Value="@(new Icons.Filled.Size24.Settings())" class="animate__animated animate__rubberBand" />
                 }
                 else
                 {
-                    <FluentIcon Icon="Icons.Regular.Size24.Settings" />
+                    <FluentIcon Value="@(new Icons.Regular.Size24.Settings())" />
                 }
                 <span>Setting</span>
             </div>
         </NavLink>
+
         <NavLink href="/counter">
             <div @onclick=@(_ => ActivePage = "Help") class=@(ActivePage == "Help" ? "active":string.Empty)>
                 @if (ActivePage == "Help")
                 {
-                    <FluentIcon Icon="Icons.Filled.Size24.ChatHelp" class="animate__animated animate__rubberBand" />
+                    <FluentIcon Value="@(new Icons.Filled.Size24.ChatHelp())" class="animate__animated animate__rubberBand" />
                 }
                 else
                 {
-                    <FluentIcon Icon="Icons.Regular.Size24.ChatHelp" />
+                    <FluentIcon Value="@(new Icons.Regular.Size24.ChatHelp())" />
                 }
                 <span>Help</span>
             </div>
