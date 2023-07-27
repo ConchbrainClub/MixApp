@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
 using MixApp.Models;
+using MixApp.Services;
 
 namespace MixApp.Components
 {
