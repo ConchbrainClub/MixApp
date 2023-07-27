@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Fast.Components.FluentUI;
 using MixApp;
-using MixApp.Models;
 using MixApp.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
