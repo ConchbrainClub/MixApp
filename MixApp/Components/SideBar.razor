@@ -2,77 +2,41 @@
 
 <nav class="sidebar">
     <div class="top">
-        <NavLink Href="/">
-            <div @onclick=@(_ => ActivePage = "Home") class=@(ActivePage == "Home" ? "active":string.Empty)>
-                @if (ActivePage == "Home")
-                {
-                    <FluentIcon Value="@(new Icons.Filled.Size24.Home())" class="animate__animated animate__rubberBand" />
-                }
-                else
-                {
-                    <FluentIcon Value="@(new Icons.Regular.Size24.Home())" />
-                }
-                <span>Home</span>
-            </div>
-        </NavLink>
-
-        <NavLink Href="/softwares">
-            <div @onclick=@(_ => ActivePage = "Apps") class=@(ActivePage == "Apps" ? "active":string.Empty)>
-                @if (ActivePage == "Apps")
-                {
-                    <FluentIcon Value="@(new Icons.Filled.Size24.Apps())" class="animate__animated animate__rubberBand" />
-                }
-                else
-                {
-                    <FluentIcon Value="@(new Icons.Regular.Size24.Apps())" />
-                }
-                <span>Apps</span>
-            </div>
-        </NavLink>
-
-        <NavLink Href="/counter">
-            <div @onclick=@(_ => ActivePage = "Library") class=@(ActivePage == "Library" ? "active":string.Empty)>
-                @if (ActivePage == "Library")
-                {
-                    <FluentIcon Value="@(new Icons.Filled.Size24.Library())" class="animate__animated animate__rubberBand" />
-                }
-                else
-                {
-                    <FluentIcon Value="@(new Icons.Regular.Size24.Library())" />
-                }
-                <span>Library</span>
-            </div>
-        </NavLink>
+        @foreach (RouteInfo info in Top)
+        {
+            <NavLink Href="@info.Href">
+                <div @onclick=@(_ => CurrentHref = info.Href) class=@(CurrentHref == info.Href ? "active":string.Empty)>
+                    @if (CurrentHref == info.Href)
+                    {
+                        <FluentIcon Value="@info.IconFilled" class="animate__animated animate__rubberBand" />
+                    }
+                    else
+                    {
+                        <FluentIcon Value="@info.IconRegular" />
+                    }
+                    <span>@info.Name</span>
+                </div>
+            </NavLink>
+        }
     </div>
 
     <div class="bottom">
-        <NavLink href="/counter">
-            <div @onclick=@(_ => ActivePage = "Setting") class=@(ActivePage == "Setting" ? "active":string.Empty)>
-                @if (ActivePage == "Setting")
-                {
-                    <FluentIcon Value="@(new Icons.Filled.Size24.Settings())" class="animate__animated animate__rubberBand" />
-                }
-                else
-                {
-                    <FluentIcon Value="@(new Icons.Regular.Size24.Settings())" />
-                }
-                <span>Setting</span>
-            </div>
-        </NavLink>
-
-        <NavLink href="/counter">
-            <div @onclick=@(_ => ActivePage = "Help") class=@(ActivePage == "Help" ? "active":string.Empty)>
-                @if (ActivePage == "Help")
-                {
-                    <FluentIcon Value="@(new Icons.Filled.Size24.ChatHelp())" class="animate__animated animate__rubberBand" />
-                }
-                else
-                {
-                    <FluentIcon Value="@(new Icons.Regular.Size24.ChatHelp())" />
-                }
-                <span>Help</span>
-            </div>
-        </NavLink>
+        @foreach (RouteInfo info in Bottom)
+        {
+            <NavLink Href="@info.Href">
+                <div @onclick=@(_ => CurrentHref = info.Href) class=@(CurrentHref == info.Href ? "active":string.Empty)>
+                    @if (CurrentHref == info.Href)
+                    {
+                        <FluentIcon Value="@info.IconFilled" class="animate__animated animate__rubberBand" />
+                    }
+                    else
+                    {
+                        <FluentIcon Value="@info.IconRegular" />
+                    }
+                    <span>@info.Name</span>
+                </div>
+            </NavLink>
+        }
     </div>
 </nav>
 
