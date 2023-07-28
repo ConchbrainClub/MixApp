@@ -14,8 +14,8 @@ namespace MixApp.Components
 
         public string GetIcon()
         {
-            Uri uri = new Uri(Software.PackageUrl ?? string.Empty);
-            return $"{uri.Scheme}://{uri.Host}/favicon.ico";
+            Uri uri = new Uri(Software.PackageUrl ?? "https://www.conchbrain.club");
+            return $"https://icon.horse/icon/{uri.Host}";
         }
     }
 }
