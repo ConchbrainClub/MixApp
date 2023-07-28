@@ -3,8 +3,8 @@
 <nav class="sidebar">
     <div class="top">
         <NavLink Href="/">
-            <div @onclick=@(_ => ActivePage = "Home") class=@(ActivePage == "Home" ? "active":string.Empty)>
-                @if (ActivePage == "Home")
+            <div @onclick=@(_ => ActivePage = "/") class=@(ActivePage == "/" ? "active":string.Empty)>
+                @if (ActivePage == "/")
                 {
                     <FluentIcon Value="@(new Icons.Filled.Size24.Home())" class="animate__animated animate__rubberBand" />
                 }
@@ -17,8 +17,8 @@
         </NavLink>
 
         <NavLink Href="/softwares">
-            <div @onclick=@(_ => ActivePage = "Apps") class=@(ActivePage == "Apps" ? "active":string.Empty)>
-                @if (ActivePage == "Apps")
+            <div @onclick=@(_ => ActivePage = "softwares") class=@(ActivePage == "softwares" ? "active":string.Empty)>
+                @if (ActivePage == "softwares")
                 {
                     <FluentIcon Value="@(new Icons.Filled.Size24.Apps())" class="animate__animated animate__rubberBand" />
                 }
@@ -31,8 +31,8 @@
         </NavLink>
 
         <NavLink Href="/counter">
-            <div @onclick=@(_ => ActivePage = "Library") class=@(ActivePage == "Library" ? "active":string.Empty)>
-                @if (ActivePage == "Library")
+            <div @onclick=@(_ => ActivePage = "counter") class=@(ActivePage == "counter" ? "active":string.Empty)>
+                @if (ActivePage == "counter")
                 {
                     <FluentIcon Value="@(new Icons.Filled.Size24.Library())" class="animate__animated animate__rubberBand" />
                 }
@@ -46,9 +46,9 @@
     </div>
 
     <div class="bottom">
-        <NavLink href="/counter">
-            <div @onclick=@(_ => ActivePage = "Setting") class=@(ActivePage == "Setting" ? "active":string.Empty)>
-                @if (ActivePage == "Setting")
+        <NavLink href="/setting">
+            <div @onclick=@(_ => ActivePage = "setting") class=@(ActivePage == "setting" ? "active":string.Empty)>
+                @if (ActivePage == "setting")
                 {
                     <FluentIcon Value="@(new Icons.Filled.Size24.Settings())" class="animate__animated animate__rubberBand" />
                 }
@@ -60,9 +60,9 @@
             </div>
         </NavLink>
 
-        <NavLink href="/counter">
-            <div @onclick=@(_ => ActivePage = "Help") class=@(ActivePage == "Help" ? "active":string.Empty)>
-                @if (ActivePage == "Help")
+        <NavLink href="/help">
+            <div @onclick=@(_ => ActivePage = "help") class=@(ActivePage == "help" ? "active":string.Empty)>
+                @if (ActivePage == "help")
                 {
                     <FluentIcon Value="@(new Icons.Filled.Size24.ChatHelp())" class="animate__animated animate__rubberBand" />
                 }

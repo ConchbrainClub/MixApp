@@ -5,11 +5,21 @@
 
 <BaseLayerLuminance>
     <FluentStack class="page" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
-
+        
         <div class="content">
-            @foreach (Software software in Softwares)
+            @if (Softwares.Count == 0)
             {
-                <SoftwareCard Software="software" />
+                for (int index = 0; index < 10; index++)
+                {
+                    <FluentSkeleton style="border-radius: 7px; margin: 10px; height: 120px;width: 80px;" Shape="SkeletonShape.Rect" Shimmer="true"></FluentSkeleton> 
+                }
+            }
+            else
+            {
+                @foreach (Software software in Softwares)
+                {
+                    <SoftwareCard Software="software" />
+                }
             }
         </div>
 
