@@ -4,8 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <BlazorCacheBootResources>false</BlazorCacheBootResources>
-    <DisableGitAutoCRLFInPublishOutput>true</DisableGitAutoCRLFInPublishOutput>
+    <PublishTrimmed>true</PublishTrimmed>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
   </PropertyGroup>
 
