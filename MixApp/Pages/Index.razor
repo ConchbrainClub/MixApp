@@ -5,21 +5,6 @@
 <BaseLayerLuminance>
     <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000"
         Easing=ScrollEasing.EaseInOut>
-        @if (Softwares.Count == 0)
-        {
-            for (int index = 0; index < 10; index++)
-            {
-                <FluentSkeleton style="border-radius: 7px; margin: 10px; height: 120px;width: 80px;" Shape="SkeletonShape.Rect" Shimmer="true"></FluentSkeleton> 
-            }
-        }
-        else
-        {
-            @foreach (Software software in Softwares)
-            {
-                <SoftwareCard Software="software" />
-            }
-        }
-        
         @foreach (Software software in RecentlyUpdatedSoftwares)
         {
             <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
@@ -35,6 +20,7 @@
                 <div class="mask" />
             </FluentCard>
         }
+        
     </FluentHorizontalScroll>
 
     <div class="recommended">
@@ -44,9 +30,19 @@
     </div>
 
     <div class="content">
-        @foreach (Software software in RandomSoftwares)
+        @if (RandomSoftwares.Count == 0)
         {
-            <SoftwareCard Software="software" />
+            for (int index = 0; index < 10; index++)
+            {
+                <FluentSkeleton style="border-radius: 7px; margin: 10px; height: 120px;width: 80px;" Shape="SkeletonShape.Rect" Shimmer="true"></FluentSkeleton> 
+            }
+        }
+        else
+        {
+            @foreach (Software software in RandomSoftwares)
+            {
+                <SoftwareCard Software="software" />
+            }
         }
     </div>
 
@@ -57,9 +53,19 @@
     </div>
 
     <div class="content">
-        @foreach (Software software in RecentlyUpdatedSoftwares)
+        @if (RecentlyUpdatedSoftwares.Count == 0)
         {
-            <SoftwareCard Software="software" />
+            for (int index = 0; index < 10; index++)
+            {
+                <FluentSkeleton style="border-radius: 7px; margin: 10px; height: 120px;width: 80px;" Shape="SkeletonShape.Rect" Shimmer="true"></FluentSkeleton> 
+            }
+        }
+        else
+        {
+            @foreach (Software software in RecentlyUpdatedSoftwares)
+            {
+                <SoftwareCard Software="software" />
+            }
         }
     </div>
 </BaseLayerLuminance>
