@@ -11,7 +11,7 @@
             {
                 for (int index = 0; index < 10; index++)
                 {
-                    <FluentSkeleton style="border-radius: 7px; margin: 10px; height: 120px;width: 80px;" Shape="SkeletonShape.Rect" Shimmer="true"></FluentSkeleton> 
+                    <FluentSkeleton class="maskImg" Shimmer="true"></FluentSkeleton> 
                 }
             }
             else
@@ -38,6 +38,12 @@
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
         grid-gap: 1em;
+    }
+
+    .maskImg{
+        border-radius: 7px;
+        width: 210px;
+        height: 320px;
     }
 
     @@media only screen and (max-width: 1400px) {
