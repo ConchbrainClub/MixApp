@@ -38,7 +38,7 @@ namespace MixApp.Services
 
         public async void LoadScript()
         {
-            Scripts = await httpClient.GetFromJsonAsync<Dictionary<string, string>>($"/locale/{Locale}.json") ?? new();
+            Scripts = await httpClient.GetFromJsonAsync<Dictionary<string, string>>($"/lang/{Locale}.json") ?? new();
             OnLoaded?.Invoke();
         }
     }
