@@ -19,13 +19,7 @@ namespace MixApp.Components
             var uri = new Uri(Navigation.Uri);
             string pageName = uri.Segments.Last();
             await JSRuntime.InvokeVoidAsync("console.log",pageName);
-            // if (pageName == "/")
-            // {
-            //     ActivePage = "Home";
-            // }
-            // else
-            // {
-                ActivePage = pageName;
+            ActivePage = pageName;
             
         }
     }
