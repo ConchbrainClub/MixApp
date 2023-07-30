@@ -5,21 +5,38 @@
 <BaseLayerLuminance>
     <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000"
         Easing=ScrollEasing.EaseInOut>
-        @foreach (Software software in RecentlyUpdatedSoftwares)
-        {
-            <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
-                <div class="bannerDesc">
-                    <h2>@software.PackageName</h2>
-                    <p>@software.ShortDescription</p>
-                    <FluentButton Appearance="Appearance.Outline">
-                        More Info
-                    </FluentButton>
-                </div>
+            @if (RecentlyUpdatedSoftwares.Count == 0)
+            {
+                for (int index = 0; index < 3; index++)
+                {
+                      <FluentCard class="bannerSkeleton" Shimmer="true">
+                        <FluentSkeleton class="bannerSkeletonTitle"  Shape="SkeletonShape.Rect" Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="bannerSkeletonIntro" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
 
-                <img src=@(HttpClient?.BaseAddress + software.Cover) class="cover" loading="lazy">
-                <div class="mask" />
-            </FluentCard>
-        }
+                        <FluentSkeleton class="bannerSkeletonButton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    </FluentCard> 
+                }
+            }
+            else
+            {
+                 @foreach (Software software in RecentlyUpdatedSoftwares)
+                {
+                    <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
+                        <div class="bannerDesc">
+                            <h2>@software.PackageName</h2>
+                            <p>@software.ShortDescription</p>
+                            <FluentButton Appearance="Appearance.Outline">
+                                More Info
+                            </FluentButton>
+                        </div>
+                        <img src=@(HttpClient?.BaseAddress + software.Cover) class="cover" loading="lazy">
+                        <div class="mask" />
+                    </FluentCard>
+                }
+            }
+
+       
+        
     </FluentHorizontalScroll>
 
     <div class="recommended">
@@ -29,9 +46,33 @@
     </div>
 
     <div class="content">
-        @foreach (Software software in RandomSoftwares)
+        @if (RandomSoftwares.Count == 0)
         {
-            <SoftwareCard Software="software" />
+            for (int index = 0; index < 10; index++)
+            {
+                <FluentCard class="skeleton" Shimmer="true">
+                    <div class="skeletonBox"></div>
+                    <FluentSkeleton class="packageSkeleton"  Shimmer="true"></FluentSkeleton>
+                    
+                    <FluentDivider></FluentDivider>
+                    <FluentSkeleton class="titleSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="iconSkeleton" style="border-radius: 4px; width: 50px; height: 50px;width: 50px;float: right;" Shape="SkeletonShape.Circle"  Shimmer="true"></FluentSkeleton>
+                    
+                    <FluentSkeleton class="firmSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="buttonSkeleton starSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="buttonSkeleton moreSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                </FluentCard> 
+            }
+        }
+        else
+        {
+            @foreach (Software software in RandomSoftwares)
+            {
+                <SoftwareCard Software="software" />
+            }
         }
     </div>
 
@@ -42,14 +83,120 @@
     </div>
 
     <div class="content">
-        @foreach (Software software in RecentlyUpdatedSoftwares)
+        @if (RecentlyUpdatedSoftwares.Count == 0)
         {
-            <SoftwareCard Software="software" />
+            for (int index = 0; index <10; index++)
+            {
+                <FluentCard class="skeleton" Shimmer="true">
+                    <div class="skeletonBox"></div>
+                    <FluentSkeleton class="packageSkeleton"  Shimmer="true"></FluentSkeleton>
+                    
+                    <FluentDivider></FluentDivider>
+                    <FluentSkeleton class="titleSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="iconSkeleton" style="border-radius: 4px; width: 50px; height: 50px;width: 50px;float: right;" Shape="SkeletonShape.Circle"  Shimmer="true"></FluentSkeleton>
+                    
+                    <FluentSkeleton class="firmSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="buttonSkeleton starSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="buttonSkeleton moreSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                </FluentCard> 
+            }
+        }
+        else
+        {
+            @foreach (Software software in RecentlyUpdatedSoftwares)
+            {
+                <SoftwareCard Software="software" />
+            }
         }
     </div>
 </BaseLayerLuminance>
 
 <style>
+    .skeleton{
+        height: 300px;
+        position: relative;
+        padding: 20px 20px 60px 20px;
+        border: 0.8px solid #000;
+        box-sizing: border-box;
+    }
+    .skeleton .packageSkeleton{
+        border-radius: 7px;
+        height: 20px;
+        margin-bottom: 16px;
+    }
+    .skeleton .titleSkeleton{
+        float: left;
+        width: 60%;
+        height: 32px;
+        margin: 0.75rem 0;
+    }
+    .skeleton .iconSkeleton{
+        float: right;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        margin: 10px;
+    }
+    .skeleton .firmSkeleton{
+        width: 90%;
+        height: 20px;
+        margin-bottom: 10px;
+    }
+    .skeleton .introSkeleton{
+        width: 100%;
+        height: 13px;
+        margin: 5px 0 6px 0;
+    }
+    .skeleton .buttonSkeleton{
+        height: 32px;
+        float: left;
+        position: absolute;
+        bottom: 30px;
+    }
+    .skeleton .moreSkeleton{
+        left: 105px;
+        width: 82px;
+    }
+    .skeleton .starSkeleton{
+        left: 20px;
+        width: 72px;
+    }
+    .skeletonBox{
+        width: 5000px;
+    }
+    .bannerSkeleton{
+        margin-right: 10px;
+        height: 550px;
+        width: 950px;
+        position: relative;
+    }
+    .bannerSkeletonTitle{
+        position: absolute;
+        top: 45%;
+        left: 6%;
+        height: 36px;
+        width: 200px;
+        margin-bottom: 12px;
+    }
+    .bannerSkeletonIntro{
+        position: absolute;
+        top: 54%;
+        left: 6%;
+        height: 20px;
+        width: 250px;
+        margin-bottom: 16px;
+    }
+    .bannerSkeletonButton{
+        position: absolute;
+        top: 60%;
+        left: 6%;
+        width: 82px;
+        height: 32px;
+    }
+
     .banner {
         width: 100%;
     }
