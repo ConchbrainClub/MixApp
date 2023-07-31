@@ -1,19 +1,21 @@
 @inherits MixApp.Components.SearchBoxBase
 
+@inject LocaleManager LM
+
 <div class="searchBox">
-    <FluentSearch Value="@KeyWord" @onchange="UserInput" @oninput="UserInput" class="search" Placeholder="Search" />
+    <FluentSearch Value="@KeyWord" @onchange="UserInput" @oninput="UserInput" class="search" Placeholder=@LM.Scripts["c.search_box.search"] />
 
     @if(SearchResults.Count != 0 && !string.IsNullOrEmpty(KeyWord))
     {
         <div class="searchContent animate__animated animate__fadeInDown">
             <FluentDataGrid class="searchResult" Items="@SearchResults.AsQueryable()" GridTemplateColumns="1fr 1fr 2fr 1fr" ResizableColumns=true Virtualize="true" >
-                <PropertyColumn Title="Identifier" Property="@(i => i.PackageIdentifier)" />
-                <PropertyColumn Title="Name" Property="@(i => i.PackageName)" />
-                <PropertyColumn Title="Description" Property="@(i => i.ShortDescription)" />
-                <PropertyColumn Title="Publisher" Property="@(i => i.Publisher)" />
+                <PropertyColumn Title=@LM.Scripts["c.search_box.identifier"] Property="@(i => i.PackageIdentifier)" />
+                <PropertyColumn Title=@LM.Scripts["c.search_box.name"] Property="@(i => i.PackageName)" />
+                <PropertyColumn Title=@LM.Scripts["c.search_box.description"] Property="@(i => i.ShortDescription)" />
+                <PropertyColumn Title=@LM.Scripts["c.search_box.publisher"] Property="@(i => i.Publisher)" />
                 
-                <TemplateColumn Title="Open">
-                    <FluentBadge @onclick=@(_ => OpenSoftware(context)) Appearance="Appearance.Accent" Fill="highlight" Color="highlight">Open</FluentBadge>
+                <TemplateColumn Title=@LM.Scripts["c.search_box.open"]>
+                    <FluentBadge @onclick=@(_ => OpenSoftware(context)) Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@LM.Scripts["c.search_box.open"]</FluentBadge>
                 </TemplateColumn>
             </FluentDataGrid>
         </div>

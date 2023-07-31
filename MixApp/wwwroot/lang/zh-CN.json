@@ -1,0 +1,39 @@
+{
+    "c.detail.identifier": "标识",
+    "c.detail.latest": "最新",
+    "c.detail.date": "日期",
+    "c.detail.official_website": "官方网站",
+    "c.detail.download": "下载",
+    "c.detail.installers": "安装包",
+    "c.detail.arch": "架构",
+    "c.detail.url": "链接",
+    "c.detail.sha256": "Sha256",
+    "c.detail.winget": "WinGet",
+    "c.detail.tags": "标签",
+    "c.detail.other_version": "其他版本",
+    "c.detail.version": "版本",
+    "c.detail.release_notes": "更新日志",
+    "c.detail.release_date": "更新时间",
+    "c.detail.license": "许可证",
+    "c.detail.privacy": "隐私",
+
+    "c.side_bar.home": "主页",
+    "c.side_bar.apps": "软件",
+    "c.side_bar.library": "库",
+    "c.side_bar.setting": "设置",
+    "c.side_bar.help": "帮助",
+
+    "c.search_box.search": "搜索",
+    "c.search_box.identifier": "标识",
+    "c.search_box.name": "名称",
+    "c.search_box.description": "详情",
+    "c.search_box.publisher": "发布者",
+    "c.search_box.open": "打开",
+
+    "c.software_card.star": "收藏",
+    "c.software_card.more_info": "更多信息",
+    
+    "p.index.more_info": "更多信息",
+    "p.index.recommend_for_you": "为你推荐",
+    "p.index.trending_software": "热度"
+}

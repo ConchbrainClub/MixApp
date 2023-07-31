@@ -9,3 +9,7 @@ window.InitPageSoftware = (dotnet) => {
         dotnet.invokeMethodAsync('OnScrollEnd', scrollEnd)
     }
 }
+
+window.locale = () => {
+    return window.navigator.language
+}

@@ -1,0 +1,39 @@
+{
+    "c.detail.identifier": "Identifier",
+    "c.detail.latest": "Latest",
+    "c.detail.date": "Date",
+    "c.detail.official_website": "Official website",
+    "c.detail.download": "Download",
+    "c.detail.installers": "Installers",
+    "c.detail.arch": "Arch",
+    "c.detail.url": "Url",
+    "c.detail.sha256": "Sha256",
+    "c.detail.winget": "WinGet",
+    "c.detail.tags": "Tags",
+    "c.detail.other_version": "Versions",
+    "c.detail.version": "Version",
+    "c.detail.release_notes": "Release Notes",
+    "c.detail.release_date": "Release Date",
+    "c.detail.license": "License",
+    "c.detail.privacy": "Privacy",
+
+    "c.side_bar.home": "Home",
+    "c.side_bar.apps": "Apps",
+    "c.side_bar.library": "Library",
+    "c.side_bar.setting": "Setting",
+    "c.side_bar.help": "Help",
+
+    "c.search_box.search": "Search",
+    "c.search_box.identifier": "Identifier",
+    "c.search_box.name": "Name",
+    "c.search_box.description": "Description",
+    "c.search_box.publisher": "Publisher",
+    "c.search_box.open": "Open",
+
+    "c.software_card.star": "Star",
+    "c.software_card.more_info": "More Info",
+    
+    "p.index.more_info": "More Info",
+    "p.index.recommend_for_you": "Recommend for you",
+    "p.index.trending_software": "Trending software"
+}
