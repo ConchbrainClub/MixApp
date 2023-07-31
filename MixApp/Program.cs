@@ -22,7 +22,9 @@ builder.Services.AddScoped(sp =>
 
 builder.Services.AddSingleton<GlobalEvent>();
 
-builder.Services.AddSingleton(new LocaleManager(builder.HostEnvironment.BaseAddress));
+LocaleManager localeManager = new(builder.HostEnvironment.BaseAddress);
+await localeManager.Initialize();
+builder.Services.AddSingleton(localeManager);
 
 builder.Services.AddFluentToasts();
 

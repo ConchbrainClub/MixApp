@@ -6,21 +6,9 @@ namespace MixApp.Services
     {
         private HttpClient httpClient;
 
-        private string locale = string.Empty;
-
         public event Action? OnLoaded;
 
         public Dictionary<string, string> Scripts { get; set; }
-
-        public string Locale
-        {
-            get => locale;
-            set
-            {
-                locale = value;
-                LoadScript();
-            }
-        }
 
         public LocaleManager(string baseAddress)
         {
@@ -30,14 +18,13 @@ namespace MixApp.Services
             {
                 BaseAddress = new Uri(baseAddress)
             };
-
-            Locale = "zh-CN";
         }
 
-        public async void LoadScript()
+        public async Task<LocaleManager> Initialize(string locale = "zh-CN")
         {
-            Scripts = await httpClient.GetFromJsonAsync<Dictionary<string, string>>($"/lang/{Locale}.json") ?? new();
+            Scripts = await httpClient.GetFromJsonAsync<Dictionary<string, string>>($"/lang/{locale}.json") ?? new();
             OnLoaded?.Invoke();
+            return this;
         }
     }
 }
