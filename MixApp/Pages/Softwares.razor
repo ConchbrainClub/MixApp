@@ -5,11 +5,21 @@
 
 <BaseLayerLuminance>
     <FluentStack class="page" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
-
+        
         <div class="content">
-            @foreach (Software software in Softwares)
+            @if (Softwares.Count == 0)
             {
-                <SoftwareCard Software="software" />
+                for (int index = 0; index < 10; index++)
+                {
+                    <SkeletonCard />
+                }
+            }
+            else
+            {
+                @foreach (Software software in Softwares)
+                {
+                    <SoftwareCard Software="software" />
+                }
             }
         </div>
 
@@ -23,7 +33,7 @@
         height: 100%;
         overflow-y: scroll;
     }
-
+    
     .content {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));

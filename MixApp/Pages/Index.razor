@@ -5,21 +5,33 @@
 <BaseLayerLuminance>
     <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000"
         Easing=ScrollEasing.EaseInOut>
-        @foreach (Software software in RecentlyUpdatedSoftwares)
-        {
-            <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
-                <div class="bannerDesc">
-                    <h2>@software.PackageName</h2>
-                    <p>@software.ShortDescription</p>
-                    <FluentButton Appearance="Appearance.Outline">
-                        More Info
-                    </FluentButton>
-                </div>
+            @if (RecentlyUpdatedSoftwares.Count == 0)
+            {
+                for (int index = 0; index < 2; index++)
+                {
+                    <SkeletonBanner />
+                }
+            }
+            else
+            {
+                 @foreach (Software software in RecentlyUpdatedSoftwares)
+                {
+                    <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
+                        <div class="bannerDesc">
+                            <h2>@software.PackageName</h2>
+                            <p>@software.ShortDescription</p>
+                            <FluentButton Appearance="Appearance.Outline">
+                                More Info
+                            </FluentButton>
+                        </div>
+                        <img src=@(HttpClient?.BaseAddress + software.Cover) class="cover" loading="lazy">
+                        <div class="mask" />
+                    </FluentCard>
+                }
+            }
 
-                <img src=@(HttpClient?.BaseAddress + software.Cover) class="cover" loading="lazy">
-                <div class="mask" />
-            </FluentCard>
-        }
+       
+        
     </FluentHorizontalScroll>
 
     <div class="recommended">
@@ -29,9 +41,19 @@
     </div>
 
     <div class="content">
-        @foreach (Software software in RandomSoftwares)
+        @if (RandomSoftwares.Count == 0)
         {
-            <SoftwareCard Software="software" />
+            for (int index = 0; index < 5; index++)
+            {
+                <SkeletonCard />
+            }
+        }
+        else
+        {
+            @foreach (Software software in RandomSoftwares)
+            {
+                <SoftwareCard Software="software" />
+            }
         }
     </div>
 
