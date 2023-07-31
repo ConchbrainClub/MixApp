@@ -2,7 +2,7 @@
 
 <FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="#333333" BaseLayerLuminance="0">
     <div class="layout">
-        <SideBar></SideBar>
+        <SideBar />
 
         <div class="main">
             <SearchBox />
@@ -38,10 +38,6 @@
     }
 
     @@media only screen and (max-width: 950px) {
-        .sidebar {
-            display: none;
-        }
-
         .main {
             width: calc(100% - 10px);
             margin: 0;
@@ -50,10 +46,6 @@
         .main > .container {
             padding: 10px 20px;
             height: 100vh;
-        }
-
-        .main > .search {
-            display: none;
         }
     }
 
