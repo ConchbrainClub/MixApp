@@ -7,12 +7,11 @@
         Easing=ScrollEasing.EaseInOut>
             @if (RecentlyUpdatedSoftwares.Count == 0)
             {
-                for (int index = 0; index < 3; index++)
+                for (int index = 0; index < 2; index++)
                 {
-                      <FluentCard class="bannerSkeleton" Shimmer="true">
+                    <FluentCard class="bannerSkeleton" Shimmer="true">
                         <FluentSkeleton class="bannerSkeletonTitle"  Shape="SkeletonShape.Rect" Shimmer="true"></FluentSkeleton>
                         <FluentSkeleton class="bannerSkeletonIntro" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-
                         <FluentSkeleton class="bannerSkeletonButton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
                     </FluentCard> 
                 }
@@ -48,7 +47,7 @@
     <div class="content">
         @if (RandomSoftwares.Count == 0)
         {
-            for (int index = 0; index < 10; index++)
+            for (int index = 0; index < 5; index++)
             {
                 <FluentCard class="skeleton" Shimmer="true">
                     <div class="skeletonBox"></div>
@@ -57,7 +56,7 @@
                     <FluentDivider></FluentDivider>
                     <FluentSkeleton class="titleSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
                     <FluentSkeleton class="iconSkeleton" style="border-radius: 4px; width: 50px; height: 50px;width: 50px;float: right;" Shape="SkeletonShape.Circle"  Shimmer="true"></FluentSkeleton>
-                    
+
                     <FluentSkeleton class="firmSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
                     <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
                     <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
@@ -83,33 +82,9 @@
     </div>
 
     <div class="content">
-        @if (RecentlyUpdatedSoftwares.Count == 0)
+        @foreach (Software software in RecentlyUpdatedSoftwares)
         {
-            for (int index = 0; index <10; index++)
-            {
-                <FluentCard class="skeleton" Shimmer="true">
-                    <div class="skeletonBox"></div>
-                    <FluentSkeleton class="packageSkeleton"  Shimmer="true"></FluentSkeleton>
-                    
-                    <FluentDivider></FluentDivider>
-                    <FluentSkeleton class="titleSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                    <FluentSkeleton class="iconSkeleton" style="border-radius: 4px; width: 50px; height: 50px;width: 50px;float: right;" Shape="SkeletonShape.Circle"  Shimmer="true"></FluentSkeleton>
-                    
-                    <FluentSkeleton class="firmSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                    <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
-                    <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
-                    <FluentSkeleton class="introSkeleton"  Shimmer="true"></FluentSkeleton>
-                    <FluentSkeleton class="buttonSkeleton starSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                    <FluentSkeleton class="buttonSkeleton moreSkeleton" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                </FluentCard> 
-            }
-        }
-        else
-        {
-            @foreach (Software software in RecentlyUpdatedSoftwares)
-            {
-                <SoftwareCard Software="software" />
-            }
+            <SoftwareCard Software="software" />
         }
     </div>
 </BaseLayerLuminance>
