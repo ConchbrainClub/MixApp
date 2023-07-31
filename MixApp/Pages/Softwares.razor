@@ -9,7 +9,7 @@
         <div class="content">
             @if (Softwares.Count == 0)
             {
-                for (int index = 0; index < 15; index++)
+                for (int index = 0; index < 10; index++)
                 {
                     <SkeletonCard />
                 }
@@ -34,59 +34,6 @@
         overflow-y: scroll;
     }
     
-    .skeleton{
-        height: 300px;
-        position: relative;
-        padding: 20px 20px 60px 20px;
-        border: 0.8px solid #000;
-        box-sizing: border-box;
-    }
-    .skeleton .packageSkeleton{
-        border-radius: 7px;
-        height: 20px;
-        margin-bottom: 16px;
-    }
-    .skeleton .titleSkeleton{
-        float: left;
-        width: 60%;
-        height: 32px;
-        margin: 0.75rem 0;
-    }
-    .skeleton .iconSkeleton{
-        float: right;
-        width: 40px;
-        height: 40px;
-        border-radius: 5px;
-        margin: 10px;
-    }
-    .skeleton .firmSkeleton{
-        width: 90%;
-        height: 20px;
-        margin-bottom: 10px;
-    }
-    .skeleton .introSkeleton{
-        width: 100%;
-        height: 13px;
-        margin: 5px 0 6px 0;
-    }
-    .skeleton .buttonSkeleton{
-        height: 32px;
-        float: left;
-        position: absolute;
-        bottom: 30px;
-    }
-    .skeleton .moreSkeleton{
-        left: 105px;
-        width: 82px;
-    }
-    .skeleton .starSkeleton{
-        left: 20px;
-        width: 72px;
-    }
-    .skeletonBox{
-        width: 5000px;
-    }
-
     .content {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
