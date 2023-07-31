@@ -23,21 +23,21 @@ namespace MixApp.Components
                     Href = "/",
                     IconFilled = new Icons.Filled.Size24.Home(),
                     IconRegular = new Icons.Regular.Size24.Home(),
-                    Name = "Home"
+                    Name = "c.side_bar.home"
                 },
                 new()
                 {
                     Href = "/softwares",
                     IconFilled = new Icons.Filled.Size24.Apps(),
                     IconRegular = new Icons.Regular.Size24.Apps(),
-                    Name = "Apps"
+                    Name = "c.side_bar.apps"
                 },
                 new()
                 {
                     Href = "/counter",
                     IconFilled = new Icons.Filled.Size24.Library(),
                     IconRegular = new Icons.Regular.Size24.Library(),
-                    Name = "Library"
+                    Name = "c.side_bar.library"
                 }
             };
 
@@ -48,14 +48,14 @@ namespace MixApp.Components
                     Href = "/setting",
                     IconFilled = new Icons.Filled.Size24.Settings(),
                     IconRegular = new Icons.Regular.Size24.Settings(),
-                    Name = "Setting"
+                    Name = "c.side_bar.setting"
                 },
                 new()
                 {
                     Href = "/help",
                     IconFilled = new Icons.Filled.Size24.ChatHelp(),
                     IconRegular = new Icons.Regular.Size24.ChatHelp(),
-                    Name = "Help"
+                    Name = "c.side_bar.help"
                 }
             };
 

@@ -20,15 +20,15 @@ builder.Services.AddScoped(sp =>
     };
 });
 
+builder.Services.AddSingleton<GlobalEvent>();
+
+builder.Services.AddSingleton(new LocaleManager(builder.HostEnvironment.BaseAddress));
+
 builder.Services.AddFluentToasts();
 
 builder.Services.AddFluentUIComponents(options =>
 {
     options.HostingModel = BlazorHostingModel.WebAssembly;
 });
-
-builder.Services.AddSingleton<GlobalEvent>();
-
-builder.Services.AddSingleton(new LocaleManager(builder.HostEnvironment.BaseAddress));
 
 await builder.Build().RunAsync();

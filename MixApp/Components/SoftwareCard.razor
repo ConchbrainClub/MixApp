@@ -1,5 +1,7 @@
 @inherits MixApp.Components.SoftwareCardBase
 
+@inject LocaleManager LM
+
 <BaseLayerLuminance>
     <div class="card">
         <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
@@ -15,11 +17,11 @@
 
             <div class="action">
                 <FluentButton IconEnd="@(new Icons.Regular.Size16.Star())">
-                    Star
+                    @LM.Scripts["c.software_card.star"]
                 </FluentButton>
 
                 <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(Software)) Appearance="Appearance.Accent">
-                    More Info
+                    @LM.Scripts["c.software_card.more_info"]
                 </FluentButton>
             </div>
         </FluentCard>

@@ -1,5 +1,7 @@
 @inherits MixApp.Components.SideBarBase
 
+@inject LocaleManager LM
+
 <nav class="sidebar">
     <div class="top">
         @foreach (RouteInfo info in Top)
@@ -14,7 +16,7 @@
                     {
                         <FluentIcon Value="@info.IconRegular" />
                     }
-                    <span>@info.Name</span>
+                    <span>@LM.Scripts[info.Name]</span>
                 </div>
             </NavLink>
         }
@@ -33,7 +35,7 @@
                     {
                         <FluentIcon Value="@info.IconRegular" />
                     }
-                    <span>@info.Name</span>
+                    <span>@LM.Scripts[info.Name]</span>
                 </div>
             </NavLink>
         }

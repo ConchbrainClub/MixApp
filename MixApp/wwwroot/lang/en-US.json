@@ -6,10 +6,10 @@
     "c.detail.download": "Download",
     "c.detail.installers": "Installers",
     "c.detail.arch": "Arch",
-    "c.detail.tags": "Tags",
     "c.detail.url": "Url",
     "c.detail.sha256": "Sha256",
-    "c.detail.winGet": "WinGet",
+    "c.detail.winget": "WinGet",
+    "c.detail.tags": "Tags",
     "c.detail.other_version": "Versions",
     "c.detail.version": "Version",
     "c.detail.release_notes": "Release Notes",
@@ -33,7 +33,7 @@
     "c.software_card.star": "Star",
     "c.software_card.more_info": "More Info",
     
-    "o.index.more_info": "More Info",
+    "p.index.more_info": "More Info",
     "p.index.recommend_for_you": "Recommend for you",
     "p.index.trending_software": "Trending software"
 }

@@ -6,10 +6,10 @@
     "c.detail.download": "下载",
     "c.detail.installers": "安装包",
     "c.detail.arch": "架构",
-    "c.detail.tags": "标签",
     "c.detail.url": "链接",
     "c.detail.sha256": "Sha256",
-    "c.detail.winGet": "WinGet",
+    "c.detail.winget": "WinGet",
+    "c.detail.tags": "标签",
     "c.detail.other_version": "其他版本",
     "c.detail.version": "版本",
     "c.detail.release_notes": "更新日志",
@@ -33,7 +33,7 @@
     "c.software_card.star": "收藏",
     "c.software_card.more_info": "更多信息",
     
-    "o.index.more_info": "更多信息",
+    "p.index.more_info": "更多信息",
     "p.index.recommend_for_you": "为你推荐",
     "p.index.trending_software": "热度"
 }
