@@ -1,4 +1,4 @@
-window.InitPageSoftware = (dotnet) => {
+window.initPageSoftware = (dotnet) => {
     let scrollBox = document.querySelector('.page')
 
     scrollBox.onscrollend = () => {

@@ -20,7 +20,7 @@ namespace MixApp.Services
             };
         }
 
-        public async Task<LocaleManager> Initialize(string locale = "zh-CN")
+        public async Task<LocaleManager> Initialize(string locale = "en-US")
         {
             Scripts = await httpClient.GetFromJsonAsync<Dictionary<string, string>>($"/lang/{locale}.json") ?? new();
             OnLoaded?.Invoke();

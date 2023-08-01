@@ -1,10 +1,17 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Fast.Components.FluentUI;
+using Microsoft.JSInterop;
 using MixApp;
 using MixApp.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+IJSRuntime? jSRuntime = builder.Services.BuildServiceProvider().GetService<IJSRuntime>();
+string locale = await jSRuntime!.InvokeAsync<string>("locale") ?? "en-US";
+
+LocaleManager localeManager = new(builder.HostEnvironment.BaseAddress);
+await localeManager.Initialize(locale);
 
 builder.RootComponents.Add<App>("#app");
 
@@ -22,8 +29,6 @@ builder.Services.AddScoped(sp =>
 
 builder.Services.AddSingleton<GlobalEvent>();
 
-LocaleManager localeManager = new(builder.HostEnvironment.BaseAddress);
-await localeManager.Initialize();
 builder.Services.AddSingleton(localeManager);
 
 builder.Services.AddFluentToasts();

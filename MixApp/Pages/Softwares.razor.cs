@@ -31,7 +31,7 @@ namespace MixApp.Pages
         protected override void OnAfterRender(bool firstRender)
         {
             if (!firstRender) return;
-            JSRunTime!.InvokeVoidAsync("InitPageSoftware", DotNetObjectReference.Create(this));
+            JSRunTime!.InvokeVoidAsync("initPageSoftware", DotNetObjectReference.Create(this));
         }
 
         private async void LoadData()
