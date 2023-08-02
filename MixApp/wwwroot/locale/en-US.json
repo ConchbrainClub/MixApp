@@ -8,6 +8,7 @@
     "c.detail.arch": "Arch",
     "c.detail.url": "Url",
     "c.detail.sha256": "Sha256",
+    "c.detail.scope": "Scope",
     "c.detail.winget": "WinGet",
     "c.detail.tags": "Tags",
     "c.detail.other_version": "Versions",

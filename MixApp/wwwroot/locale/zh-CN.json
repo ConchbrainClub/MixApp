@@ -8,6 +8,7 @@
     "c.detail.arch": "架构",
     "c.detail.url": "链接",
     "c.detail.sha256": "Sha256",
+    "c.detail.scope": "范围",
     "c.detail.winget": "WinGet",
     "c.detail.tags": "标签",
     "c.detail.other_version": "其他版本",

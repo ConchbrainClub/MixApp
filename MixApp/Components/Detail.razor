@@ -46,12 +46,13 @@
                     <div>
                         <h4>@LM.Scripts["c.detail.installers"]</h4>
 
-                        <FluentDataGrid Items="@Installers.AsQueryable()" GridTemplateColumns="1fr 5fr 7fr" ResizableColumns=true Virtualize="true" >
+                        <FluentDataGrid Items="@Installers.AsQueryable()" GridTemplateColumns="1fr 5fr 7fr 1fr" ResizableColumns=true Virtualize="true" >
                             <PropertyColumn Title=@LM.Scripts["c.detail.arch"] Property=@(i => i!.Architecture) />
                             <TemplateColumn Title=@LM.Scripts["c.detail.url"]>
                                 <a href="@context.InstallerUrl" target="_blank">@context.InstallerUrl</a>
                             </TemplateColumn>
                             <PropertyColumn Title=@LM.Scripts["c.detail.sha256"] Property=@(i => i!.InstallerSha256) />
+                            <PropertyColumn Title=@LM.Scripts["c.detail.scope"] Property=@(i => i!.Scope) />
                         </FluentDataGrid>
                     </div>
 
@@ -75,12 +76,17 @@
                     <div>
                         <h4>@LM.Scripts["c.detail.other_version"]</h4>
 
-                        <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 4fr 1fr 1fr" ResizableColumns=true Virtualize="true" >
+                        <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 5fr 1fr 2fr" ResizableColumns=true Virtualize="true" >
                             <PropertyColumn Title=@LM.Scripts["c.detail.version"] Property=@(i => i!.PackageVersion) Sortable="true" />
                             <PropertyColumn Title=@LM.Scripts["c.detail.release_notes"] Property=@(i => i!.ReleaseNotes ?? "None") Sortable="true" />
                             <PropertyColumn Title=@LM.Scripts["c.detail.release_date"] Property=@(i => i!.ReleaseDate ?? "-") Sortable="true" />
                             <TemplateColumn Title="Dwonload">
-                                <FluentBadge @onclick="(_ => Download(context.Installers))" Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@LM.Scripts["c.detail.download"]</FluentBadge>
+                                @foreach (Installer installer in JsonSerializer.Deserialize<List<Installer>>(context.Installers ?? "[]")!)
+                                {
+                                    <a href="@installer.InstallerUrl" target="_blank">
+                                        <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@(installer.Architecture + installer.Scope)</FluentBadge>
+                                    </a>
+                                }
                             </TemplateColumn>
                         </FluentDataGrid>
                     </div>

@@ -4,6 +4,7 @@ using Microsoft.Fast.Components.FluentUI;
 using MixApp.Models;
 using System.Text.Json;
 using Microsoft.JSInterop;
+using Semver;
 
 namespace MixApp.Components
 {
@@ -51,10 +52,14 @@ namespace MixApp.Components
         {
             if (string.IsNullOrEmpty(installers)) return;
 
-            Installer? installer = JsonSerializer.Deserialize<List<Installer>>(installers)?.Find(i =>
+            List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(installers) ?? new();
+
+            Installer? installer = installersObj.Find(i => i.Architecture == "x86");
+
+            if (installersObj.FindIndex(i => i.Architecture == "x64") > 0) 
             {
-                return i.Architecture == "x86" || i.Architecture == "x64";
-            });
+                installer = installersObj.Find(i => i.Architecture == "x64");
+            }
 
             JSRunTime?.InvokeVoidAsync("open", installer?.InstallerUrl);
         }
