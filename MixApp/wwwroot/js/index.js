@@ -11,5 +11,5 @@ window.initPageSoftware = (dotnet) => {
 }
 
 window.locale = () => {
-    return window.navigator.language
+    return localStorage.getItem('locale') || window.navigator.language
 }

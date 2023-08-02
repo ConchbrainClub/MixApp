@@ -6,6 +6,8 @@ namespace MixApp.Services
     {
         private HttpClient httpClient;
 
+        private string[] supportLocale = new [] { "zh-CN", "en-US" };
+
         public event Action? OnLoaded;
 
         public Dictionary<string, string> Scripts { get; set; }
@@ -20,11 +22,11 @@ namespace MixApp.Services
             };
         }
 
-        public async Task<LocaleManager> Initialize(string locale = "en-US")
+        public async Task Initialize(string locale = "en-US")
         {
-            Scripts = await httpClient.GetFromJsonAsync<Dictionary<string, string>>($"/lang/{locale}.json") ?? new();
+            if (!supportLocale.Contains(locale)) locale = "en-US";
+            Scripts = await httpClient.GetFromJsonAsync<Dictionary<string, string>>($"/locale/{locale}.json") ?? new();
             OnLoaded?.Invoke();
-            return this;
         }
     }
 }

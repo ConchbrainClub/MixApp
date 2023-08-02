@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Fast.Components.FluentUI;
@@ -30,6 +31,8 @@ builder.Services.AddScoped(sp =>
 builder.Services.AddSingleton<GlobalEvent>();
 
 builder.Services.AddSingleton(localeManager);
+
+builder.Services.AddBlazoredLocalStorage();
 
 builder.Services.AddFluentToasts();
 

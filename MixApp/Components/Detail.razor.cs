@@ -38,7 +38,8 @@ namespace MixApp.Components
 
             Manifests = (await HttpClient
                 .GetFromJsonAsync<IEnumerable<Manifest>>($"/softwares/{Software?.PackageIdentifier}") ?? Array.Empty<Manifest>())
-                .OrderByDescending(i => i.PackageVersion).ToList();
+                .OrderByDescending(i => new Version(i.PackageVersion ?? "0.0.1"))
+                .ToList();
 
             Latest = Manifests.First();
             Installers = JsonSerializer.Deserialize<List<Installer>>(Latest.Installers!) ?? new();

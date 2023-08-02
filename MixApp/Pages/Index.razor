@@ -17,11 +17,11 @@
             {
                  @foreach (Software software in RecentlyUpdatedSoftwares)
                 {
-                    <FluentCard @onclick=@(_ => GlobalEvent.OpenSoftware(software)) Appearance="Appearance.Accent">
+                    <FluentCard Appearance="Appearance.Accent">
                         <div class="bannerDesc">
                             <h2>@software.PackageName</h2>
                             <p>@software.ShortDescription</p>
-                            <FluentButton Appearance="Appearance.Outline">
+                            <FluentButton Appearance="Appearance.Outline" @onclick=@(_ => GlobalEvent.OpenSoftware(software))>
                                 @LM.Scripts["p.index.more_info"]
                             </FluentButton>
                         </div>
@@ -30,9 +30,6 @@
                     </FluentCard>
                 }
             }
-
-       
-        
     </FluentHorizontalScroll>
 
     <div class="recommended">
