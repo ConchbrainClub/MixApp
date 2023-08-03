@@ -36,5 +36,15 @@
     
     "p.index.more_info": "More Info",
     "p.index.recommend_for_you": "Recommend for you",
-    "p.index.trending_software": "Trending software"
+    "p.index.trending_software": "Trending software",
+
+    "p.setting.setting": "Setting",
+    "p.setting.interface": "Interface",
+    "p.setting.locale": "Locale",
+    "p.setting.zh_cn": "zh-CN",
+    "p.setting.en_us": "en-US",
+    "p.setting.theme": "Theme",
+    "p.setting.light": "Light",
+    "p.setting.dark": "Dark",
+    "p.setting.download": "Download"
 }

@@ -1,40 +1,41 @@
 @page "/Setting"
 @inherits MixApp.Pages.SettingBase
 
-<PageTitle>Setting</PageTitle>
+@inject LocaleManager LM
+
+@* <PageTitle>Setting</PageTitle> *@
 
 <div class="setting">
-    <h2>Settings</h2>
-    
+    <h2>@LM.Scripts["p.setting.setting"]</h2>
 
     <FluentAccordion>
-        <FluentAccordionItem Heading="Interface" Expanded="true">
+        <FluentAccordionItem Heading=@LM.Scripts["p.setting.interface"] Expanded="true">
             <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.Globe())" Color=Color.Neutral />
 
             <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
-                <p class="title">Langurage</p>
+                <p class="title">@LM.Scripts["p.setting.locale"]</p>
                 <FluentSpacer />
                 
                 <FluentSelect TOption="string">
-                    <FluentOption>en-US</FluentOption>
-                    <FluentOption>zh-CN</FluentOption>
+                    <FluentOption>@LM.Scripts["p.setting.zh_cn"]</FluentOption>
+                    <FluentOption>@LM.Scripts["p.setting.en_us"]</FluentOption>
                 </FluentSelect>
             </FluentStack>
 
             <FluentDivider></FluentDivider>
 
             <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
-                <p class="title">Theme</p>
+                <p class="title">@LM.Scripts["p.setting.theme"]</p>
                 <FluentSpacer />
                 
                 <FluentSelect TOption="string">
-                    <FluentOption>Light</FluentOption>
-                    <FluentOption>Dark</FluentOption>
+                    <FluentOption>@LM.Scripts["p.setting.light"]</FluentOption>
+                    <FluentOption>@LM.Scripts["p.setting.dark"]</FluentOption>
                 </FluentSelect>
             </FluentStack>
         </FluentAccordionItem>
 
-        <FluentAccordionItem Heading="Download">
+        <FluentAccordionItem Heading=@LM.Scripts["p.setting.download"]>
             <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.ArrowCircleDown())" Color=Color.Neutral />
 
             <div slot="end">
