@@ -42,7 +42,7 @@ namespace MixApp.Pages
                 .GetFromJsonAsync<List<Software>>($"/softwares?index={++PageIndex}") 
                 ?? new();
 
-            softwares.ForEach(i => Softwares.Add(i));
+            softwares.ForEach(Softwares.Add);
             StateHasChanged();
         }
 

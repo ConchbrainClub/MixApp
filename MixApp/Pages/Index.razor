@@ -4,8 +4,10 @@
 @inject LocaleManager LM
 
 <BaseLayerLuminance>
-    <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000"
-        Easing=ScrollEasing.EaseInOut>
+    <FluentStack class="page" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
+
+        <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000"
+            Easing=ScrollEasing.EaseInOut>
             @if (RecentlyUpdatedSoftwares.Count == 0)
             {
                 for (int index = 0; index < 2; index++)
@@ -15,7 +17,7 @@
             }
             else
             {
-                 @foreach (Software software in RecentlyUpdatedSoftwares)
+                @foreach (Software software in RecentlyUpdatedSoftwares)
                 {
                     <FluentCard Appearance="Appearance.Accent">
                         <div class="bannerDesc">
@@ -30,46 +32,53 @@
                     </FluentCard>
                 }
             }
-    </FluentHorizontalScroll>
+        </FluentHorizontalScroll>
 
-    <div class="recommended">
-        <p class="text">
-            @LM.Scripts["p.index.recommend_for_you"] &gt;
-        </p>
-    </div>
+        <div class="recommended">
+            <p class="text">
+                @LM.Scripts["p.index.recommend_for_you"] &gt;
+            </p>
+        </div>
 
-    <div class="content">
-        @if (RandomSoftwares.Count == 0)
-        {
-            for (int index = 0; index < 5; index++)
+        <div class="content">
+            @if (RandomSoftwares.Count == 0)
             {
-                <SkeletonCard />
+                for (int index = 0; index < 5; index++)
+                {
+                    <SkeletonCard />
+                }
             }
-        }
-        else
-        {
-            @foreach (Software software in RandomSoftwares)
+            else
+            {
+                @foreach (Software software in RandomSoftwares)
+                {
+                    <SoftwareCard Software="software" />
+                }
+            }
+        </div>
+
+        <div class="recommended">
+            <p class="text">
+                @LM.Scripts["p.index.trending_software"] &gt;
+            </p>
+        </div>
+
+        <div class="content">
+            @foreach (Software software in RecentlyUpdatedSoftwares)
             {
                 <SoftwareCard Software="software" />
             }
-        }
-    </div>
-
-    <div class="recommended">
-        <p class="text">
-            @LM.Scripts["p.index.trending_software"] &gt;
-        </p>
-    </div>
-
-    <div class="content">
-        @foreach (Software software in RecentlyUpdatedSoftwares)
-        {
-            <SoftwareCard Software="software" />
-        }
-    </div>
+        </div>
+        
+    </FluentStack>
 </BaseLayerLuminance>
 
 <style>
+    .page {
+        height: 100%;
+        overflow-y: scroll;
+    }
+
     .banner {
         width: 100%;
     }

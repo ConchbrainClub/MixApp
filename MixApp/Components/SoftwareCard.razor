@@ -3,7 +3,7 @@
 @inject LocaleManager LM
 
 <BaseLayerLuminance>
-    <div class="card">
+    <div class="card" @ref="cardReference">
         <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
             <div>
                 <p>@Software.PackageIdentifier</p>
@@ -31,7 +31,6 @@
 </BaseLayerLuminance>
 
 <style>
-
     .card fluent-card {
         padding: 20px 20px 60px 20px;
         position: relative;
@@ -67,10 +66,11 @@
     .card .light {
         display: none;
         position: absolute;
-        width: 200px;
-        height: 200px;
-        background-color: #ffffff34;
+        width: 300px;
+        height: 300px;
+        background-color: #ffffff27;
         border-radius: 50%;
         filter: blur(40px);
+        z-index: -1;
     }
 </style>

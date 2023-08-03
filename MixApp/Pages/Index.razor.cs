@@ -34,7 +34,7 @@ namespace MixApp.Pages
                 .GetFromJsonAsync<List<Software>>("/top") 
                 ?? new();
             
-            softwares.ForEach(i => Softwares.Add(i));
+            softwares.ForEach(Softwares.Add);
             StateHasChanged();
         }
 
@@ -44,7 +44,7 @@ namespace MixApp.Pages
                 .GetFromJsonAsync<List<Software>>("/random") 
                 ?? new();
             
-            softwares.ForEach(i => RandomSoftwares.Add(i));
+            softwares.ForEach(RandomSoftwares.Add);
             StateHasChanged();
         }
 
@@ -54,7 +54,7 @@ namespace MixApp.Pages
                 .GetFromJsonAsync<List<Software>>("/recentlyUpdated") 
                 ?? new();
             
-            softwares.ForEach(i => RecentlyUpdatedSoftwares.Add(i));
+            softwares.ForEach(RecentlyUpdatedSoftwares.Add);
             StateHasChanged();
         }
     }
