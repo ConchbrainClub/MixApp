@@ -4,7 +4,6 @@ using Microsoft.Fast.Components.FluentUI;
 using MixApp.Models;
 using System.Text.Json;
 using Microsoft.JSInterop;
-using Semver;
 
 namespace MixApp.Components
 {
@@ -39,7 +38,22 @@ namespace MixApp.Components
 
             Manifests = (await HttpClient
                 .GetFromJsonAsync<IEnumerable<Manifest>>($"/softwares/{Software?.PackageIdentifier}") ?? Array.Empty<Manifest>())
-                .OrderByDescending(i => new Version(i.PackageVersion ?? "0.0.1"))
+                .OrderByDescending(i =>
+                {
+                    if (DateTime.TryParse(i.ReleaseDate, out DateTime releaseDate))
+                    {
+                        return releaseDate;
+                    }
+                    return DateTime.Now;
+                })
+                .OrderByDescending(i => 
+                {
+                    if (Version.TryParse(i.PackageVersion, out Version? version))
+                    {
+                        return version;
+                    }
+                    return new Version();
+                })
                 .ToList();
 
             Latest = Manifests.First();
@@ -61,7 +75,7 @@ namespace MixApp.Components
                 installer = installersObj.Find(i => i.Architecture == "x64");
             }
 
-            JSRunTime?.InvokeVoidAsync("open", installer?.InstallerUrl);
+            JSRunTime!.InvokeVoidAsync("open", installer?.InstallerUrl).AsTask();
         }
     }
 }
