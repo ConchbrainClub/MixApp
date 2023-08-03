@@ -14,26 +14,22 @@ window.locale = () => {
     return localStorage.getItem('locale') || window.navigator.language
 }
 
-window.addEventListener('load', function () {
-    var lis = document.querySelectorAll('.card fluent-card');
+window.initHighLight = (card, scrollBox) => {
 
-    for (var i = 0; i < lis.length; i++) {
+    card.addEventListener('mouseover', function () {
+        var light = this.querySelector('.light');
+        light.style.display = 'block';
 
-        lis[i].addEventListener('mouseover', function () {
-            var light = this.querySelector('.light');
-            light.style.display = 'block';
-
-            this.addEventListener('mousemove', function (e) {
-                var x = e.pageX - this.offsetLeft - light.offsetWidth / 2;
-                var y = e.pageY + document.querySelector('.container').scrollTop - this.offsetTop - light.offsetHeight / 2;
-                light.style.left = x + 'px';
-                light.style.top = y + 'px';
-            })
+        this.addEventListener('mousemove', function (e) {
+            var x = e.pageX - this.offsetLeft - light.offsetWidth / 2;
+            var y = e.pageY + scrollBox.scrollTop - this.offsetTop - light.offsetHeight / 2;
+            light.style.left = x + 'px';
+            light.style.top = y + 'px';
         })
+    })
 
-        lis[i].addEventListener('mouseout', function () {
-            var light = this.querySelector('.light');
-            light.style.display = 'none';
-        })
-    }
-})
+    card.addEventListener('mouseout', function () {
+        var light = this.querySelector('.light');
+        light.style.display = 'none';
+    })
+}
