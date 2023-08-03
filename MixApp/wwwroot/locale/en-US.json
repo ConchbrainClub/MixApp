@@ -46,5 +46,6 @@
     "p.setting.theme": "Theme",
     "p.setting.light": "Light",
     "p.setting.dark": "Dark",
+    "p.setting.color": "Color",
     "p.setting.download": "Download"
 }

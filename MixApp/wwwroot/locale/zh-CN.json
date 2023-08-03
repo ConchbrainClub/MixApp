@@ -46,5 +46,6 @@
     "p.setting.theme": "主题",
     "p.setting.light": "浅色",
     "p.setting.dark": "深色",
+    "p.setting.color": "主题色",
     "p.setting.download": "下载"
 }
