@@ -3,8 +3,69 @@
 
 <PageTitle>Setting</PageTitle>
 
-<h1>Setting</h1>
+<div class="setting">
+    <h2>Settings</h2>
+    
 
-<p role="status">Current count: @currentCount</p>
+    <FluentAccordion>
+        <FluentAccordionItem Heading="Interface" Expanded="true">
+            <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.Globe())" Color=Color.Neutral />
 
-<FluentButton @onclick="IncrementCount">Click me</FluentButton>
+            <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                <p class="title">Langurage</p>
+                <FluentSpacer />
+                
+                <FluentSelect TOption="string">
+                    <FluentOption>en-US</FluentOption>
+                    <FluentOption>zh-CN</FluentOption>
+                </FluentSelect>
+            </FluentStack>
+
+            <FluentDivider></FluentDivider>
+
+            <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                <p class="title">Theme</p>
+                <FluentSpacer />
+                
+                <FluentSelect TOption="string">
+                    <FluentOption>Light</FluentOption>
+                    <FluentOption>Dark</FluentOption>
+                </FluentSelect>
+            </FluentStack>
+        </FluentAccordionItem>
+
+        <FluentAccordionItem Heading="Download">
+            <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.ArrowCircleDown())" Color=Color.Neutral />
+
+            <div slot="end">
+                #end#
+            </div>
+
+            <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                <p class="title">Download setting is here.</p>
+            </FluentStack>
+        </FluentAccordionItem>
+    </FluentAccordion>
+</div>
+
+<style>
+    .setting {
+        width: 100%;
+        margin-bottom: 40px;
+    }
+
+    .setting fluent-accordion-item {
+        margin-bottom: 20px;
+    }
+
+    .setting .content {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .setting .content .title {
+        line-height: 100%;
+        margin: 0;
+    }
+</style>
