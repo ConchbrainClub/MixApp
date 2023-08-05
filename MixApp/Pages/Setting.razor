@@ -16,10 +16,10 @@
                 <p class="title">@LM.Scripts["p.setting.locale"]</p>
                 <FluentSpacer />
                 
-                <FluentSelect TOption="string">
-                    <FluentOption>@LM.Scripts["p.setting.zh_cn"]</FluentOption>
-                    <FluentOption>@LM.Scripts["p.setting.en_us"]</FluentOption>
-                </FluentSelect>
+                <FluentSelect TOption="Option<string>" Items="LocaleOptions" 
+                    @bind-SelectedOption="SelectedLocale"
+                    OptionText="@(i => LM.Scripts[i.Text!])" />
+
             </FluentStack>
 
             <FluentDivider />

@@ -4,9 +4,9 @@ namespace MixApp.Services
 {
     public class LocaleManager
     {
-        private HttpClient httpClient;
+        private readonly HttpClient httpClient;
 
-        private string[] supportLocale = new [] { "zh-CN", "en-US" };
+        private readonly string[] supportLocale = new [] { "zh-CN", "en-US" };
 
         public event Action? OnLoaded;
 

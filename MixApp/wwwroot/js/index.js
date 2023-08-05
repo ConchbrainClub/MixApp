@@ -35,3 +35,7 @@ window.initHighLight = (card) => {
         light.style.display = 'none';
     })
 }
+
+window.reload = () => {
+    location.reload()
+}

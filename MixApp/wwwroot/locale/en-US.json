@@ -41,6 +41,7 @@
     "p.setting.setting": "Setting",
     "p.setting.interface": "Interface",
     "p.setting.locale": "Locale",
+    "p.setting.auto": "Auto",
     "p.setting.zh_cn": "zh-CN",
     "p.setting.en_us": "en-US",
     "p.setting.theme": "Theme",
