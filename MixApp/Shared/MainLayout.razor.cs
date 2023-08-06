@@ -20,6 +20,8 @@ namespace MixApp.Shared
 
         public string Theme { get; set; } = "#333333";
 
+        public string Color { get; set; } = "#82ddfd";
+
         protected override async Task OnInitializedAsync()
         {
             GlobalEvent.OnOpenSoftware += software => 
@@ -32,9 +34,14 @@ namespace MixApp.Shared
 
             if (!string.IsNullOrEmpty(theme))
             {
-                Console.WriteLine(theme);
                 Theme = theme;
-                StateHasChanged();
+            }
+
+            string color = await LocalStorage.GetItemAsStringAsync("color");
+
+            if (!string.IsNullOrEmpty(color))
+            {
+                Color = color;
             }
         }
     }

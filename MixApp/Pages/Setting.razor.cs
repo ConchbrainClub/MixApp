@@ -48,6 +48,21 @@ namespace MixApp.Pages
 
         public List<Option<string>>? ThemeOptions { get; set; }
 
+        // Color setting
+
+        private string? selectedColor;
+
+        public string? SelectedColor
+        {
+            get => selectedColor;
+            set
+            {
+                selectedColor = value;
+                LocalStorage.SetItemAsStringAsync("color", value).AsTask();
+                JSRunTime!.InvokeVoidAsync("reload").AsTask();
+            }
+        }
+
         protected override async Task OnInitializedAsync()
         {
             // Init locale options
@@ -72,6 +87,17 @@ namespace MixApp.Pages
 
             string theme = await LocalStorage.GetItemAsStringAsync("theme").AsTask();
             selectedTheme = ThemeOptions.SingleOrDefault(i => i.Value == theme);
+
+            // Init base color
+            
+            string color = await LocalStorage.GetItemAsStringAsync("color").AsTask();
+
+            if (string.IsNullOrEmpty(color))
+            {
+                color = "#82ddfd";
+            }
+
+            selectedColor = color;
         }
     }
 }
