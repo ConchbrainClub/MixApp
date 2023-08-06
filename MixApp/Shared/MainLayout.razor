@@ -1,9 +1,10 @@
 ﻿@inherits MixApp.Shared.MainLayoutBase
 
-<FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="#333333" BaseLayerLuminance="0">
+<FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="@Theme" BaseLayerLuminance="0">
     
     <div class="layout">
         <SearchBox />
+        
         <div class="main">
             <SideBar />
 
@@ -31,7 +32,7 @@
     }
 
     .main > .container {
-        height: calc(100vh - 65px);
+        height: calc(100vh - 75px);
         overflow-y: scroll;
         text-align: left;
         padding:  0 10px;

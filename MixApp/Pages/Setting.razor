@@ -28,10 +28,10 @@
                 <p class="title">@LM.Scripts["p.setting.theme"]</p>
                 <FluentSpacer />
                 
-                <FluentSelect TOption="string">
-                    <FluentOption>@LM.Scripts["p.setting.light"]</FluentOption>
-                    <FluentOption>@LM.Scripts["p.setting.dark"]</FluentOption>
-                </FluentSelect>
+                <FluentSelect TOption="Option<string>" Items="ThemeOptions" 
+                    @bind-SelectedOption="SelectedTheme"
+                    OptionText="@(i => LM.Scripts[i.Text!])" />
+
             </FluentStack>
 
 

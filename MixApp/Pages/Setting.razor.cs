@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Fast.Components.FluentUI;
 using Microsoft.JSInterop;
+using MixApp.Services;
 
 namespace MixApp.Pages
 {
@@ -12,6 +13,8 @@ namespace MixApp.Pages
 
         [Inject]
         ILocalStorageService LocalStorage { get; set; } = default!;
+
+        // Locale setting
 
         private Option<string>? selectedLocale;
 
@@ -28,8 +31,27 @@ namespace MixApp.Pages
 
         public List<Option<string>>? LocaleOptions { get; set; }
 
+        // Theme setting
+
+        private Option<string>? selectedTheme;
+
+        public Option<string>? SelectedTheme
+        {
+            get => selectedTheme;
+            set
+            {
+                selectedTheme = value;
+                LocalStorage.SetItemAsStringAsync("theme", value?.Value).AsTask();
+                JSRunTime!.InvokeVoidAsync("reload").AsTask();
+            }
+        }
+
+        public List<Option<string>>? ThemeOptions { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
+            // Init locale options
+
             LocaleOptions = new List<Option<string>>()
             {
                 new Option<string> { Text = "p.setting.auto", Value = "" },
@@ -39,6 +61,17 @@ namespace MixApp.Pages
 
             string locale = await LocalStorage.GetItemAsStringAsync("locale").AsTask();
             selectedLocale = LocaleOptions.SingleOrDefault(i => i.Value == locale);
+
+            // Init theme options
+
+            ThemeOptions = new List<Option<string>>()
+            {
+                new Option<string> { Text = "p.setting.light", Value = "#f5f5f5" },
+                new Option<string> { Text = "p.setting.dark", Value = "#333333" }
+            };
+
+            string theme = await LocalStorage.GetItemAsStringAsync("theme").AsTask();
+            selectedTheme = ThemeOptions.SingleOrDefault(i => i.Value == theme);
         }
     }
 }
