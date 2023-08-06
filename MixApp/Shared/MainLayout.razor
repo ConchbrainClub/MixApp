@@ -1,11 +1,11 @@
 ﻿@inherits MixApp.Shared.MainLayoutBase
 
 <FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" FillColor="#333333" BaseLayerLuminance="0">
+    
     <div class="layout">
-        <SideBar />
-
+        <SearchBox />
         <div class="main">
-            <SearchBox />
+            <SideBar />
 
             <FluentStack class="container" Orientation="Orientation.Vertical"
                 HorizontalAlignment="HorizontalAlignment.Center">
@@ -20,21 +20,21 @@
 <style>
     .layout {
         height: 100vh;
-        display: flex;
     }
 
     .main {
         text-align: center;
-        width: calc(100% - 210px);
+        width: 100%;
         margin: 0 auto;
+        display: flex;
         text-decoration: none;
     }
 
     .main > .container {
-        height: calc(100vh - 75px);
+        height: calc(100vh - 55px);
         overflow-y: scroll;
         text-align: left;
-        padding: 0 10px;
+        padding:  0 10px;
     }
 
     @@media only screen and (max-width: 950px) {

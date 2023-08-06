@@ -3,6 +3,10 @@
 @inject LocaleManager LM
 
 <div class="searchBox">
+    <div class="mix">
+        <img src="/favicon.png" class="mixIcon"/>
+        <span class="mixInfo">Mix Store</span>
+    </div>
     <FluentSearch Value="@KeyWord" @onchange="UserInput" @oninput="UserInput" class="search" Placeholder=@LM.Scripts["c.search_box.search"] />
 
     @if(SearchResults.Count != 0 && !string.IsNullOrEmpty(KeyWord))
@@ -27,11 +31,31 @@
         position: relative;
         display: flex;
         justify-content: center;
+        background-color: #ffffff03;
+        position: relative;
+    }
+    .mix{
+        position: absolute;
+        left: 25px;
+        top: 15px;
+    }
+    .mix .mixIcon{
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .mix .mixInfo{
+        padding-left: 5px;
+        font-weight: 500;
+        display: inline-block;
+        vertical-align: middle;
     }
 
     .searchBox .search {
         width: 50%; 
         margin: 15px;
+        margin-right: 10px;
     }
 
     .searchBox .searchContent {
