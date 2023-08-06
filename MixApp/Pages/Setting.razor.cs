@@ -86,7 +86,8 @@ namespace MixApp.Pages
             };
 
             string theme = await LocalStorage.GetItemAsStringAsync("theme").AsTask();
-            selectedTheme = ThemeOptions.SingleOrDefault(i => i.Value == theme);
+            selectedTheme = ThemeOptions.SingleOrDefault(i => i.Value == theme) 
+                ?? ThemeOptions.Single(i => i.Text == "p.setting.dark");
 
             // Init base color
             
