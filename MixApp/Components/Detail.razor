@@ -3,10 +3,14 @@
 
 @inject LocaleManager LM
 
-@if (Software != null) {
-    <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn" >
+@if (Software != null)
+{
+    <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn">
+        <FluentIcon Value="@(new Icons.Regular.Size20.PresenceOffline())" class="cancelButton" @onclick="(_ => Software = null)"/>
+
         <div class="detail">
-            <img src="@(HttpClient?.BaseAddress + Software?.Cover)" loading="lazy" class="cover animate__animated animate__fadeInDown" />
+            <img src="@(HttpClient?.BaseAddress + Software?.Cover)" loading="lazy"
+                class="cover animate__animated animate__fadeInDown" />
             <div class="mask" />
 
             <div>
@@ -16,13 +20,13 @@
 
                         <p>@Software?.ShortDescription</p>
                         <p>@Latest.Description</p>
-                        
-                        <FluentButton @onclick="(_ => Download(Latest.Installers))" 
+
+                        <FluentButton @onclick="(_ => Download(Latest.Installers))"
                             IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())" 
                             Autofocus="true">
                             @LM.Scripts["c.detail.download"]
                         </FluentButton>
-                        
+
                         <FluentButton IconEnd="@(new Icons.Regular.Size16.Star())" Appearance="Appearance.Stealth" />
                     </div>
 
@@ -42,7 +46,7 @@
                 <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
 
                 <div class="info">
-                    
+
                     <div>
                         <h4>@LM.Scripts["c.detail.installers"]</h4>
 
@@ -85,12 +89,12 @@
                                 {
                                     <a href="@installer.InstallerUrl" target="_blank">
                                         <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@(installer.Architecture + installer.Scope)</FluentBadge>
-                                    </a>
+                                        </a>
                                 }
                             </TemplateColumn>
                         </FluentDataGrid>
                     </div>
-                    
+
                     <div>
                         <h4>@LM.Scripts["c.detail.license"]</h4>
 
@@ -127,6 +131,17 @@
     fluent-dialog::part(control) {
         --dialog-width: 60vw;
         padding: 20px 0;
+        position: relative;
+    }
+
+    .cancelButton {
+        position:absolute;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        z-index: 5;
+        right:-15px;
+        top:-15px;
     }
 
     .detail {
@@ -141,6 +156,7 @@
         border-radius: 5px;
     }
 
+
     .detail .mask {
         position: absolute;
         top: 0;
@@ -148,24 +164,24 @@
         width: 100%;
         background: linear-gradient(to top, #333333, rgba(255, 255, 255, 0));
     }
-    
+
     .head {
         display: flex;
         justify-content: space-between;
         padding: 20px;
     }
 
-    .head > div:first-child {
+    .head>div:first-child {
         text-align: left;
     }
 
-    .head > div:last-child {
+    .head>div:last-child {
         text-align: right;
         padding: 20px;
         min-width: 250px;
     }
 
-    .head > div:last-child p {
+    .head>div:last-child p {
         margin: 5px;
     }
 
@@ -173,7 +189,7 @@
         padding: 20px;
     }
 
-    .info > div {
+    .info>div {
         margin-bottom: 20px;
     }
 
@@ -182,7 +198,7 @@
     }
 
     .info fluent-data-grid {
-        max-height: 400px; 
+        max-height: 400px;
         overflow-y: scroll;
     }
 
