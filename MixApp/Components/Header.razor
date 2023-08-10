@@ -2,7 +2,7 @@
 
 @inject LocaleManager LM
 
-<div class="header">
+<div class="mixHeader">
     <div class="mix">
         <img src="/favicon.png" class="mixIcon"/>
         <span class="mixInfo">Mix Store</span>
@@ -27,11 +27,11 @@
 </div>
 
 <style>
-    .header {
+    .mixHeader {
         position: relative;
         display: flex;
         justify-content: center;
-        background-color: #3d3d3d;
+        background-color: var(--neutral-fill-layer-rest);;
         position: relative;
         height: 60px;
     }
@@ -57,13 +57,13 @@
         vertical-align: middle;
     }
 
-    .header .search {
+    .mixHeader .search {
         width: 50%; 
         margin: 15px;
         margin-right: 10px;
     }
 
-    .header .searchContent {
+    .mixHeader .searchContent {
         position: absolute;
         margin-top: 70px;
         overflow-y: scroll;
@@ -76,16 +76,16 @@
         border-radius: 5px;
     }
 
-    .header ::-webkit-scrollbar {
+    .mixHeader ::-webkit-scrollbar {
         display: none;
     }
 
-    .header .searchResult {
+    .mixHeader .searchResult {
         padding: 20px;
     }
 
     @@media only screen and (max-width: 950px) {
-        .header .search {
+        .mixHeader .search {
             display: none;
         }
     }
