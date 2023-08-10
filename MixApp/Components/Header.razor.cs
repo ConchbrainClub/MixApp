@@ -5,7 +5,7 @@ using MixApp.Services;
 
 namespace MixApp.Components
 {
-    public partial class SearchBoxBase : ComponentBase
+    public partial class HeaderBase : ComponentBase
     {
         [Inject]
         private HttpClient HttpClient { get; set; } = new();

@@ -1,8 +1,8 @@
-@inherits MixApp.Components.SearchBoxBase
+@inherits MixApp.Components.HeaderBase
 
 @inject LocaleManager LM
 
-<div class="searchBox">
+<div class="header">
     <div class="mix">
         <img src="/favicon.png" class="mixIcon"/>
         <span class="mixInfo">Mix Store</span>
@@ -27,7 +27,7 @@
 </div>
 
 <style>
-    .searchBox {
+    .header {
         position: relative;
         display: flex;
         justify-content: center;
@@ -57,13 +57,13 @@
         vertical-align: middle;
     }
 
-    .searchBox .search {
+    .header .search {
         width: 50%; 
         margin: 15px;
         margin-right: 10px;
     }
 
-    .searchBox .searchContent {
+    .header .searchContent {
         position: absolute;
         margin-top: 70px;
         overflow-y: scroll;
@@ -76,16 +76,16 @@
         border-radius: 5px;
     }
 
-    .searchBox ::-webkit-scrollbar {
+    .header ::-webkit-scrollbar {
         display: none;
     }
 
-    .searchBox .searchResult {
+    .header .searchResult {
         padding: 20px;
     }
 
     @@media only screen and (max-width: 950px) {
-        .searchBox .search {
+        .header .search {
             display: none;
         }
     }
