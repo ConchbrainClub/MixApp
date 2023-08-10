@@ -8,7 +8,7 @@
     <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn">
         <FluentIcon class="cancelButton" 
             Value="@(new Icons.Regular.Size20.PresenceOffline())" 
-            @onclick="(_ => OnDismiss.Invoke(new DialogEventArgs()))"/>
+            @onclick="(_ => { OnDismiss.Invoke(new DialogEventArgs()); Software = null; })"/>
 
         <div class="detail">
             <img src="@(HttpClient?.BaseAddress + Software?.Cover)" loading="lazy"
