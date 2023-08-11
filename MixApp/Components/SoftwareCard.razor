@@ -16,13 +16,11 @@
             </div>
 
             <div class="action">
-                <FluentButton IconEnd="@(new Icons.Regular.Size16.Star())">
-                    @LM.Scripts["c.software_card.star"]
-                </FluentButton>
-
                 <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(Software)) Appearance="Appearance.Accent">
                     @LM.Scripts["c.software_card.more_info"]
                 </FluentButton>
+
+                <FluentButton IconEnd="@(new Icons.Regular.Size16.Add())" />
             </div>
 
             <div class="light"></div>
