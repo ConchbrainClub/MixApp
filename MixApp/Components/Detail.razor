@@ -29,7 +29,7 @@
                             @LM.Scripts["c.detail.download"]
                         </FluentButton>
 
-                        <FluentButton IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" />
+                        <FluentButton IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
                     </div>
 
                     <div class="animate__animated animate__fadeInRight">
@@ -135,15 +135,22 @@
         padding: 20px 0;
         position: relative;
     }
+    
+    @@media only screen and (max-width: 1200px) {
+        fluent-dialog::part(control) {
+            --dialog-width: calc(100% - 30px);
+            margin: 14px;
+        }
+    }
 
     .cancelButton {
-        position:absolute;
+        position: absolute;
         border-radius: 50%;
         width: 32px;
         height: 32px;
         z-index: 5;
-        right:-15px;
-        top:-15px;
+        right: -10px;
+        top: -15px;
     }
 
     .detail {
