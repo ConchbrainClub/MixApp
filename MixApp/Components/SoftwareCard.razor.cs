@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MixApp.Models;
-using MixApp.Services;
 
 namespace MixApp.Components
 {
@@ -9,9 +8,6 @@ namespace MixApp.Components
     {
         [Inject]
         IJSRuntime JSRunTime { get; set; } = default!;
-
-        [Inject]
-        public GlobalEvent GlobalEvent { get; set; } = new();
 
         public ElementReference cardReference;
 

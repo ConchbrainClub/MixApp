@@ -1,6 +1,7 @@
 @inherits MixApp.Components.SoftwareCardBase
 
 @inject LocaleManager LM
+@inject GlobalEvent GlobalEvent
 
 <BaseLayerLuminance>
     <div class="card" @ref="cardReference">
@@ -20,7 +21,14 @@
                     @LM.Scripts["c.software_card.more_info"]
                 </FluentButton>
 
-                <FluentButton IconEnd="@(new Icons.Regular.Size16.Add())" Title="Add to list" />
+                @if(GlobalEvent.Softwares.FindIndex(i => Software.PackageIdentifier == i.PackageIdentifier) < 0)
+                {
+                    <FluentButton @onclick=@(_ => GlobalEvent.Add2DownloadList(Software)) IconEnd="@(new Icons.Regular.Size20.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                }
+                else
+                {
+                    <FluentButton IconEnd="@(new Icons.Filled.Size20.Dismiss())" Appearance="Appearance.Stealth" Title="Remove from list" />
+                }
             </div>
 
             <div class="light"></div>

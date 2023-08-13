@@ -29,7 +29,7 @@
                             @LM.Scripts["c.detail.download"]
                         </FluentButton>
 
-                        <FluentButton IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                        <FluentButton @onclick=@(_ => GlobalEvent.Add2DownloadList(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
                     </div>
 
                     <div class="animate__animated animate__fadeInRight">

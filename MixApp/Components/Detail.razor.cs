@@ -4,6 +4,7 @@ using Microsoft.Fast.Components.FluentUI;
 using MixApp.Models;
 using System.Text.Json;
 using Microsoft.JSInterop;
+using MixApp.Services;
 
 namespace MixApp.Components
 {
@@ -14,6 +15,9 @@ namespace MixApp.Components
 
         [Inject]
         IJSRuntime? JSRunTime { get; set; }
+
+        [Inject]
+        public GlobalEvent GlobalEvent { get; set; } = new();
 
         [Parameter]
         public Action<DialogEventArgs> OnDismiss { get; set; }

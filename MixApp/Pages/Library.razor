@@ -5,8 +5,34 @@
 
 <PageTitle>Library</PageTitle>
 
-<h1>Library</h1>
+<div class="page">
+    <h1>Library</h1>
 
-<p role="status">Current count: @currentCount</p>
+    <FluentDataGrid Items="@Softwares.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 2fr 2fr" ResizableColumns=true>
+        <TemplateColumn Title="Bonus">
+            <img class="icon" src=@(GetIcon(context)) onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" loading="lazy" />
+        </TemplateColumn>
+        <PropertyColumn Property="@(i => i.PackageName)" />
+        <PropertyColumn Property="@(i => i.ShortDescription)" />
+        <PropertyColumn Property="@(i => i.Publisher)" />
+        <TemplateColumn Title="Bonus">
+            <FluentButton Appearance="Appearance.Accent">Info</FluentButton>
+            <FluentButton Appearance="Appearance.Accent">Pause</FluentButton>
+        </TemplateColumn>
+    </FluentDataGrid>
+</div>
 
-<FluentButton @onclick="IncrementCount">Click me</FluentButton>
+<style>
+    .page {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .page h1 {
+        margin: 20px 10px;
+    }
+
+    .page img {
+        height: 30px;
+    }
+</style>
