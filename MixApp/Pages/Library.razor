@@ -6,16 +6,26 @@
 <PageTitle>Library</PageTitle>
 
 <div class="page">
-    <h1>Library</h1>
+    <h1>Waiting Queue</h1>
 
     <FluentDataGrid Items="@Softwares.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 2fr 2fr" ResizableColumns=true>
-        <TemplateColumn Title="Bonus">
+        <TemplateColumn Title="Logo">
             <img class="icon" src=@(GetIcon(context)) onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" loading="lazy" />
         </TemplateColumn>
-        <PropertyColumn Property="@(i => i.PackageName)" />
-        <PropertyColumn Property="@(i => i.ShortDescription)" />
-        <PropertyColumn Property="@(i => i.Publisher)" />
-        <TemplateColumn Title="Bonus">
+
+        <TemplateColumn Title="PackageName" >
+            <p class="line">@context.PackageName</p>
+        </TemplateColumn>
+
+        <TemplateColumn Title="Description">
+            <p class="line">@context.ShortDescription</p>
+        </TemplateColumn>
+
+        <TemplateColumn Title="Publisher">
+            <p class="line">@context.Publisher</p>
+        </TemplateColumn>
+
+        <TemplateColumn Title="Action">
             <FluentButton Appearance="Appearance.Accent">Info</FluentButton>
             <FluentButton Appearance="Appearance.Accent">Pause</FluentButton>
         </TemplateColumn>
@@ -29,10 +39,16 @@
     }
 
     .page h1 {
-        margin: 20px 10px;
+        margin: 0 10px 20px 10px;
     }
 
     .page img {
         height: 30px;
+    }
+
+    .page .line {
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 0;
     }
 </style>
