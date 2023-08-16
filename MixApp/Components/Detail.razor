@@ -2,6 +2,7 @@
 @using System.Text.Json
 
 @inject LocaleManager LM
+@inject GlobalEvent GlobalEvent
 
 @if (Software != null)
 {
@@ -23,13 +24,13 @@
                         <p>@Software?.ShortDescription</p>
                         <p>@Latest.Description</p>
 
-                        <FluentButton @onclick="(_ => Download(Latest.Installers))"
+                        <FluentButton @onclick="(_ => Download(null))"
                             IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())" 
                             Autofocus="true">
                             @LM.Scripts["c.detail.download"]
                         </FluentButton>
 
-                        <FluentButton @onclick=@(_ => GlobalEvent.Add2DownloadList(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                        <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
                     </div>
 
                     <div class="animate__animated animate__fadeInRight">
@@ -89,9 +90,9 @@
                             <TemplateColumn Title="Dwonload">
                                 @foreach (Installer installer in JsonSerializer.Deserialize<List<Installer>>(context.Installers ?? "[]")!)
                                 {
-                                    <a href="@installer.InstallerUrl" target="_blank">
+                                    <a @onclick=@(_ => Download(installer)) target="_blank">
                                         <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@(installer.Architecture + installer.Scope)</FluentBadge>
-                                        </a>
+                                    </a>
                                 }
                             </TemplateColumn>
                         </FluentDataGrid>

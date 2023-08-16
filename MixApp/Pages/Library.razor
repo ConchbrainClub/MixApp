@@ -2,13 +2,14 @@
 @inherits MixApp.Pages.LibraryBase
 
 @inject LocaleManager LM
+@inject GlobalEvent GlobalEvent
 
 <PageTitle>Library</PageTitle>
 
 <div class="page">
     <h1>Waiting Queue</h1>
 
-    <FluentDataGrid Items="@Softwares.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 2fr 2fr" ResizableColumns=true>
+    <FluentDataGrid Items="@GlobalEvent.WaitQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 2fr 2fr" ResizableColumns=true>
         <TemplateColumn Title="Logo">
             <img class="icon" src=@(GetIcon(context)) onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" loading="lazy" />
         </TemplateColumn>

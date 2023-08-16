@@ -16,9 +16,6 @@ namespace MixApp.Components
         [Inject]
         IJSRuntime? JSRunTime { get; set; }
 
-        [Inject]
-        public GlobalEvent GlobalEvent { get; set; } = new();
-
         [Parameter]
         public Action<DialogEventArgs> OnDismiss { get; set; }
 
@@ -66,20 +63,27 @@ namespace MixApp.Components
             StateHasChanged();
         }
 
-        public void Download(string? installers)
+        public async void Download(Installer? installer)
         {
-            if (string.IsNullOrEmpty(installers)) return;
-
-            List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(installers) ?? new();
-
-            Installer? installer = installersObj.Find(i => i.Architecture == "x86");
-
-            if (installersObj.FindIndex(i => i.Architecture == "x64") > 0) 
+            if (installer == null)
             {
-                installer = installersObj.Find(i => i.Architecture == "x64");
+                List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(Latest.Installers!) ?? new();
+
+                installer = installersObj.Find(i => i.Architecture == "x86");
+
+                if (installersObj.FindIndex(i => i.Architecture == "x64") > 0) 
+                {
+                    installer = installersObj.Find(i => i.Architecture == "x64");
+                }
             }
 
-            JSRunTime!.InvokeVoidAsync("open", installer?.InstallerUrl).AsTask();
+            HttpClient httpClient = new();
+            HttpResponseMessage responseMessage = await httpClient.GetAsync("https://cors.conchbrain.club?" + installer?.InstallerUrl);
+            using Stream stream = responseMessage.Content.ReadAsStream();
+            using var streamRef = new DotNetStreamReference(stream: stream);
+
+            string extName = installer?.InstallerUrl?.Split('.').Last() ?? "exe";
+            await JSRunTime!.InvokeVoidAsync("downloadFileFromStream", $"{Software?.PackageName}.{extName}", streamRef).AsTask();
         }
     }
 }

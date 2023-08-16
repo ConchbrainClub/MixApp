@@ -36,6 +36,18 @@ window.initHighLight = (card) => {
     })
 }
 
+window.downloadFileFromStream = async (fileName, contentStreamReference) => {
+    let arrayBuffer = await contentStreamReference.arrayBuffer();
+    let blob = new Blob([arrayBuffer]);
+    let url = URL.createObjectURL(blob);
+    let ele = document.createElement('a');
+    ele.href = url;
+    ele.download = fileName ?? '';
+    ele.click();
+    ele.remove();
+    URL.revokeObjectURL(url);
+}
+
 window.reload = () => {
     location.reload()
 }

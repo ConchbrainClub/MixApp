@@ -8,7 +8,7 @@ namespace MixApp.Services
 
         public event Action<string>? OnChangeTheme;
 
-        public List<Software> Softwares { get; set; } = new();
+        public List<Software> WaitQueue { get; set; } = new();
 
         public void OpenSoftware(Software software)
         {
@@ -20,9 +20,9 @@ namespace MixApp.Services
             OnChangeTheme?.Invoke(color);
         }
 
-        public void Add2DownloadList(Software software) 
+        public void Add2WaitQueue(Software software) 
         {
-            Softwares.Add(software);
+            WaitQueue.Add(software);
         }
     }
 }
