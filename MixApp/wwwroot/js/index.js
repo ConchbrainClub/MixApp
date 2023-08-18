@@ -36,7 +36,7 @@ window.initHighLight = (card) => {
     })
 }
 
-window.downloadInstaller = async(url) => {
+window.downloadFile = async(dotnet, fileName, url) => {
     let res = await fetch(url)
     let reader = res.body.getReader()
 
@@ -54,14 +54,10 @@ window.downloadInstaller = async(url) => {
     }
 
     console.log('download finished')
-    downloadFromBuffer('123.exe', buffer)
-}
-
-window.downloadFromBuffer = async (fileName, buffer) => {
+    
     let blob = new Blob(buffer)
-    let url = URL.createObjectURL(blob)
     let ele = document.createElement('a')
-    ele.href = url
+    ele.href = URL.createObjectURL(blob)
     ele.download = fileName ?? ''
     ele.click()
     ele.remove()

@@ -11,7 +11,7 @@ namespace MixApp.Components
         private HttpClient HttpClient { get; set; } = new();
 
         [Inject]
-        public GlobalEvent GlobalEvent { get; set; } = new();
+        public GlobalEvent GlobalEvent { get; set; } = default!;
 
         public string? KeyWord { get; set; }
 

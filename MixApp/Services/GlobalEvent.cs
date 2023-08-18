@@ -1,9 +1,17 @@
+using Microsoft.JSInterop;
 using MixApp.Models;
 
 namespace MixApp.Services
 {
     public class GlobalEvent
     {
+        private IJSRuntime JSRuntime { get; set; }
+
+        public GlobalEvent(IJSRuntime runtime)
+        {
+            JSRuntime = runtime;
+        }
+
         public event Action<Software>? OnOpenSoftware;
 
         public event Action<string>? OnChangeTheme;
@@ -23,6 +31,11 @@ namespace MixApp.Services
         public void Add2WaitQueue(Software software) 
         {
             WaitQueue.Add(software);
+        }
+
+        public void DownloadFile(string fileName, string url)
+        {
+            JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(this), fileName, url).AsTask();
         }
     }
 }

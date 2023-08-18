@@ -15,7 +15,7 @@ namespace MixApp.Pages
         IJSRuntime? JSRunTime { get; set; }
 
         [Inject]
-        public GlobalEvent GlobalEvent { get; set; } = new();
+        public GlobalEvent GlobalEvent { get; set; } = default!;
 
         public int PageIndex { get; set; } = -1;
 

@@ -4,6 +4,7 @@ using Microsoft.Fast.Components.FluentUI;
 using MixApp.Models;
 using System.Text.Json;
 using Microsoft.JSInterop;
+using MixApp.Services;
 
 namespace MixApp.Components
 {
@@ -13,7 +14,7 @@ namespace MixApp.Components
         public HttpClient HttpClient { get; set; } = new HttpClient();
 
         [Inject]
-        IJSRuntime? JSRunTime { get; set; }
+        public GlobalEvent GlobalEvent { get; set; } = default!;
 
         [Parameter]
         public Action<DialogEventArgs> OnDismiss { get; set; }
@@ -76,7 +77,10 @@ namespace MixApp.Components
                 }
             }
 
-            JSRunTime!.InvokeVoidAsync("downloadInstaller", "https://cors.conchbrain.club?" + installer?.InstallerUrl).AsTask();
+            string fileName = (Software?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
+            string url = "https://cors.conchbrain.club?" + installer?.InstallerUrl;
+
+            GlobalEvent.DownloadFile(fileName, url);
         }
     }
 }

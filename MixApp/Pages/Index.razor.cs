@@ -11,7 +11,7 @@ namespace MixApp.Pages
         public HttpClient HttpClient { get; set; } = new HttpClient();
 
         [Inject]
-        public GlobalEvent GlobalEvent { get; set; } = new();
+        public GlobalEvent GlobalEvent { get; set; } = default!;
         
         public Software? SelectedSoftware { get; set; }
 

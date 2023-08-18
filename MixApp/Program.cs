@@ -8,8 +8,8 @@ using MixApp.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-IJSRuntime? jSRuntime = builder.Services.BuildServiceProvider().GetService<IJSRuntime>();
-string locale = await jSRuntime!.InvokeAsync<string>("locale") ?? "en-US";
+IJSRuntime? jsRuntime = builder.Services.BuildServiceProvider().GetService<IJSRuntime>();
+string locale = await jsRuntime!.InvokeAsync<string>("locale") ?? "en-US";
 
 LocaleManager localeManager = new(builder.HostEnvironment.BaseAddress);
 await localeManager.Initialize(locale);
@@ -28,7 +28,7 @@ builder.Services.AddScoped(sp =>
     };
 });
 
-builder.Services.AddSingleton<GlobalEvent>();
+builder.Services.AddSingleton(new GlobalEvent(jsRuntime!));
 
 builder.Services.AddSingleton(localeManager);
 

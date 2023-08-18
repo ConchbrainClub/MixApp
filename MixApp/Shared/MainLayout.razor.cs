@@ -12,7 +12,7 @@ namespace MixApp.Shared
         ILocalStorageService LocalStorage { get; set; } = default!;
 
         [Inject]
-        private GlobalEvent GlobalEvent { get; set; } = new();
+        private GlobalEvent GlobalEvent { get; set; } = default!;
 
         public bool Expanded { get; set; } = false;
 
