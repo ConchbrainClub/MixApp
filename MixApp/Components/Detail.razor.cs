@@ -4,7 +4,6 @@ using Microsoft.Fast.Components.FluentUI;
 using MixApp.Models;
 using System.Text.Json;
 using Microsoft.JSInterop;
-using MixApp.Services;
 
 namespace MixApp.Components
 {
@@ -63,7 +62,7 @@ namespace MixApp.Components
             StateHasChanged();
         }
 
-        public async void Download(Installer? installer)
+        public void Download(Installer? installer)
         {
             if (installer == null)
             {
@@ -77,13 +76,7 @@ namespace MixApp.Components
                 }
             }
 
-            HttpClient httpClient = new();
-            HttpResponseMessage responseMessage = await httpClient.GetAsync("https://cors.conchbrain.club?" + installer?.InstallerUrl);
-            using Stream stream = responseMessage.Content.ReadAsStream();
-            using var streamRef = new DotNetStreamReference(stream: stream);
-
-            string extName = installer?.InstallerUrl?.Split('.').Last() ?? "exe";
-            await JSRunTime!.InvokeVoidAsync("downloadFileFromStream", $"{Software?.PackageName}.{extName}", streamRef).AsTask();
+            JSRunTime!.InvokeVoidAsync("downloadInstaller", "https://cors.conchbrain.club?" + installer?.InstallerUrl).AsTask();
         }
     }
 }
