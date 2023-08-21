@@ -71,14 +71,18 @@ namespace MixApp.Components
 
                 installer = installersObj.Find(i => i.Architecture == "x86");
 
+                Console.WriteLine(installer == null);
+
                 if (installersObj.FindIndex(i => i.Architecture == "x64") > 0) 
                 {
-                    installer = installersObj.Find(i => i.Architecture == "x64");
+                    Console.WriteLine("=============");
+                    installer = installersObj.Single(i => i.Architecture == "x64");
                 }
             }
 
             string fileName = (Software?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
             string url = "https://cors.conchbrain.club?" + installer?.InstallerUrl;
+            Console.WriteLine(installer);
 
             GlobalEvent.DownloadFile(fileName, url);
         }
