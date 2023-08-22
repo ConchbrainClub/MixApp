@@ -31,6 +31,7 @@ namespace MixApp.Services
             {
                 List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(manifest.Installers!) ?? new();
 
+                installer = installersObj.First();
                 installer = installersObj.Find(i => i.Architecture == "x86");
 
                 if (installersObj.FindIndex(i => i.Architecture == "x64") >= 0) 

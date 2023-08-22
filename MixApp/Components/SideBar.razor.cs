@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Fast.Components.FluentUI;
+using MixApp.Models;
 
 namespace MixApp.Components
 {

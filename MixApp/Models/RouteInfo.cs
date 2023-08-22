@@ -1,6 +1,6 @@
 using Microsoft.Fast.Components.FluentUI;
 
-namespace MixApp.Components
+namespace MixApp.Models
 {
     public class RouteInfo
     {
