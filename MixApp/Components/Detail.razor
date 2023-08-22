@@ -2,6 +2,7 @@
 @using System.Text.Json
 
 @inject LocaleManager LM
+@inject GlobalEvent GlobalEvent
 
 @if (Software != null)
 {
@@ -23,8 +24,8 @@
                         <p>@Software?.ShortDescription</p>
                         <p>@Latest.Description</p>
 
-                        <FluentButton @onclick="(_ => Download(null))"
-                            IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())" 
+                        <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
+                            IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
                             Autofocus="true">
                             @LM.Scripts["c.detail.download"]
                         </FluentButton>
@@ -89,7 +90,7 @@
                             <TemplateColumn Title="Dwonload">
                                 @foreach (Installer installer in JsonSerializer.Deserialize<List<Installer>>(context.Installers ?? "[]")!)
                                 {
-                                    <a @onclick=@(_ => Download(installer)) target="_blank">
+                                    <a @onclick=@(_ => GlobalEvent.DownloadInstaller(context, installer)) href="javascript:void(0)" target="_blank">
                                         <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@(installer.Architecture + installer.Scope)</FluentBadge>
                                     </a>
                                 }

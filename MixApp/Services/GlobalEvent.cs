@@ -1,5 +1,6 @@
 using Microsoft.JSInterop;
 using MixApp.Models;
+using System.Text.Json;
 
 namespace MixApp.Services
 {
@@ -24,9 +25,24 @@ namespace MixApp.Services
 
         public void Add2WaitQueue(Software software) => WaitQueue.Add(software);
 
-        public void DownloadApp(Manifest manifest, Installer installer)
+        public void DownloadInstaller(Manifest manifest, Installer? installer = null)
         {
-            
+            if (installer == null)
+            {
+                List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(manifest.Installers!) ?? new();
+
+                installer = installersObj.Find(i => i.Architecture == "x86");
+
+                if (installersObj.FindIndex(i => i.Architecture == "x64") >= 0) 
+                {
+                    installer = installersObj.Single(i => i.Architecture == "x64");
+                }
+            }
+
+            string fileName = (manifest?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
+            string url = "https://cors.conchbrain.club?" + installer?.InstallerUrl;
+
+            DownloadFile(fileName, url);
         }
 
         public void DownloadFile(string fileName, string url)

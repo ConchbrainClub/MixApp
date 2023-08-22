@@ -13,9 +13,6 @@ namespace MixApp.Components
         [Inject]
         public HttpClient HttpClient { get; set; } = new HttpClient();
 
-        [Inject]
-        public GlobalEvent GlobalEvent { get; set; } = default!;
-
         [Parameter]
         public Action<DialogEventArgs> OnDismiss { get; set; }
 
@@ -61,30 +58,6 @@ namespace MixApp.Components
             Installers = JsonSerializer.Deserialize<List<Installer>>(Latest.Installers!) ?? new();
 
             StateHasChanged();
-        }
-
-        public void Download(Installer? installer)
-        {
-            if (installer == null)
-            {
-                List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(Latest.Installers!) ?? new();
-
-                installer = installersObj.Find(i => i.Architecture == "x86");
-
-                Console.WriteLine(installer == null);
-
-                if (installersObj.FindIndex(i => i.Architecture == "x64") > 0) 
-                {
-                    Console.WriteLine("=============");
-                    installer = installersObj.Single(i => i.Architecture == "x64");
-                }
-            }
-
-            string fileName = (Software?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
-            string url = "https://cors.conchbrain.club?" + installer?.InstallerUrl;
-            Console.WriteLine(installer);
-
-            GlobalEvent.DownloadFile(fileName, url);
         }
     }
 }
