@@ -26,11 +26,18 @@
                             <p>@Software?.ShortDescription</p>
                             <p>@Latest.Description</p>
 
-                            <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
-                                IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
-                                Autofocus="true">
-                                @LM.Scripts["c.detail.download"]
-                            </FluentButton>
+                            @if((GlobalEvent.DownloadQueue.FindIndex(i => i.Manifest.PackageIdentifier == Latest.PackageIdentifier) < 0))
+                            {
+                                <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
+                                    IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
+                                    Autofocus="true">
+                                    @LM.Scripts["c.detail.download"]
+                                </FluentButton>
+                            }
+                            else
+                            {
+                                <FluentProgressRing></FluentProgressRing>
+                            }
 
                             <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
                         </div>
