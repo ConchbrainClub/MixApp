@@ -48,11 +48,17 @@ window.downloadFile = (dotnet, fileName, url) => {
 
         while (true) {
             let { done, value } = await reader.read()
-            if (done) break
+            if (done) {
+                dotnet.invokeMethodAsync('ChangedProgress', 100)
+                break
+            }
 
             buffer.push(value)
             receivedLength += value.length
+
             let progress = Math.round(receivedLength / contentLength * 100)
+            if (isNaN(progress) || !isFinite(progress)) progress = 0
+
             dotnet.invokeMethodAsync('ChangedProgress', progress)
         }
 
