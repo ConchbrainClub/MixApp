@@ -1,6 +1,6 @@
-﻿using MixApp.Models;
+﻿using Microsoft.JSInterop;
 
-namespace MixApp;
+namespace MixApp.Models;
 
 public class DownloadTask
 {
@@ -18,4 +18,13 @@ public class DownloadTask
     public Installer Installer { get; set; }
 
     public int Progress { get; set; }
+
+    public event Action<DownloadTask>? OnProgressChanged;
+
+    [JSInvokable]
+    public void ChangedProgress(int progress)
+    {
+        Progress = progress;
+        OnProgressChanged?.Invoke(this);
+    }
 }

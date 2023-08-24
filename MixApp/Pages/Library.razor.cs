@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Components;
-using MixApp.Models;
+using MixApp.Services;
 
 namespace MixApp.Pages
 {
     public partial class LibraryBase : ComponentBase
     {
-        public static string GetIcon(Software software)
+        [Inject]
+        public GlobalEvent GlobalEvent { get; set; } = default!;
+
+        protected override void OnInitialized()
         {
-            Uri uri = new(software.PackageUrl ?? "https://www.conchbrain.club");
-            return $"https://icon.horse/icon/{uri.Host}";
+            GlobalEvent.OnDownloadQueueChanged += StateHasChanged;
+            base.OnInitialized();
         }
     }
 }

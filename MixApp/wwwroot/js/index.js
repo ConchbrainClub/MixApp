@@ -53,7 +53,7 @@ window.downloadFile = (dotnet, fileName, url) => {
             buffer.push(value)
             receivedLength += value.length
             let progress = Math.round(receivedLength / contentLength * 100)
-            dotnet.invokeMethodAsync('OnProgressChanged', progress)
+            dotnet.invokeMethodAsync('ChangedProgress', progress)
         }
 
         console.log('download finished')
@@ -67,7 +67,7 @@ window.downloadFile = (dotnet, fileName, url) => {
         URL.revokeObjectURL(url)
 
     }).catch(() => {
-        dotnet.invokeMethodAsync('OnProgressChanged', -1)
+        dotnet.invokeMethodAsync('ChangedProgress', -1)
     })
 }
 

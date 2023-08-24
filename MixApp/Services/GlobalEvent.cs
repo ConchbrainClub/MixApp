@@ -17,6 +17,10 @@ namespace MixApp.Services
 
         public event Action<string>? OnChangeTheme;
 
+        public event Action? OnDownloadQueueChanged;
+
+        public List<DownloadTask> DownloadQueue { get; set; } = new();
+
         public List<Software> WaitQueue { get; set; } = new();
 
         public void OpenSoftware(Software software) => OnOpenSoftware?.Invoke(software);
@@ -44,13 +48,15 @@ namespace MixApp.Services
             string fileName = (manifest?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
             string url = "https://cors.conchbrain.club?" + installer?.InstallerUrl;
 
-            JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(this), fileName, url).AsTask();
-        }
+            DownloadTask task = new(manifest!, installer!);
+            task.OnProgressChanged += i => 
+            {
+                if (i.Progress == 100) DownloadQueue.Remove(i);
+                OnDownloadQueueChanged?.Invoke();
+            };
+            DownloadQueue.Add(task);
 
-        [JSInvokable]
-        public void OnProgressChanged(int progress)
-        {
-            Console.WriteLine(progress);
+            JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url).AsTask();
         }
     }
 }
