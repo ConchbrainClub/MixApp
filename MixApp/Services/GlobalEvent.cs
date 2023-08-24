@@ -49,13 +49,14 @@ namespace MixApp.Services
             string url = "https://cors.conchbrain.club?" + installer?.InstallerUrl;
 
             DownloadTask task = new(manifest!, installer!);
+
             task.OnProgressChanged += i => 
             {
                 if (i.Progress == 100) DownloadQueue.Remove(i);
                 OnDownloadQueueChanged?.Invoke();
             };
-            DownloadQueue.Add(task);
 
+            DownloadQueue.Add(task);
             JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url).AsTask();
         }
     }
