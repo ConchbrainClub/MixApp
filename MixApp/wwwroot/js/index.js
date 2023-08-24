@@ -36,32 +36,39 @@ window.initHighLight = (card) => {
     })
 }
 
-window.downloadFile = async(dotnet, fileName, url) => {
-    let res = await fetch(url)
-    let reader = res.body.getReader()
+window.downloadFile = (dotnet, fileName, url) => {
+    new Promise(async () => {
 
-    let contentLength = res.headers.get('Content-Length')
-    let receivedLength = 0
-    let buffer = []
+        let res = await fetch(url)
+        let reader = res.body.getReader()
 
-    while (true) {
-        let { done, value } = await reader.read()
-        if (done) break
+        let contentLength = res.headers.get('Content-Length')
+        let receivedLength = 0
+        let buffer = []
 
-        buffer.push(value)
-        receivedLength += value.length
-        console.log(Math.round(receivedLength / contentLength * 100))
-    }
+        while (true) {
+            let { done, value } = await reader.read()
+            if (done) break
 
-    console.log('download finished')
-    
-    let blob = new Blob(buffer)
-    let ele = document.createElement('a')
-    ele.href = URL.createObjectURL(blob)
-    ele.download = fileName ?? ''
-    ele.click()
-    ele.remove()
-    URL.revokeObjectURL(url)
+            buffer.push(value)
+            receivedLength += value.length
+            let progress = Math.round(receivedLength / contentLength * 100)
+            dotnet.invokeMethodAsync('OnProgressChanged', progress)
+        }
+
+        console.log('download finished')
+        
+        let blob = new Blob(buffer)
+        let ele = document.createElement('a')
+        ele.href = URL.createObjectURL(blob)
+        ele.download = fileName ?? ''
+        ele.click()
+        ele.remove()
+        URL.revokeObjectURL(url)
+
+    }).catch(() => {
+        dotnet.invokeMethodAsync('OnProgressChanged', -1)
+    })
 }
 
 window.reload = () => {

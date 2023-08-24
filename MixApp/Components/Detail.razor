@@ -53,7 +53,12 @@
                     <div>
                         <h4>@LM.Scripts["c.detail.installers"]</h4>
 
-                        <FluentDataGrid Items="@Installers.AsQueryable()" GridTemplateColumns="1fr 5fr 7fr 1fr" ResizableColumns=true Virtualize="true" >
+                        <FluentDataGrid Items=@(JsonSerializer.Deserialize<List<Installer>>(Latest.Installers ?? "[]")!.AsQueryable()) 
+                            TGridItem="Installer" 
+                            GridTemplateColumns="1fr 5fr 7fr 1fr" 
+                            ResizableColumns=true 
+                            Virtualize="true" >
+                            
                             <PropertyColumn Title=@LM.Scripts["c.detail.arch"] Property=@(i => i!.Architecture) />
                             <TemplateColumn Title=@LM.Scripts["c.detail.url"]>
                                 <a href="@context.InstallerUrl" target="_blank">@context.InstallerUrl</a>

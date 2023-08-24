@@ -2,9 +2,6 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Fast.Components.FluentUI;
 using MixApp.Models;
-using System.Text.Json;
-using Microsoft.JSInterop;
-using MixApp.Services;
 
 namespace MixApp.Components
 {
@@ -22,8 +19,6 @@ namespace MixApp.Components
         public List<Manifest> Manifests { get; set; } = new();
 
         public Manifest Latest { get; set; } = new();
-
-        public List<Installer> Installers { get; set; } = new();
 
         public DetailBase()
         {
@@ -55,8 +50,6 @@ namespace MixApp.Components
                 .ToList();
 
             Latest = Manifests.First();
-            Installers = JsonSerializer.Deserialize<List<Installer>>(Latest.Installers!) ?? new();
-
             StateHasChanged();
         }
     }

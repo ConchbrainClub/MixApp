@@ -27,28 +27,30 @@ namespace MixApp.Services
 
         public void DownloadInstaller(Manifest manifest, Installer? installer = null)
         {
+            List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(manifest.Installers!) ?? new();
+
             if (installer == null)
             {
-                List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(manifest.Installers!) ?? new();
-
-                installer = installersObj.First();
                 installer = installersObj.Find(i => i.Architecture == "x86");
 
                 if (installersObj.FindIndex(i => i.Architecture == "x64") >= 0) 
                 {
-                    installer = installersObj.Single(i => i.Architecture == "x64");
+                    installer = installersObj.Find(i => i.Architecture == "x64");
                 }
             }
+
+            installer ??= installersObj.First();
 
             string fileName = (manifest?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
             string url = "https://cors.conchbrain.club?" + installer?.InstallerUrl;
 
-            DownloadFile(fileName, url);
+            JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(this), fileName, url).AsTask();
         }
 
-        public void DownloadFile(string fileName, string url)
+        [JSInvokable]
+        public void OnProgressChanged(int progress)
         {
-            JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(this), fileName, url).AsTask();
+            Console.WriteLine(progress);
         }
     }
 }
