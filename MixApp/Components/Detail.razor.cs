@@ -18,7 +18,7 @@ namespace MixApp.Components
 
         public List<Manifest> Manifests { get; set; } = new();
 
-        public Manifest Latest { get; set; } = new();
+        public Manifest? Latest { get; set; }
 
         public DetailBase()
         {
@@ -28,6 +28,7 @@ namespace MixApp.Components
         protected async override void OnParametersSet()
         {
             if (Software == null) return;
+            Latest = null;
 
             Manifests = (await HttpClient
                 .GetFromJsonAsync<IEnumerable<Manifest>>($"/softwares/{Software?.PackageIdentifier}") ?? Array.Empty<Manifest>())

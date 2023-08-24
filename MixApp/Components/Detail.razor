@@ -16,121 +16,128 @@
                 class="cover animate__animated animate__fadeInDown" />
             <div class="mask" />
 
-            <div>
-                <div class="head">
-                    <div class="animate__animated animate__fadeInLeft">
-                        <h1>@Software?.PackageName</h1>
+            @if(Latest != null)
+            {
+                <div>
+                    <div class="head">
+                        <div class="animate__animated animate__fadeInLeft">
+                            <h1>@Software?.PackageName</h1>
 
-                        <p>@Software?.ShortDescription</p>
-                        <p>@Latest.Description</p>
+                            <p>@Software?.ShortDescription</p>
+                            <p>@Latest.Description</p>
 
-                        <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
-                            IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
-                            Autofocus="true">
-                            @LM.Scripts["c.detail.download"]
-                        </FluentButton>
+                            <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
+                                IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
+                                Autofocus="true">
+                                @LM.Scripts["c.detail.download"]
+                            </FluentButton>
 
-                        <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                            <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                        </div>
+
+                        <div class="animate__animated animate__fadeInRight">
+                            <p>@LM.Scripts["c.detail.identifier"]: @Software?.PackageIdentifier</p>
+                            <p>@LM.Scripts["c.detail.latest"]: @Latest.PackageVersion</p>
+                            <p>@LM.Scripts["c.detail.date"]: @Latest.ReleaseDate</p>
+                            <p>
+                                <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
+                            </p>
+                            <a href="@Latest.PublisherUrl" target="_blank">
+                                <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@LM.Scripts["c.detail.official_website"]</FluentBadge>
+                            </a>
+                        </div>
                     </div>
 
-                    <div class="animate__animated animate__fadeInRight">
-                        <p>@LM.Scripts["c.detail.identifier"]: @Software?.PackageIdentifier</p>
-                        <p>@LM.Scripts["c.detail.latest"]: @Latest.PackageVersion</p>
-                        <p>@LM.Scripts["c.detail.date"]: @Latest.ReleaseDate</p>
-                        <p>
-                            <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
-                        </p>
-                        <a href="@Latest.PublisherUrl" target="_blank">
-                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@LM.Scripts["c.detail.official_website"]</FluentBadge>
-                        </a>
+                    <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
+
+                    <div class="info">
+
+                        <div>
+                            <h4>@LM.Scripts["c.detail.installers"]</h4>
+
+                            <FluentDataGrid Items=@(JsonSerializer.Deserialize<List<Installer>>(Latest.Installers ?? "[]")!.AsQueryable()) 
+                                TGridItem="Installer" 
+                                GridTemplateColumns="1fr 5fr 7fr 1fr" 
+                                ResizableColumns=true 
+                                Virtualize="true" >
+                                
+                                <PropertyColumn Title=@LM.Scripts["c.detail.arch"] Property=@(i => i!.Architecture) />
+                                <TemplateColumn Title=@LM.Scripts["c.detail.url"]>
+                                    <a href="@context.InstallerUrl" target="_blank">@context.InstallerUrl</a>
+                                </TemplateColumn>
+                                <PropertyColumn Title=@LM.Scripts["c.detail.sha256"] Property=@(i => i!.InstallerSha256) />
+                                <PropertyColumn Title=@LM.Scripts["c.detail.scope"] Property=@(i => i!.Scope) />
+                            </FluentDataGrid>
+                        </div>
+
+                        <div>
+                            <h4>@LM.Scripts["c.detail.winget"]</h4>
+
+                            <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) />
+                        </div>
+
+                        <div>
+                            <h4>@LM.Scripts["c.detail.tags"]</h4>
+
+                            @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
+                            {
+                                <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                                    @tags
+                                </FluentBadge>
+                            }
+                        </div>
+
+                        <div>
+                            <h4>@LM.Scripts["c.detail.other_version"]</h4>
+
+                            <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 5fr 1fr 2fr" ResizableColumns=true Virtualize="true" >
+                                <PropertyColumn Title=@LM.Scripts["c.detail.version"] Property=@(i => i!.PackageVersion) Sortable="true" />
+                                <PropertyColumn Title=@LM.Scripts["c.detail.release_notes"] Property=@(i => i!.ReleaseNotes ?? "None") Sortable="true" />
+                                <PropertyColumn Title=@LM.Scripts["c.detail.release_date"] Property=@(i => i!.ReleaseDate ?? "-") Sortable="true" />
+                                <TemplateColumn Title="Dwonload">
+                                    @foreach (Installer installer in JsonSerializer.Deserialize<List<Installer>>(context.Installers ?? "[]")!)
+                                    {
+                                        <a @onclick=@(_ => GlobalEvent.DownloadInstaller(context, installer)) href="javascript:void(0)" target="_blank">
+                                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@(installer.Architecture + installer.Scope)</FluentBadge>
+                                        </a>
+                                    }
+                                </TemplateColumn>
+                            </FluentDataGrid>
+                        </div>
+
+                        <div>
+                            <h4>@LM.Scripts["c.detail.license"]</h4>
+
+                            <a href="@Latest.LicenseUrl" target="_blank">
+                                <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                                    @Latest.License
+                                </FluentBadge>
+                            </a>
+                        </div>
+
+                        <div>
+                            <h4>@LM.Scripts["c.detail.privacy"]</h4>
+
+                            <a href="@Latest.PrivacyUrl" target="_blank">
+                                <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
+                                    @Latest.PrivacyUrl
+                                </FluentBadge>
+                            </a>
+                        </div>
+
+                        <div class="copyright">
+                            <a href="@Latest.CopyrightUrl" target="_blank">
+                                @Latest.Copyright
+                            </a>
+                        </div>
+
                     </div>
                 </div>
-
-                <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
-
-                <div class="info">
-
-                    <div>
-                        <h4>@LM.Scripts["c.detail.installers"]</h4>
-
-                        <FluentDataGrid Items=@(JsonSerializer.Deserialize<List<Installer>>(Latest.Installers ?? "[]")!.AsQueryable()) 
-                            TGridItem="Installer" 
-                            GridTemplateColumns="1fr 5fr 7fr 1fr" 
-                            ResizableColumns=true 
-                            Virtualize="true" >
-                            
-                            <PropertyColumn Title=@LM.Scripts["c.detail.arch"] Property=@(i => i!.Architecture) />
-                            <TemplateColumn Title=@LM.Scripts["c.detail.url"]>
-                                <a href="@context.InstallerUrl" target="_blank">@context.InstallerUrl</a>
-                            </TemplateColumn>
-                            <PropertyColumn Title=@LM.Scripts["c.detail.sha256"] Property=@(i => i!.InstallerSha256) />
-                            <PropertyColumn Title=@LM.Scripts["c.detail.scope"] Property=@(i => i!.Scope) />
-                        </FluentDataGrid>
-                    </div>
-
-                    <div>
-                        <h4>@LM.Scripts["c.detail.winget"]</h4>
-
-                        <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) />
-                    </div>
-
-                    <div>
-                        <h4>@LM.Scripts["c.detail.tags"]</h4>
-
-                        @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
-                        {
-                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
-                                @tags
-                            </FluentBadge>
-                        }
-                    </div>
-
-                    <div>
-                        <h4>@LM.Scripts["c.detail.other_version"]</h4>
-
-                        <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 5fr 1fr 2fr" ResizableColumns=true Virtualize="true" >
-                            <PropertyColumn Title=@LM.Scripts["c.detail.version"] Property=@(i => i!.PackageVersion) Sortable="true" />
-                            <PropertyColumn Title=@LM.Scripts["c.detail.release_notes"] Property=@(i => i!.ReleaseNotes ?? "None") Sortable="true" />
-                            <PropertyColumn Title=@LM.Scripts["c.detail.release_date"] Property=@(i => i!.ReleaseDate ?? "-") Sortable="true" />
-                            <TemplateColumn Title="Dwonload">
-                                @foreach (Installer installer in JsonSerializer.Deserialize<List<Installer>>(context.Installers ?? "[]")!)
-                                {
-                                    <a @onclick=@(_ => GlobalEvent.DownloadInstaller(context, installer)) href="javascript:void(0)" target="_blank">
-                                        <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@(installer.Architecture + installer.Scope)</FluentBadge>
-                                    </a>
-                                }
-                            </TemplateColumn>
-                        </FluentDataGrid>
-                    </div>
-
-                    <div>
-                        <h4>@LM.Scripts["c.detail.license"]</h4>
-
-                        <a href="@Latest.LicenseUrl" target="_blank">
-                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
-                                @Latest.License
-                            </FluentBadge>
-                        </a>
-                    </div>
-
-                    <div>
-                        <h4>@LM.Scripts["c.detail.privacy"]</h4>
-
-                        <a href="@Latest.PrivacyUrl" target="_blank">
-                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">
-                                @Latest.PrivacyUrl
-                            </FluentBadge>
-                        </a>
-                    </div>
-
-                    <div class="copyright">
-                        <a href="@Latest.CopyrightUrl" target="_blank">
-                            @Latest.Copyright
-                        </a>
-                    </div>
-
-                </div>
-            </div>
+            }
+            else
+            {
+                <FluentProgressRing></FluentProgressRing>
+            }
         </div>
     </FluentDialog>
 }
