@@ -13,26 +13,70 @@ namespace MixApp.Services
             JSRuntime = runtime;
         }
 
+        /// <summary>
+        /// When user want open software detail interface
+        /// </summary>
         public event Action<Software>? OnOpenSoftware;
 
-        public event Action<string>? OnChangeTheme;
-
+        /// <summary>
+        /// When download progress changed
+        /// </summary>
         public event Action? OnDownloadQueueChanged;
 
-        public List<DownloadTask> DownloadQueue { get; set; } = new();
-
+        /// <summary>
+        /// Wait for download queue
+        /// </summary>
         public List<Software> WaitQueue { get; set; } = new();
 
+        /// <summary>
+        /// Downloading queue
+        /// </summary>
+        public List<DownloadTask> DownloadQueue { get; set; } = new();
+
+        /// <summary>
+        /// Download history queue
+        /// </summary>
+        public List<DownloadTask> HistoryQueue { get; set; } = new();
+
+        /// <summary>
+        /// Open software detail interface
+        /// </summary>
+        /// <param name="software">Software info to fetch Manifests</param>
         public void OpenSoftware(Software software) => OnOpenSoftware?.Invoke(software);
 
-        public void ChangeTheme(string color) => OnChangeTheme?.Invoke(color);
-
+        /// <summary>
+        /// Add Software to wait to download queue
+        /// </summary>
+        /// <param name="software">software info</param>
         public void Add2WaitQueue(Software software) => WaitQueue.Add(software);
 
+        /// <summary>
+        /// Add the download task info to download history queue
+        /// </summary>
+        /// <param name="task">download task info</param>
+        public void Add2HistoryQueue(DownloadTask task)
+        {
+            int index = HistoryQueue.FindIndex(history => 
+            {
+                return history.Manifest.PackageIdentifier == task.Manifest.PackageIdentifier &&
+                    history.Manifest.PackageVersion == task.Manifest.PackageVersion &&
+                    history.Installer.InstallerSha256 == task.Installer.InstallerSha256;
+            });
+
+            if (index >= 0) HistoryQueue.RemoveAt(index);
+            HistoryQueue.Add(task);
+        }
+
+        /// <summary>
+        /// Download the software by manifest (which software) and installer (which arch) 
+        /// </summary>
+        /// <param name="manifest">software's manifest</param>
+        /// <param name="installer">manifest's installer</param>
         public void DownloadInstaller(Manifest manifest, Installer? installer = null)
         {
             List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(manifest.Installers!) ?? new();
 
+            // Find the installer that the arch is x86 or x64 (default)
             if (installer == null)
             {
                 installer = installersObj.Find(i => i.Architecture == "x86");
@@ -43,6 +87,7 @@ namespace MixApp.Services
                 }
             }
 
+            // If can not find the default arch, download the first
             installer ??= installersObj.First();
 
             string fileName = (manifest?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
@@ -52,11 +97,16 @@ namespace MixApp.Services
 
             task.OnProgressChanged += i => 
             {
-                if (i.Progress == 100) DownloadQueue.Remove(i);
+                if (i.Progress == 100) 
+                {
+                    DownloadQueue.Remove(i);
+                    Add2HistoryQueue(i);
+                }
                 OnDownloadQueueChanged?.Invoke();
             };
 
             DownloadQueue.Add(task);
+            // Invoke javascript to fetch the installer
             JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url).AsTask();
         }
     }

@@ -72,6 +72,35 @@
             </FluentDataGrid>
         </div>
     }
+
+    <div class="list">
+        <h1>Download History</h1>
+
+        <FluentDataGrid Items="@GlobalEvent.HistoryQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 2fr 2fr" ResizableColumns=true>
+            <TemplateColumn Title="Logo">
+                <img class="icon" 
+                    src=@("https://icon.horse/icon/" + new Uri(context.Manifest.PackageUrl ?? "https://www.conchbrain.club").Host) 
+                    onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" 
+                    loading="lazy" />
+            </TemplateColumn>
+
+            <TemplateColumn Title="PackageName" >
+                <p class="line">@context.Manifest.PackageName</p>
+            </TemplateColumn>
+
+            <TemplateColumn Title="Description">
+                <p class="line">@context.Manifest.ShortDescription</p>
+            </TemplateColumn>
+
+            <TemplateColumn Title="Publisher">
+                <p class="line">@context.Manifest.Publisher</p>
+            </TemplateColumn>
+
+            <TemplateColumn Title="Action">
+                <FluentButton Appearance="Appearance.Accent">Delete</FluentButton>
+            </TemplateColumn>
+        </FluentDataGrid>
+    </div>
 </div>
 
 <style>
