@@ -1,0 +1,172 @@
+﻿@page "/"
+@inherits MixApp.Shared.Pages.IndexBase
+
+@inject LocaleManager LM
+
+<PageTitle>Home</PageTitle>
+
+<BaseLayerLuminance>
+    <FluentStack class="page" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
+
+        <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000"
+            Easing=ScrollEasing.EaseInOut>
+            @if (RecentlyUpdatedSoftwares.Count == 0)
+            {
+                for (int index = 0; index < 2; index++)
+                {
+                    <SkeletonBanner />
+                }
+            }
+            else
+            {
+                @foreach (Software software in RecentlyUpdatedSoftwares)
+                {
+                    <FluentCard Appearance="Appearance.Accent">
+                        <div class="bannerDesc">
+                            <h2>@software.PackageName</h2>
+                            <p>@software.ShortDescription</p>
+                            <FluentButton Appearance="Appearance.Outline" @onclick=@(_ => GlobalEvent.OpenSoftware(software))>
+                                @LM.Scripts["p.index.more_info"]
+                            </FluentButton>
+                        </div>
+                        <img src=@(HttpClient?.BaseAddress + software.Cover) class="cover" loading="lazy">
+                        <div class="mask" />
+                    </FluentCard>
+                }
+            }
+        </FluentHorizontalScroll>
+
+        <div class="recommended">
+            <p class="text">
+                @LM.Scripts["p.index.recommend_for_you"] &gt;
+            </p>
+        </div>
+
+        <div class="content">
+            @if (RandomSoftwares.Count == 0)
+            {
+                for (int index = 0; index < 5; index++)
+                {
+                    <SkeletonCard />
+                }
+            }
+            else
+            {
+                @foreach (Software software in RandomSoftwares)
+                {
+                    <SoftwareCard Software="software" />
+                }
+            }
+        </div>
+
+        <div class="recommended">
+            <p class="text">
+                @LM.Scripts["p.index.trending_software"] &gt;
+            </p>
+        </div>
+
+        <div class="content">
+            @foreach (Software software in RecentlyUpdatedSoftwares)
+            {
+                <SoftwareCard Software="software" />
+            }
+        </div>
+        
+    </FluentStack>
+</BaseLayerLuminance>
+
+<style>
+    .page {
+        height: 100%;
+        overflow-y: scroll;
+    }
+
+    .banner {
+        width: 100%;
+    }
+
+    .text {
+        font-weight: bold;
+        font-size: 17px;
+        font-family: inherit;
+    }
+
+    .banner fluent-card {
+        margin-right: 10px;
+        height: 550px;
+        width: 950px;
+        position: relative;
+    }
+
+    .banner fluent-card:hover {
+        -webkit-box-shadow: 0 0 6px #999;
+        box-shadow: 0 0 6px #999;
+        -webkit-transition: all .5s ease-out;
+        transition: all .5s ease-out;
+    }
+
+    .banner .cover {
+        height: 100%;
+    }
+
+    .banner .mask {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        z-index: 3;
+        background: linear-gradient(to right, var(--fill-color), rgba(255, 255, 255, 0));
+    }
+
+    .bannerDesc {
+        font-size: 20px;
+        font-weight: bold;
+        max-width: 400px;
+        position: absolute;
+        top: 45%;
+        left: 6%;
+        z-index: 4;
+    }
+
+    .bannerDesc fluent-button {
+        backdrop-filter: saturate(110%) blur(10px);
+    }
+
+    .content {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-gap: 1em;
+    }
+
+    @@media only screen and (max-width: 1400px) {
+        .content {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+    }
+
+    @@media only screen and (max-width: 1200px) {
+        .content {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @@media only screen and (max-width: 950px) {
+        .content {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @@media only screen and (max-width: 700px) {
+        .content {
+            width: 100%;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+    }
+
+    .recommended {
+        width: 100%;
+        margin-top: 20px;
+        text-align: left;
+    }
+</style>

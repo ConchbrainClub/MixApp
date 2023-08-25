@@ -1,0 +1,82 @@
+@inherits MixApp.Shared.Components.SoftwareCardBase
+
+@inject LocaleManager LM
+@inject GlobalEvent GlobalEvent
+
+<BaseLayerLuminance>
+    <div class="card" @ref="cardReference">
+        <FluentCard BackReference="@context" class="animate__animated animate__fadeIn">
+            <div>
+                <p>@Software.PackageIdentifier</p>
+                <FluentDivider></FluentDivider>
+                
+                <img class="icon" src=@(GetIcon()) onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" loading="lazy" />
+                <h3 class="title">@Software.PackageName</h3>
+                <FluentBadge Appearance="Appearance.Neutral">@Software.Publisher</FluentBadge>
+                <p class="desc">@Software.ShortDescription</p>
+            </div>
+
+            <div class="action">
+                <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(Software)) Appearance="Appearance.Accent">
+                    @LM.Scripts["c.software_card.more_info"]
+                </FluentButton>
+
+                @if(GlobalEvent.WaitQueue.FindIndex(i => Software.PackageIdentifier == i.PackageIdentifier) < 0)
+                {
+                    <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software)) IconEnd="@(new Icons.Regular.Size20.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                }
+                else
+                {
+                    <FluentButton IconEnd="@(new Icons.Filled.Size20.Dismiss())" Appearance="Appearance.Stealth" Title="Remove from list" />
+                }
+            </div>
+
+            <div class="light"></div>
+        </FluentCard>
+    </div>
+</BaseLayerLuminance>
+
+<style>
+    .card fluent-card {
+        padding: 20px 20px 60px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .title {
+        margin: 0.75rem 0;
+    }
+
+    .card .desc {
+        margin-top: 10px;
+    }
+
+    .card .action {
+        margin: 1.5rem 0;
+        position: absolute;
+        bottom: 0;
+    }
+    
+    .card .action fluent-button {
+        margin-right: 5px;
+    }
+
+    .card .icon{
+        float: right;
+        width: 40px;
+        height: 40px;
+        margin: 10px;
+        border-radius: 5px;
+    }
+
+    .card .light {
+        display: none;
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background-color: #ffffff27;
+        border-radius: 50%;
+        filter: blur(40px);
+        z-index: -1;
+    }
+</style>
