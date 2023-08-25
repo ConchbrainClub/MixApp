@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixApp", "MixApp.Shared\MixApp.Shared.csproj", "{A4512AFE-F6E9-4084-8CE5-485E69C2CDC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MixApp.Client", "MixApp.Client\MixApp.Client.csproj", "{45F1A141-CE7F-411F-AE9A-A5E2E28341E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{A4512AFE-F6E9-4084-8CE5-485E69C2CDC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4512AFE-F6E9-4084-8CE5-485E69C2CDC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4512AFE-F6E9-4084-8CE5-485E69C2CDC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45F1A141-CE7F-411F-AE9A-A5E2E28341E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F1A141-CE7F-411F-AE9A-A5E2E28341E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F1A141-CE7F-411F-AE9A-A5E2E28341E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F1A141-CE7F-411F-AE9A-A5E2E28341E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
