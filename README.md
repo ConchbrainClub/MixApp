@@ -4,7 +4,7 @@ MixApp web app, powered by blazor
 
 ```bash
 yarn # OR npm install
-mv ./node_modules/ ./MixApp/wwwroot/lib
+mv ./node_modules/ ./MixApp.Shared/wwwroot/lib
 
 wget https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh
 chmod +x dotnet-install.sh
@@ -12,5 +12,5 @@ chmod +x dotnet-install.sh
 rm dotnet-install.sh
 
 dotnet restore
-dotnet watch run --project MixApp/MixApp.csproj
+dotnet watch run --project MixApp.Shared/MixApp.csproj
 ```

@@ -1,3 +1,5 @@
+window.external.receiveMessage(message => alert(message));
+
 window.initPageSoftware = (dotnet) => {
     let scrollBox = document.querySelector('.page')
 
