@@ -1,7 +1,7 @@
 ﻿﻿using PhotinoNET;
 using System.Drawing;
 
-namespace HelloPhotinoApp
+namespace MixApp.Client
 {
     class Program
     {
