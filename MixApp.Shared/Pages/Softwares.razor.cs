@@ -23,15 +23,12 @@ namespace MixApp.Shared.Pages
 
         public Software? SelectedSoftware { get; set; }
 
-        protected override void OnInitialized()
-        {
-            LoadData();
-        }
-
         protected override void OnAfterRender(bool firstRender)
         {
             if (!firstRender) return;
+            GlobalEvent.OnWaitQueueChanged += StateHasChanged;
             JSRunTime!.InvokeVoidAsync("initPageSoftware", DotNetObjectReference.Create(this)).AsTask();
+            LoadData();
         }
 
         private async void LoadData()

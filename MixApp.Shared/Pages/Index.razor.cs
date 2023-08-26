@@ -23,6 +23,7 @@ namespace MixApp.Shared.Pages
 
         protected override void OnInitialized()
         {
+            GlobalEvent.OnWaitQueueChanged += StateHasChanged;
             LoadTopData();
             LoadRandomData();
             LoadRecentlyUpdatedData();

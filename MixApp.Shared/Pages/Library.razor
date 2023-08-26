@@ -11,7 +11,7 @@
         <div class="list">
             <h1>Waiting Queue</h1>
 
-            <FluentDataGrid Items="@GlobalEvent.WaitQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 2fr 2fr" ResizableColumns=true>
+            <FluentDataGrid Items="@GlobalEvent.WaitQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 3fr 2fr" ResizableColumns=true>
                 <TemplateColumn Title="Logo">
                     <img class="icon" 
                         src=@("https://icon.horse/icon/" + new Uri(context.PackageUrl ?? "https://www.conchbrain.club").Host) 
@@ -32,8 +32,8 @@
                 </TemplateColumn>
 
                 <TemplateColumn Title="Action">
-                    <FluentButton Appearance="Appearance.Accent">Info</FluentButton>
-                    <FluentButton Appearance="Appearance.Accent">Pause</FluentButton>
+                    <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())" />
+                    <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size16.Dismiss())" />
                 </TemplateColumn>
             </FluentDataGrid>
         </div>
@@ -44,7 +44,7 @@
         <div class="list">
             <h1>Download Queue</h1>
 
-            <FluentDataGrid Items="@GlobalEvent.DownloadQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 2fr 2fr" ResizableColumns=true>
+            <FluentDataGrid Items="@GlobalEvent.DownloadQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 3fr 2fr" ResizableColumns=true>
                 <TemplateColumn Title="Logo">
                     <img class="icon" 
                         src=@("https://icon.horse/icon/" + new Uri(context.Manifest.PackageUrl ?? "https://www.conchbrain.club").Host) 
@@ -76,7 +76,7 @@
     <div class="list">
         <h1>Download History</h1>
 
-        <FluentDataGrid Items="@GlobalEvent.HistoryQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 2fr 2fr" ResizableColumns=true>
+        <FluentDataGrid Items="@GlobalEvent.HistoryQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 3fr 2fr" ResizableColumns=true>
             <TemplateColumn Title="Logo">
                 <img class="icon" 
                     src=@("https://icon.horse/icon/" + new Uri(context.Manifest.PackageUrl ?? "https://www.conchbrain.club").Host) 
