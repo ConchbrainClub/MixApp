@@ -1,4 +1,10 @@
-window.external.receiveMessage(message => alert(message));
+try {
+    window.external.receiveMessage(message => alert(message))
+    console.log('client app')
+} 
+catch (error) {
+    console.log('web app')
+}
 
 window.initPageSoftware = (dotnet) => {
     let scrollBox = document.querySelector('.page')
