@@ -10,11 +10,13 @@ class Program
     {
         string windowTitle = "MixStore";
 
-        var window = new PhotinoWindow()
+        PhotinoWindow window = new PhotinoWindow()
             .SetTitle(windowTitle)
             .SetUseOsDefaultSize(false)
             .SetSize(new Size(1400, 930))
-            // .SetChromeless(true)
+            // .SetContextMenuEnabled(false)
+            // .SetDevToolsEnabled(false)
+            .SetGrantBrowserPermissions(true)
             .Center()
             .RegisterWebMessageReceivedHandler((object? sender, string message) =>
             {
