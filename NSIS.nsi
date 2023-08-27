@@ -20,12 +20,19 @@
   ;InstallDirRegKey HKCU "Software\Modern UI Test" ""
 
   ;Request application privileges for Windows Vista
-  RequestExecutionLevel admin
+  RequestExecutionLevel user
 
 ;--------------------------------
 ;Interface Settings
 
+  !define MUI_HEADERIMAGE
+  !define MUI_HEADERIMAGE_BITMAP "MixApp.Client\header.bmp" ; optional
   !define MUI_ABORTWARNING
+
+;--------------------------------
+;Variables
+
+  Var StartMenuFolder
 
 ;--------------------------------
 ;Pages
@@ -33,6 +40,13 @@
   ;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
   ;!insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
+  
+  ;Start Menu Folder Page Configuration
+  !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
+  !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\MixStore" 
+  !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "MixStore"
+  
+  !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
   !insertmacro MUI_PAGE_INSTFILES
   
   !insertmacro MUI_UNPAGE_CONFIRM
@@ -41,7 +55,7 @@
 ;--------------------------------
 ;Languages
  
-  !insertmacro MUI_LANGUAGE "SimpChinese"
+  !insertmacro MUI_LANGUAGE "English"
 
 ;--------------------------------
 ;Installer Sections
@@ -52,24 +66,26 @@ Section "Dummy Section" SecDummy
   
   ;ADD YOUR OWN FILES HERE...
   File /nonfatal /r "MixApp.Client\bin\Release\net8.0\win-x64\publish\*.*"
+  
+  ;Store installation folder
+  WriteRegStr HKCU "Software\MixStore" "" $INSTDIR
+  
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MixStore" "DisplayName" "MixStore"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MixStore" "UninstallString" "$INSTDIR\Uninstall.exe"
 
+  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+    
+    ;Create shortcuts
+    CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
+    CreateShortcut "$SMPROGRAMS\$StartMenuFolder\MixStore.lnk" "$INSTDIR\MixStore.exe"
+    CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+  
+  !insertmacro MUI_STARTMENU_WRITE_END
+
 SectionEnd
-
-;--------------------------------
-;Descriptions
-
-  ;Language strings
-  ;LangString DESC_SecDummy ${LANG_ENGLISH} "A test section."
-
-  ;Assign language strings to sections
-  ;!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  ;!insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} $(DESC_SecDummy)
-  ;!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
 ;Uninstaller Section
@@ -79,6 +95,14 @@ Section "Uninstall"
   ;ADD YOUR OWN FILES HERE...
 
   RMDir /r "$INSTDIR"
+  
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
+    
+  Delete "$SMPROGRAMS\$StartMenuFolder\MixStore.lnk"
+  Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
+  RMDir "$SMPROGRAMS\$StartMenuFolder"
+  
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MixStore"
+  DeleteRegKey /ifempty HKCU "Software\MixStore"
 
 SectionEnd
