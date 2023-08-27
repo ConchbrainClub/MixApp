@@ -19,6 +19,11 @@ namespace MixApp.Shared.Services
         public event Action<Software>? OnOpenSoftware;
 
         /// <summary>
+        /// When wait queue changed
+        /// </summary>
+        public event Action? OnWaitQueueChanged;
+
+        /// <summary>
         /// When download progress changed
         /// </summary>
         public event Action? OnDownloadQueueChanged;
@@ -48,7 +53,21 @@ namespace MixApp.Shared.Services
         /// Add Software to wait to download queue
         /// </summary>
         /// <param name="software">software info</param>
-        public void Add2WaitQueue(Software software) => WaitQueue.Add(software);
+        public void Add2WaitQueue(Software software)
+        {
+            int index = WaitQueue.FindIndex(i => i.PackageIdentifier ==  software.PackageIdentifier);
+
+            if (index < 0)
+            {
+                WaitQueue.Add(software);
+            }
+            else
+            {
+                WaitQueue.RemoveAt(index);
+            }
+
+            OnWaitQueueChanged?.Invoke();
+        }
 
         /// <summary>
         /// Add the download task info to download history queue

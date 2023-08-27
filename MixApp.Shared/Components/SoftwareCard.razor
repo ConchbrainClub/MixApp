@@ -27,7 +27,7 @@
                 }
                 else
                 {
-                    <FluentButton IconEnd="@(new Icons.Filled.Size20.Dismiss())" Appearance="Appearance.Stealth" Title="Remove from list" />
+                    <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software)) IconEnd="@(new Icons.Filled.Size20.Dismiss())" Appearance="Appearance.Stealth" Title="Remove from list" />
                 }
             </div>
 

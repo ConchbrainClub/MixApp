@@ -42,7 +42,14 @@
                                 <FluentProgressRing></FluentProgressRing>
                             }
 
-                            <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                            @if(GlobalEvent.WaitQueue.FindIndex(i => Software!.PackageIdentifier == i.PackageIdentifier) < 0)
+                            {
+                                <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                            }
+                            else
+                            {
+                                <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Filled.Size16.Dismiss())" Appearance="Appearance.Stealth" Title="Remove from list" />
+                            }
                         </div>
 
                         <div class="animate__animated animate__fadeInRight">

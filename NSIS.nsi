@@ -1,6 +1,4 @@
 ;NSIS Modern User Interface
-;Basic Example Script
-;Written by Joost Verburg
 
 ;--------------------------------
 ;Include Modern UI
@@ -43,7 +41,7 @@
 ;--------------------------------
 ;Languages
  
-  !insertmacro MUI_LANGUAGE "English"
+  !insertmacro MUI_LANGUAGE "SimpChinese"
 
 ;--------------------------------
 ;Installer Sections
