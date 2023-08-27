@@ -2,7 +2,6 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Fast.Components.FluentUI;
 using Microsoft.JSInterop;
-using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Pages
 {

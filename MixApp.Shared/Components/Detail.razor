@@ -28,7 +28,7 @@
 
                             @if((GlobalEvent.DownloadQueue.FindIndex(i => i.Manifest.PackageIdentifier == Latest.PackageIdentifier) < 0))
                             {   
-                                @* rodo点击下载按钮，移动到库动画 *@
+                                @* todo 点击下载按钮，移动到库动画 *@
                                 <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
                                     IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
                                     Autofocus="true">
@@ -38,7 +38,7 @@
                             }
                             else
                             {
-                                @* todo: 显示下载进度 *@
+                                @* todo 显示下载进度 *@
                                 <FluentProgressRing></FluentProgressRing>
                             }
 
@@ -167,7 +167,6 @@
                     </div>
                 </div>
                 <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
-
             }
         </div>
     </FluentDialog>
@@ -196,12 +195,12 @@
         margin-bottom: 16px;
     }
 
-
     .buttonOnLeft {
         width: 76px;
         height: 32px;
         margin-bottom: 16px;
     }
+
     .detailSkeletonButtonRight{
         display: flex;
         flex-direction: column;
@@ -209,6 +208,7 @@
         padding: 20px;
         width: 135px;
     }
+
     .detailSkeletonButtonRight  .detailSkeletonRight{
         height: 20px;
         margin: 5px;
@@ -217,22 +217,25 @@
     .firstOnRight{
         width: 90px;
     }
+
     .secondOnRight{
         width: 100px;
     }
+
     .thirdOnRight{
         width: 70px;
     }
+
     .fourthOnRight{
         width: 50px;
     }
-
 
     @@media only screen and (max-width: 260px) {
         .secondOnLeft{
             width: 100%;
         }
     }
+
      @@media only screen and (max-width: 210px) {
         .firstOnLeft{
             width: 100%;
@@ -243,9 +246,6 @@
         padding: 20px;
 
     }
-   
-
-
 
     fluent-dialog::part(control) {
         --dialog-width: 60vw;
@@ -255,15 +255,15 @@
     
     @@media only screen and (max-width: 1200px) {
         fluent-dialog::part(control) {
-            --dialog-width: calc(100% - 30px);
-            margin: 14px;
+                --dialog-width: calc(100% - 30px);
+                margin: 14px;
+            }
+            .detailSkeletonButtonRight{
+                width: 175px;
+            }
+            .detailSkeletonIntroLeft{
+            width: calc(100% - 175px);
         }
-        .detailSkeletonButtonRight{
-            width: 175px;
-        }
-        .detailSkeletonIntroLeft{
-        width: calc(100% - 175px);
-    }
     }
 
     .cancelButton {
