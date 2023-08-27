@@ -9,13 +9,12 @@
     <PublishAot>true</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
     <StripSymbols>true</StripSymbols>
+    <AssemblyName>MixStore</AssemblyName>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\**" />
-    <None Update="wwwroot\**">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None> 
+    <Content Include="favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
