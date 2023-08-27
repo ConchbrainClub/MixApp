@@ -7,6 +7,7 @@
         @foreach (RouteInfo info in Top)
         {
             <NavLink Href="@info.Href">
+                @* 颜色用var(--accent-fill-rest) *@
                 <div @onclick=@(_ => CurrentHref = info.Href) class=@(CurrentHref == info.Href ? "active":string.Empty)>
                     @if (CurrentHref == info.Href)
                     {
@@ -17,6 +18,7 @@
                         <FluentIcon Value="@info.IconRegular" />
                     }
                     <span>@LM.Scripts[info.Name]</span>
+
                 </div>
             </NavLink>
         }
@@ -53,7 +55,8 @@
         flex-direction: column;
         justify-content: space-between;
         padding: 5px;
-        background-color: var(--neutral-fill-layer-rest);;
+        background-color: var(--neutral-fill-layer-rest);
+        ;
     }
 
     .sidebar .top,

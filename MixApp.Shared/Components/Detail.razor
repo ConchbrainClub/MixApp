@@ -15,7 +15,7 @@
             <img src="@(HttpClient?.BaseAddress + Software?.Cover)" loading="lazy"
                 class="cover animate__animated animate__fadeInDown" />
             <div class="mask" />
-
+            
             @if(Latest != null)
             {
                 <div>
@@ -27,15 +27,18 @@
                             <p>@Latest.Description</p>
 
                             @if((GlobalEvent.DownloadQueue.FindIndex(i => i.Manifest.PackageIdentifier == Latest.PackageIdentifier) < 0))
-                            {
+                            {   
+                                @* rodo点击下载按钮，移动到库动画 *@
                                 <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
                                     IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
                                     Autofocus="true">
                                     @LM.Scripts["c.detail.download"]
+                                    
                                 </FluentButton>
                             }
                             else
                             {
+                                @* todo: 显示下载进度 *@
                                 <FluentProgressRing></FluentProgressRing>
                             }
 
@@ -143,13 +146,100 @@
             }
             else
             {
-                <FluentProgressRing></FluentProgressRing>
+                <div class="detailSkeleton">
+                    <div class="detailSkeletonIntroLeft">
+                        <FluentSkeleton class="firstOnLeft" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="secondOnLeft" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="buttonOnLeft" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    </div>
+                    <div class="detailSkeletonButtonRight">
+                        <FluentSkeleton class="detailSkeletonRight firstOnRight" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="detailSkeletonRight secondOnRight" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="detailSkeletonRight thirdOnRight" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="detailSkeletonRight fourthOnRight" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    </div>
+                </div>
+                <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
+
             }
         </div>
     </FluentDialog>
 }
 
 <style scoped>
+
+    .detailSkeleton{
+        display: flex;
+        box-sizing: border-box;
+    }
+
+    .detailSkeletonIntroLeft{
+        width: calc(100% - 135px);
+    }
+
+    .firstOnLeft {
+        width: 210px;
+        height: 40px;
+        margin-bottom: 12px;
+    }
+
+    .secondOnLeft {
+        width: 260px;
+        height: 20px;
+        margin-bottom: 16px;
+    }
+
+
+    .buttonOnLeft {
+        width: 76px;
+        height: 32px;
+        margin-bottom: 16px;
+    }
+    .detailSkeletonButtonRight{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 20px;
+        width: 135px;
+    }
+    .detailSkeletonButtonRight  .detailSkeletonRight{
+        height: 20px;
+        margin: 5px;
+    }
+
+    .firstOnRight{
+        width: 90px;
+    }
+    .secondOnRight{
+        width: 100px;
+    }
+    .thirdOnRight{
+        width: 70px;
+    }
+    .fourthOnRight{
+        width: 50px;
+    }
+
+
+    @@media only screen and (max-width: 260px) {
+        .secondOnLeft{
+            width: 100%;
+        }
+    }
+     @@media only screen and (max-width: 210px) {
+        .firstOnLeft{
+            width: 100%;
+        }
+    }
+
+    .installer{
+        padding: 20px;
+
+    }
+   
+
+
+
     fluent-dialog::part(control) {
         --dialog-width: 60vw;
         padding: 20px 0;
@@ -161,6 +251,12 @@
             --dialog-width: calc(100% - 30px);
             margin: 14px;
         }
+        .detailSkeletonButtonRight{
+            width: 175px;
+        }
+        .detailSkeletonIntroLeft{
+        width: calc(100% - 175px);
+    }
     }
 
     .cancelButton {
