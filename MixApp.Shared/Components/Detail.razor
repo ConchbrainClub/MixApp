@@ -27,7 +27,7 @@
                             <p>@Latest.Description</p>
 
                             @if((GlobalEvent.DownloadQueue.FindIndex(i => i.Manifest.PackageIdentifier == Latest.PackageIdentifier) < 0))
-                            {   
+                            {
                                 @* todo 点击下载按钮，移动到库动画 *@
                                 <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
                                     IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
