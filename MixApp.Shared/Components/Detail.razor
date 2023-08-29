@@ -155,15 +155,15 @@
             {
                 <div class="detailSkeleton">
                     <div class="detailSkeletonIntroLeft">
-                        <FluentSkeleton class="firstOnLeft" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="secondOnLeft" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="buttonOnLeft" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="firstOnLeft" Width="27%" Height="40px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="secondOnLeft" Width="34%" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="buttonOnLeft"  Width="76px" Height="32px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
                     </div>
                     <div class="detailSkeletonButtonRight">
-                        <FluentSkeleton class="detailSkeletonRight firstOnRight" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="detailSkeletonRight secondOnRight" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="detailSkeletonRight thirdOnRight" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="detailSkeletonRight fourthOnRight" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="detailSkeletonRight firstOnRight" Width="90px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="detailSkeletonRight secondOnRight" Width="100px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="detailSkeletonRight thirdOnRight" Width="70px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                        <FluentSkeleton class="detailSkeletonRight fourthOnRight" Width="50px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
                     </div>
                 </div>
                 <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
@@ -184,20 +184,14 @@
     }
 
     .firstOnLeft {
-        width: 210px;
-        height: 40px;
         margin-bottom: 12px;
     }
 
     .secondOnLeft {
-        width: 260px;
-        height: 20px;
         margin-bottom: 16px;
     }
 
     .buttonOnLeft {
-        width: 76px;
-        height: 32px;
         margin-bottom: 16px;
     }
 
@@ -210,37 +204,9 @@
     }
 
     .detailSkeletonButtonRight  .detailSkeletonRight{
-        height: 20px;
         margin: 5px;
     }
 
-    .firstOnRight{
-        width: 90px;
-    }
-
-    .secondOnRight{
-        width: 100px;
-    }
-
-    .thirdOnRight{
-        width: 70px;
-    }
-
-    .fourthOnRight{
-        width: 50px;
-    }
-
-    @@media only screen and (max-width: 260px) {
-        .secondOnLeft{
-            width: 100%;
-        }
-    }
-
-     @@media only screen and (max-width: 210px) {
-        .firstOnLeft{
-            width: 100%;
-        }
-    }
 
     .installer{
         padding: 20px;
