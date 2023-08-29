@@ -6,13 +6,18 @@ using Microsoft.JSInterop;
 using MixApp.Shared;
 using MixApp.Shared.Services;
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
+WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 IJSRuntime? jsRuntime = builder.Services.BuildServiceProvider().GetService<IJSRuntime>();
-string locale = await jsRuntime!.InvokeAsync<string>("locale") ?? "en-US";
 
-LocaleManager localeManager = new(builder.HostEnvironment.BaseAddress);
-await localeManager.Initialize(locale);
+LocaleManager localeManager = await new LocaleManager().Initialize
+(
+    new HttpClient()
+    {
+        BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+    },
+    await jsRuntime!.InvokeAsync<string>("locale")
+);
 
 builder.RootComponents.Add<App>("#app");
 
@@ -20,11 +25,9 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => 
 {
-    string? baseAddress = builder.Configuration.GetSection("BaseAddress").Value;
-    
-    return new HttpClient 
+    return new HttpClient()
     {
-        BaseAddress = new Uri(baseAddress ?? string.Empty) 
+        BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value ?? string.Empty)
     };
 });
 
@@ -32,9 +35,7 @@ builder.Services.AddSingleton(new GlobalEvent(jsRuntime!));
 
 builder.Services.AddSingleton(localeManager);
 
-builder.Services.AddBlazoredLocalStorage();
-
-builder.Services.AddFluentToasts();
+builder.Services.AddBlazoredLocalStorageAsSingleton();
 
 builder.Services.AddFluentUIComponents(options =>
 {

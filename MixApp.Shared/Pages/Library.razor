@@ -66,8 +66,8 @@
                 </TemplateColumn>
 
                 <TemplateColumn Title="Action">
-                    <FluentButton Appearance="Appearance.Accent">Info</FluentButton>
-                    <FluentButton Appearance="Appearance.Accent">Pause</FluentButton>
+                    <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size16.Pause())" />
+                    <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size16.Dismiss())" />
                 </TemplateColumn>
             </FluentDataGrid>
         </div>
@@ -97,7 +97,7 @@
             </TemplateColumn>
 
             <TemplateColumn Title="Action">
-                <FluentButton Appearance="Appearance.Accent">Delete</FluentButton>
+                <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size16.Dismiss())" />
             </TemplateColumn>
         </FluentDataGrid>
     </div>
