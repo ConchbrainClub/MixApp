@@ -35,9 +35,7 @@ builder.Services.AddSingleton(new GlobalEvent(jsRuntime!));
 
 builder.Services.AddSingleton(localeManager);
 
-builder.Services.AddBlazoredLocalStorage();
-
-builder.Services.AddFluentToasts();
+builder.Services.AddBlazoredLocalStorageAsSingleton();
 
 builder.Services.AddFluentUIComponents(options =>
 {
