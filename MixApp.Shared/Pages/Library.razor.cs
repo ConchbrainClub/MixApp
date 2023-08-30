@@ -24,33 +24,26 @@ namespace MixApp.Shared.Pages
             IEnumerable<Manifest> manifests = await HttpClient.GetFromJsonAsync<IEnumerable<Manifest>>($"/softwares/{software?.PackageIdentifier}")
                 ?? Array.Empty<Manifest>();
 
-            Manifest latest = manifests
-                .OrderByDescending(i =>
+            Manifest latest = manifests.OrderByDescending(i =>
+            {
+                if (DateTime.TryParse(i.ReleaseDate, out DateTime releaseDate))
                 {
-                    if (DateTime.TryParse(i.ReleaseDate, out DateTime releaseDate))
-                    {
-                        return releaseDate;
-                    }
-                    return DateTime.Now;
-                })
-                .OrderByDescending(i =>
+                    return releaseDate;
+                }
+                return DateTime.Now;
+            })
+            .OrderByDescending(i =>
+            {
+                if (Version.TryParse(i.PackageVersion, out Version? version))
                 {
-                    if (Version.TryParse(i.PackageVersion, out Version? version))
-                    {
-                        return version;
-                    }
-                    return new Version();
-                })
-                .First();
+                    return version;
+                }
+                return new Version();
+            })
+            .First();
 
             GlobalEvent.DownloadInstaller(latest);
             GlobalEvent.WaitQueue.Remove(software!);
-        }
-
-        public void CancelDownload(DownloadTask task)
-        {
-            // cancel fetch
-            GlobalEvent.DownloadQueue.Remove(task);
         }
     }
 }

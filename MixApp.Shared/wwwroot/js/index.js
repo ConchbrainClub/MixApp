@@ -44,10 +44,21 @@ window.initHighLight = (card) => {
     })
 }
 
-window.downloadFile = (dotnet, fileName, url) => {
+window.downloadQueue = []
+
+window.downloadFile = (dotnet, fileName, url, cancelId) => {
     new Promise(async () => {
 
-        let res = await fetch(url)
+        let controller = new AbortController()
+        let res = await fetch(url, {
+            signal: controller.signal
+        })
+
+        downloadQueue.push({
+            cancelId: cancelId,
+            controller: controller
+        })
+
         let reader = res.body.getReader()
 
         let contentLength = res.headers.get('Content-Length')
@@ -70,7 +81,7 @@ window.downloadFile = (dotnet, fileName, url) => {
             dotnet.invokeMethodAsync('ChangedProgress', progress)
         }
 
-        console.log('download finished')
+        downloadQueue.splice(downloadQueue.findIndex(i => i.cancelId == cancelId), 1)
         
         let blob = new Blob(buffer)
         let ele = document.createElement('a')
@@ -83,6 +94,16 @@ window.downloadFile = (dotnet, fileName, url) => {
     }).catch(() => {
         dotnet.invokeMethodAsync('ChangedProgress', -1)
     })
+}
+
+window.cancelDownloading = (cancelId) => {
+    let index = downloadQueue.findIndex(i => i.cancelId == cancelId)
+    if (index < 0) return
+
+    try {
+        downloadQueue[index].controller.abort()
+        downloadQueue.splice(index, 1)
+    } catch (error) {}
 }
 
 window.reload = () => {

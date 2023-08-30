@@ -8,7 +8,10 @@ public class DownloadTask
     {
         Manifest = manifest;
         Installer = installer;
+        CancelId = Guid.NewGuid().ToString();
     }
+
+    public string CancelId { get; }
 
     public Manifest Manifest { get; set; }
 

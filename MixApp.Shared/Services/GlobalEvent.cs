@@ -132,7 +132,16 @@ namespace MixApp.Shared.Services
 
             DownloadQueue.Add(task);
             // Invoke javascript to fetch the installer
-            JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url).AsTask();
+            JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url, task.CancelId).AsTask();
+        }
+
+        public void CancelDownloadingTask(DownloadTask task)
+        {
+            if (!DownloadQueue.Contains(task)) return;
+            JSRuntime!.InvokeVoidAsync("cancelDownloading", task.CancelId).AsTask();
+            
+            DownloadQueue.Remove(task);
+            OnDownloadQueueChanged?.Invoke();
         }
     }
 }
