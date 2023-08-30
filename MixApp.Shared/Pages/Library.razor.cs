@@ -44,17 +44,13 @@ namespace MixApp.Shared.Pages
                 .First();
 
             GlobalEvent.DownloadInstaller(latest);
-            RemoveFromWaitQueue(software!);
+            GlobalEvent.WaitQueue.Remove(software!);
         }
-
-        public void RemoveFromWaitQueue(Software software) => GlobalEvent.WaitQueue.Remove(software);
 
         public void CancelDownload(DownloadTask task)
         {
             // cancel fetch
             GlobalEvent.DownloadQueue.Remove(task);
         }
-
-        public void RemoveFromHistoryQueue(DownloadTask task) => GlobalEvent.HistoryQueue.Remove(task);
     }
 }

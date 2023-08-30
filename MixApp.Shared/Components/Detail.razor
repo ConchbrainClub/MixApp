@@ -81,7 +81,7 @@
                                 
                                 <PropertyColumn Title=@LM.Scripts["c.detail.arch"] Property=@(i => i!.Architecture) />
                                 <TemplateColumn Title=@LM.Scripts["c.detail.url"]>
-                                    <a href="@context.InstallerUrl" target="_blank">@context.InstallerUrl</a>
+                                    <a @onclick=@(_ => GlobalEvent.DownloadInstaller(Latest, context)) href="javascript:void(0)" target="_blank">@context.InstallerUrl</a>
                                 </TemplateColumn>
                                 <PropertyColumn Title=@LM.Scripts["c.detail.sha256"] Property=@(i => i!.InstallerSha256) />
                                 <PropertyColumn Title=@LM.Scripts["c.detail.scope"] Property=@(i => i!.Scope) />

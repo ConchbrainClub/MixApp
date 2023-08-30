@@ -87,6 +87,12 @@ namespace MixApp.Shared.Services
         }
 
         /// <summary>
+        /// Download the software by DwonloadTask
+        /// </summary>
+        /// <param name="task">download task</param>
+        public void DownloadInstaller(DownloadTask task) => DownloadInstaller(task.Manifest, task.Installer);
+
+        /// <summary>
         /// Download the software by manifest (which software) and installer (which arch) 
         /// </summary>
         /// <param name="manifest">software's manifest</param>

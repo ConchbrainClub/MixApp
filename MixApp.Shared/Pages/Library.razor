@@ -33,7 +33,7 @@
 
                 <TemplateColumn Title="Action">
                     <FluentButton OnClick="(_ => DownloadFromWaitQueue(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowDownload())" />
-                    <FluentButton OnClick="(_ => RemoveFromWaitQueue(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
+                    <FluentButton OnClick="(_ => GlobalEvent.WaitQueue.Remove(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
                 </TemplateColumn>
             </FluentDataGrid>
         </div>
@@ -97,8 +97,8 @@
 
             <TemplateColumn Title="Action">
                 <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.AppsAddIn())" />
-                <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowReset())" />
-                <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
+                <FluentButton OnClick="(_ => GlobalEvent.DownloadInstaller(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowReset())" />
+                <FluentButton OnClick="(_ => GlobalEvent.HistoryQueue.Remove(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
             </TemplateColumn>
         </FluentDataGrid>
     </div>
