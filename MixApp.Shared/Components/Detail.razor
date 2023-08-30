@@ -28,7 +28,6 @@
 
                             @if((GlobalEvent.DownloadQueue.FindIndex(i => i.Manifest.PackageIdentifier == Latest.PackageIdentifier) < 0))
                             {
-                                @* todo 点击下载按钮，移动到库动画 *@
                                 <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
                                     IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
                                     Autofocus="true">
@@ -38,8 +37,10 @@
                             }
                             else
                             {
-                                @* todo 显示下载进度 *@
-                                <FluentProgressRing></FluentProgressRing>
+                                <FluentButton OnClick="(_ => ShowInLibrary())">
+                                    <FluentBadge Appearance="Appearance.Accent" slot="end">@LM.Scripts["c.detail.downloading"]</FluentBadge>
+                                    <FluentProgressRing style="width:20px; height:20px;"></FluentProgressRing>
+                                </FluentButton>
                             }
 
                             @if(GlobalEvent.WaitQueue.FindIndex(i => Software!.PackageIdentifier == i.PackageIdentifier) < 0)

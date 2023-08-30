@@ -10,6 +10,9 @@ namespace MixApp.Shared.Components
         [Inject]
         public HttpClient HttpClient { get; set; } = new HttpClient();
 
+        [Inject]
+        NavigationManager NavigationManager { get; set; } = default!;
+
         [Parameter]
         public Action<DialogEventArgs> OnDismiss { get; set; }
 
@@ -52,6 +55,13 @@ namespace MixApp.Shared.Components
 
             Latest = Manifests.First();
             StateHasChanged();
+        }
+
+        public void ShowInLibrary()
+        {
+            OnDismiss.Invoke(new DialogEventArgs());
+            Software = null;
+            NavigationManager.NavigateTo("/Library");
         }
     }
 }

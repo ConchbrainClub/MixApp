@@ -7,7 +7,6 @@
         @foreach (RouteInfo info in Top)
         {
             <NavLink Href="@info.Href">
-                @* 颜色用var(--accent-fill-rest) *@
                 <div @onclick=@(_ => CurrentHref = info.Href) class=@(CurrentHref == info.Href ? "active":string.Empty)>
                     @if (CurrentHref == info.Href)
                     {
