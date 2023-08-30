@@ -32,8 +32,8 @@
                 </TemplateColumn>
 
                 <TemplateColumn Title="Action">
-                    <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())" />
-                    <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size16.Dismiss())" />
+                    <FluentButton OnClick="(_ => DownloadFromWaitQueue(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowDownload())" />
+                    <FluentButton OnClick="(_ => RemoveFromWaitQueue(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
                 </TemplateColumn>
             </FluentDataGrid>
         </div>
@@ -66,8 +66,7 @@
                 </TemplateColumn>
 
                 <TemplateColumn Title="Action">
-                    <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size16.Pause())" />
-                    <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size16.Dismiss())" />
+                    <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
                 </TemplateColumn>
             </FluentDataGrid>
         </div>
@@ -97,7 +96,9 @@
             </TemplateColumn>
 
             <TemplateColumn Title="Action">
-                <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size16.Dismiss())" />
+                <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.AppsAddIn())" />
+                <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowReset())" />
+                <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
             </TemplateColumn>
         </FluentDataGrid>
     </div>
