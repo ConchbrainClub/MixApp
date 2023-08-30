@@ -34,10 +34,23 @@
 
     "c.software_card.more_info": "更多信息",
     
+    "p.index.home": "主页",
     "p.index.more_info": "更多信息",
     "p.index.recommend_for_you": "为你推荐",
     "p.index.trending_software": "热度",
 
+    "p.softwares.softwares": "软件",
+
+    "p.library.library": "库",
+    "p.library.waiting_queue": "待下载",
+    "p.library.download_queue": "正在下载",
+    "p.library.download_history": "历史记录",
+    "p.library.logo": "图标",
+    "p.library.package_name": "包名称",
+    "p.library.description": "描述",
+    "p.library.publisher": "发布者",
+    "p.library.action": "操作",
+    
     "p.setting.setting": "设置",
     "p.setting.interface": "界面",
     "p.setting.locale": "语言和区域",

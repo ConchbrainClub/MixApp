@@ -34,9 +34,22 @@
 
     "c.software_card.more_info": "More Info",
     
+    "p.index.home": "Home",
     "p.index.more_info": "More Info",
     "p.index.recommend_for_you": "Recommend for you",
     "p.index.trending_software": "Trending software",
+
+    "p.softwares.softwares": "Softwares",
+
+    "p.library.library": "Library",
+    "p.library.waiting_queue": "Waiting Queue",
+    "p.library.download_queue": "Download Queue",
+    "p.library.download_history": "Download History",
+    "p.library.logo": "Logo",
+    "p.library.package_name": "PackageName",
+    "p.library.description": "Description",
+    "p.library.publisher": "Publisher",
+    "p.library.action": "Action",
 
     "p.setting.setting": "Setting",
     "p.setting.interface": "Interface",

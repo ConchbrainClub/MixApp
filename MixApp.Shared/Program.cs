@@ -31,7 +31,7 @@ builder.Services.AddScoped(sp =>
     };
 });
 
-builder.Services.AddSingleton(new GlobalEvent(jsRuntime!));
+builder.Services.AddSingleton<GlobalEvent>();
 
 builder.Services.AddSingleton(localeManager);
 

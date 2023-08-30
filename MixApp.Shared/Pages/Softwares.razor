@@ -2,8 +2,9 @@
 @inherits MixApp.Shared.Pages.SoftwaresBase
 
 @using MixApp.Shared.Models
+@inject LocaleManager LM
 
-<PageTitle>Softwares</PageTitle>
+<PageTitle>@LM.Scripts["p.softwares.softwares"]</PageTitle>
 
 <BaseLayerLuminance>
     <FluentStack class="page" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >

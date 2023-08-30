@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Microsoft.JSInterop;
 using MixApp.Shared.Models;
 using System.Text.Json;
@@ -8,9 +9,12 @@ namespace MixApp.Shared.Services
     {
         private IJSRuntime JSRuntime { get; set; }
 
-        public GlobalEvent(IJSRuntime runtime)
+        private ILocalStorageService LocalStorage { get; set; }
+
+        public GlobalEvent(IJSRuntime runtime, ILocalStorageService localStorage)
         {
             JSRuntime = runtime;
+            LocalStorage = localStorage;
         }
 
         /// <summary>
