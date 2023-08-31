@@ -86,10 +86,10 @@ namespace MixApp.Shared.Services
         }
 
         /// <summary>
-        /// Add the download task info to download history queue
+        /// Add the download task info to history queue
         /// </summary>
         /// <param name="task">download task info</param>
-        public void Add2HistoryQueue(DownloadTask task)
+        public void AddToHistoryQueue(DownloadTask task)
         {
             int index = HistoryQueue.FindIndex(history => 
             {
@@ -100,6 +100,16 @@ namespace MixApp.Shared.Services
 
             if (index >= 0) HistoryQueue.RemoveAt(index);
             HistoryQueue.Insert(0, task);
+            LocalStorage.SetItemAsync("history_queue", HistoryQueue).AsTask();
+        }
+
+        /// <summary>
+        /// Remove download task from history queue
+        /// </summary>
+        /// <param name="task">download task</param>
+        public void RemoveFromHistoryQueue(DownloadTask task)
+        {
+            HistoryQueue.Remove(task);
             LocalStorage.SetItemAsync("history_queue", HistoryQueue).AsTask();
         }
 
@@ -142,7 +152,7 @@ namespace MixApp.Shared.Services
                 if (i.Progress == 100) 
                 {
                     DownloadQueue.Remove(i);
-                    Add2HistoryQueue(i);
+                    AddToHistoryQueue(i);
                 }
                 OnDownloadQueueChanged?.Invoke();
             };

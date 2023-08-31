@@ -114,7 +114,7 @@
             <TemplateColumn Title=@LM.Scripts["p.library.action"]>
                 <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.AppsAddIn())" />
                 <FluentButton OnClick="(_ => GlobalEvent.DownloadInstaller(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowReset())" />
-                <FluentButton OnClick="(_ => GlobalEvent.HistoryQueue.Remove(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
+                <FluentButton OnClick="(_ => GlobalEvent.RemoveFromHistoryQueue(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
             </TemplateColumn>
         </FluentDataGrid>
     </div>
