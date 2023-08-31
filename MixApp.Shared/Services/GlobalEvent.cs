@@ -15,6 +15,7 @@ namespace MixApp.Shared.Services
         {
             JSRuntime = runtime;
             LocalStorage = localStorage;
+            Initialize();
         }
 
         /// <summary>
@@ -33,6 +34,11 @@ namespace MixApp.Shared.Services
         public event Action? OnDownloadQueueChanged;
 
         /// <summary>
+        /// When download progress changed
+        /// </summary>
+        public event Action? OnHistoryQueueChanged;
+
+        /// <summary>
         /// Wait for download queue
         /// </summary>
         public List<Software> WaitQueue { get; set; } = new();
@@ -46,6 +52,12 @@ namespace MixApp.Shared.Services
         /// Download history queue
         /// </summary>
         public List<DownloadTask> HistoryQueue { get; set; } = new();
+
+        private async void Initialize()
+        {
+            HistoryQueue = await LocalStorage.GetItemAsync<List<DownloadTask>>("HistoryQueue");
+            OnHistoryQueueChanged?.Invoke();
+        }
 
         /// <summary>
         /// Open software detail interface
@@ -88,6 +100,7 @@ namespace MixApp.Shared.Services
 
             if (index >= 0) HistoryQueue.RemoveAt(index);
             HistoryQueue.Add(task);
+            LocalStorage.SetItemAsync("HistoryQueue", HistoryQueue).AsTask();
         }
 
         /// <summary>
@@ -134,7 +147,16 @@ namespace MixApp.Shared.Services
                 OnDownloadQueueChanged?.Invoke();
             };
 
+            // Do not download installer repeat
+            if (DownloadQueue.Find(i => 
+            {
+                return i.Manifest.PackageIdentifier == task.Manifest.PackageIdentifier
+                    && i.Manifest.PackageVersion == task.Manifest.PackageVersion
+                    && i.Installer.InstallerSha256 == task.Installer.InstallerSha256;
+            }) != null) return;
+
             DownloadQueue.Add(task);
+
             // Invoke javascript to fetch the installer
             JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url, task.CancelId).AsTask();
         }

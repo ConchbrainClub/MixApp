@@ -15,6 +15,7 @@ namespace MixApp.Shared.Pages
 
         protected override void OnInitialized()
         {
+            GlobalEvent.OnHistoryQueueChanged += StateHasChanged;
             GlobalEvent.OnDownloadQueueChanged += StateHasChanged;
             base.OnInitialized();
         }

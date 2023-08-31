@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MixApp.Shared.Models;
 using MixApp.Shared.Services;
 
@@ -32,6 +33,11 @@ namespace MixApp.Shared.Components
                 ?? new();
 
             StateHasChanged();
+        }
+
+        public void OnFocus(FocusEventArgs args)
+        {
+            Console.WriteLine("====================");
         }
 
         public void OpenSoftware(Software software)
