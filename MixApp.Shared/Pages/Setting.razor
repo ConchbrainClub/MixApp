@@ -19,7 +19,6 @@
                 <FluentSelect TOption="Option<string>" Items="LocaleOptions" 
                     @bind-SelectedOption="SelectedLocale"
                     OptionText="@(i => LM.Scripts[i.Text!])" />
-
             </FluentStack>
 
             <FluentDivider />
@@ -31,9 +30,7 @@
                 <FluentSelect TOption="Option<string>" Items="ThemeOptions" 
                     @bind-SelectedOption="SelectedTheme"
                     OptionText="@(i => LM.Scripts[i.Text!])" />
-
             </FluentStack>
-
 
             <FluentDivider />
 

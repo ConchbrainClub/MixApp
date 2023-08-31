@@ -55,7 +55,7 @@ namespace MixApp.Shared.Services
 
         private async void Initialize()
         {
-            HistoryQueue = await LocalStorage.GetItemAsync<List<DownloadTask>>("HistoryQueue");
+            HistoryQueue = (await LocalStorage.GetItemAsync<List<DownloadTask>>("history_queue")) ?? new();
             OnHistoryQueueChanged?.Invoke();
         }
 
@@ -99,8 +99,8 @@ namespace MixApp.Shared.Services
             });
 
             if (index >= 0) HistoryQueue.RemoveAt(index);
-            HistoryQueue.Add(task);
-            LocalStorage.SetItemAsync("HistoryQueue", HistoryQueue).AsTask();
+            HistoryQueue.Insert(0, task);
+            LocalStorage.SetItemAsync("history_queue", HistoryQueue).AsTask();
         }
 
         /// <summary>
