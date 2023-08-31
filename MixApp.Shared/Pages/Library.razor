@@ -44,7 +44,7 @@
         <div class="list">
             <h1>@LM.Scripts["p.library.download_queue"]</h1>
 
-            <FluentDataGrid Items="@GlobalEvent.DownloadQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 3fr 2fr" ResizableColumns=true>
+            <FluentDataGrid Items="@GlobalEvent.DownloadQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 8fr 1fr 1fr 3fr 2fr" ResizableColumns=true>
                 <TemplateColumn Title=@LM.Scripts["p.library.logo"]>
                     <img class="icon" 
                         src=@("https://icon.horse/icon/" + new Uri(context.Manifest.PackageUrl ?? "https://www.conchbrain.club").Host) 
@@ -61,6 +61,14 @@
                     <FluentProgress Min="0" Max="100" Value="@context.Progress"></FluentProgress>
                 </TemplateColumn>
 
+                <TemplateColumn Title=@LM.Scripts["p.library.version"]>
+                    <p class="line">@context.Manifest.PackageVersion</p>
+                </TemplateColumn>
+    
+                <TemplateColumn Title=@LM.Scripts["p.library.architecture"]>
+                    <p class="line">@context.Installer.Architecture</p>
+                </TemplateColumn>
+                
                 <TemplateColumn Title=@LM.Scripts["p.library.publisher"]>
                     <p class="line">@context.Manifest.Publisher</p>
                 </TemplateColumn>
@@ -75,7 +83,7 @@
     <div class="list">
         <h1>@LM.Scripts["p.library.download_history"]</h1>
 
-        <FluentDataGrid Items="@GlobalEvent.HistoryQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 3fr 2fr" ResizableColumns=true>
+        <FluentDataGrid Items="@GlobalEvent.HistoryQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 8fr 1fr 1fr 3fr 2fr" ResizableColumns=true>
             <TemplateColumn Title=@LM.Scripts["p.library.logo"]>
                 <img class="icon" 
                     src=@("https://icon.horse/icon/" + new Uri(context.Manifest.PackageUrl ?? "https://www.conchbrain.club").Host) 
@@ -89,6 +97,14 @@
 
             <TemplateColumn Title=@LM.Scripts["p.library.description"]>
                 <p class="line">@context.Manifest.ShortDescription</p>
+            </TemplateColumn>
+
+            <TemplateColumn Title=@LM.Scripts["p.library.version"]>
+                <p class="line">@context.Manifest.PackageVersion</p>
+            </TemplateColumn>
+
+            <TemplateColumn Title=@LM.Scripts["p.library.architecture"]>
+                <p class="line">@context.Installer.Architecture</p>
             </TemplateColumn>
 
             <TemplateColumn Title=@LM.Scripts["p.library.publisher"]>

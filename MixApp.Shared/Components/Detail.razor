@@ -81,7 +81,7 @@
                                 
                                 <PropertyColumn Title=@LM.Scripts["c.detail.arch"] Property=@(i => i!.Architecture) />
                                 <TemplateColumn Title=@LM.Scripts["c.detail.url"]>
-                                    <a @onclick=@(_ => GlobalEvent.DownloadInstaller(Latest, context)) href="javascript:void(0)" target="_blank">@context.InstallerUrl</a>
+                                    <a @onclick=@(_ => GlobalEvent.DownloadInstaller(Latest, context)) href="javascript:void(0)">@context.InstallerUrl</a>
                                 </TemplateColumn>
                                 <PropertyColumn Title=@LM.Scripts["c.detail.sha256"] Property=@(i => i!.InstallerSha256) />
                                 <PropertyColumn Title=@LM.Scripts["c.detail.scope"] Property=@(i => i!.Scope) />
@@ -115,7 +115,7 @@
                                 <TemplateColumn Title="Dwonload">
                                     @foreach (Installer installer in JsonSerializer.Deserialize<List<Installer>>(context.Installers ?? "[]")!)
                                     {
-                                        <a @onclick=@(_ => GlobalEvent.DownloadInstaller(context, installer)) href="javascript:void(0)" target="_blank">
+                                        <a @onclick=@(_ => GlobalEvent.DownloadInstaller(context, installer)) href="javascript:void(0)">
                                             <FluentBadge Appearance="Appearance.Accent" Fill="highlight" Color="highlight">@(installer.Architecture + installer.Scope)</FluentBadge>
                                         </a>
                                     }

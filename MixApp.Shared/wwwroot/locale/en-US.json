@@ -48,6 +48,8 @@
     "p.library.logo": "Logo",
     "p.library.package_name": "PackageName",
     "p.library.description": "Description",
+    "p.library.version": "Version",
+    "p.library.architecture": "Architecture",
     "p.library.publisher": "Publisher",
     "p.library.action": "Action",
 

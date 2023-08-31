@@ -48,6 +48,8 @@
     "p.library.logo": "图标",
     "p.library.package_name": "包名称",
     "p.library.description": "描述",
+    "p.library.version": "版本",
+    "p.library.architecture": "架构",
     "p.library.publisher": "发布者",
     "p.library.action": "操作",
     
