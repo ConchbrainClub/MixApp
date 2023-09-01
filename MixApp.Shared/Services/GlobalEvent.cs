@@ -7,12 +7,15 @@ namespace MixApp.Shared.Services
 {
     public class GlobalEvent
     {
+        public HttpClient HttpClient { get; set; } = new();
+
         private IJSRuntime JSRuntime { get; set; }
 
         private ILocalStorageService LocalStorage { get; set; }
 
-        public GlobalEvent(IJSRuntime runtime, ILocalStorageService localStorage)
+        public GlobalEvent(HttpClient httpClient, IJSRuntime runtime, ILocalStorageService localStorage)
         {
+            HttpClient = httpClient;
             JSRuntime = runtime;
             LocalStorage = localStorage;
             Initialize();
@@ -166,6 +169,8 @@ namespace MixApp.Shared.Services
             }) != null) return;
 
             DownloadQueue.Add(task);
+            
+            HttpClient.GetAsync($"/meta/change?type={MetaType.Download}&identifier={manifest?.PackageIdentifier}");
 
             // Invoke javascript to fetch the installer
             JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url, task.CancelId).AsTask();
