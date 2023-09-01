@@ -54,8 +54,9 @@ namespace MixApp.Shared.Components
                 .ToList();
 
             Latest = Manifests.First();
+
             StateHasChanged();
-            _ = HttpClient.GetAsync($"/meta/change?type={MetaType.Visit}&identifier={Latest?.PackageIdentifier}");
+            _ = HttpClient.GetAsync($"/meta/change?type={(int)MetaType.Visit}&identifier={Latest?.PackageIdentifier}");
         }
 
         public void ShowInLibrary()

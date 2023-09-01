@@ -13,9 +13,9 @@ namespace MixApp.Shared.Services
 
         private ILocalStorageService LocalStorage { get; set; }
 
-        public GlobalEvent(HttpClient httpClient, IJSRuntime runtime, ILocalStorageService localStorage)
+        public GlobalEvent(IServiceScopeFactory scopeFactory, IJSRuntime runtime, ILocalStorageService localStorage)
         {
-            HttpClient = httpClient;
+            HttpClient = scopeFactory.CreateScope().ServiceProvider.GetRequiredService<HttpClient>();
             JSRuntime = runtime;
             LocalStorage = localStorage;
             Initialize();
@@ -170,7 +170,7 @@ namespace MixApp.Shared.Services
 
             DownloadQueue.Add(task);
             
-            HttpClient.GetAsync($"/meta/change?type={MetaType.Download}&identifier={manifest?.PackageIdentifier}");
+            HttpClient.GetAsync($"/meta/change?type={(int)MetaType.Download}&identifier={manifest?.PackageIdentifier}");
 
             // Invoke javascript to fetch the installer
             JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url, task.CancelId).AsTask();
