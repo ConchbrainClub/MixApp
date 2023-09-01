@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Fast.Components.FluentUI;
 using MixApp.Shared.Models;
+using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Components
 {
@@ -8,6 +9,9 @@ namespace MixApp.Shared.Components
     {
         [Inject]
         public NavigationManager Navigation { get; set; } = default!;
+
+        [Inject]
+        public GlobalEvent GlobalEvent { get; set; } = default!;
 
         public List<RouteInfo> Top { get; set; }
 
@@ -65,6 +69,7 @@ namespace MixApp.Shared.Components
 
         protected override void OnInitialized()
         {
+            GlobalEvent.OnDownloadQueueChanged += StateHasChanged; 
             RouteInfo routeInfo = Top.Concat(Bottom)
                 .SingleOrDefault(i => new Uri(Navigation!.Uri).AbsolutePath == i.Href) ?? Top.First();
 
