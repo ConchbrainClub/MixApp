@@ -7,7 +7,7 @@
         <img src="/favicon.png" class="mixIcon"/>
         <span class="mixInfo">Mix Store</span>
     </div>
-    <FluentSearch Value="@KeyWord" @oninput="UserInput" class="search" Placeholder=@LM.Scripts["c.search_box.search"] />
+    <FluentSearch Value="@KeyWord" @onchange="UserInput" @oninput="UserInput" class="search" Placeholder=@LM.Scripts["c.search_box.search"] />
 
     @if(SearchResults.Count != 0 && !string.IsNullOrEmpty(KeyWord))
     {
