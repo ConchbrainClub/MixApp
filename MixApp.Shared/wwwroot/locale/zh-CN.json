@@ -63,5 +63,7 @@
     "p.setting.light": "浅色",
     "p.setting.dark": "深色",
     "p.setting.color": "主题色",
-    "p.setting.download": "下载"
+    "p.setting.download": "下载",
+
+    "p.help.help": "帮助"
 }

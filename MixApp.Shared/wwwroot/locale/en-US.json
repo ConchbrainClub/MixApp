@@ -63,5 +63,7 @@
     "p.setting.light": "Light",
     "p.setting.dark": "Dark",
     "p.setting.color": "Color",
-    "p.setting.download": "Download"
+    "p.setting.download": "Download",
+
+    "p.help.help": "Help"
 }

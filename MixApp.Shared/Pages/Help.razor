@@ -1,0 +1,87 @@
+﻿@page "/Help"
+
+@inject LocaleManager LM
+
+<PageTitle>@LM.Scripts["p.help.help"]</PageTitle>
+
+<div class="page">
+    <h2>@LM.Scripts["p.help.help"]</h2>
+
+    <FluentStack HorizontalGap="20" Orientation="Orientation.Horizontal">
+        <div style="width: 70%;">
+            <p class="title">Title</p>
+            <FluentTextField style="width: 100%;" />
+
+            <p class="title">Description of the problem.</p>
+            <FluentTextArea Rows="6" style="width: 100%;" />
+
+            <p class="title">Screenshot</p>
+            <FluentInputFile Id="my-file-uploader" Multiple=true ShowPreview=true MaximumFileCount="4"
+                MaximumFileSize="50000000" Accept="image/*" Style="height: 270px;" Class="demopanel">
+
+                <label for="my-file-uploader">
+                    <FluentIcon Value="@(new Icons.Regular.Size24.ArrowUpload())" />
+                </label>
+
+                <div>
+                    Drag files here you wish to upload,
+                    or <label for="my-file-uploader">browse</label>
+                    for them<span style="color: red;">*</span>.
+                    <br />
+                    <em>Maximum of 4 files allowed.</em>
+                </div>
+
+                <div>
+                    <br />
+                    <a href="#">Read more about our supported file formats.</a>
+                </div>
+            </FluentInputFile>
+        </div>
+
+        <FluentAccordion style="width: 30%;">
+            <FluentAccordionItem Heading="About" Expanded="true">
+                <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.ChatHelp())" Color=Color.Neutral />
+
+                <FluentStack class="content">
+                    <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center">
+                        <img class="icon" src="/favicon.png"/>
+                        <h5>MixStore</h5>
+                        <p>
+                            Developed by the 
+                            <a href="https://www.conchbrain.club">ConchbrainClub</a>
+                            ❤ with the help of our 
+                            <a href="https://github.com/orgs/ConchbrainClub/people" target="_blank">
+                                <strong>contributors</strong>
+                            </a>
+                        </p>
+
+                        <p>
+                            <span>© 2023 - Conchbrain Club</span>
+                            &nbsp;<strong><a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备18041216号-5</a></strong>
+                        </p>
+                    </FluentStack>
+                </FluentStack>
+            </FluentAccordionItem>
+        </FluentAccordion>
+    </FluentStack>
+</div>
+
+<style>
+    .page {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .page .content {
+        padding: 10px;
+    }
+
+    .page .title {
+        margin: 10px;
+    }
+
+    .page .icon {
+        height: 24px;
+        width: 24px;
+    }
+</style>

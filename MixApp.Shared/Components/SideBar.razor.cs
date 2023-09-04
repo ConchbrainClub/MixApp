@@ -57,7 +57,7 @@ namespace MixApp.Shared.Components
                 },
                 new()
                 {
-                    Href = "javascript:void(0)",
+                    Href = "/Help",
                     IconFilled = new Icons.Filled.Size24.ChatHelp(),
                     IconRegular = new Icons.Regular.Size24.ChatHelp(),
                     Name = "c.side_bar.help"
