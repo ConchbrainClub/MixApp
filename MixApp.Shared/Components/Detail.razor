@@ -12,7 +12,7 @@
             @onclick="(_ => { OnDismiss.Invoke(new DialogEventArgs()); Software = null; })"/>
 
         <div class="detail">
-            <img src="@(HttpClient?.BaseAddress + Software?.Cover)" loading="lazy"
+            <img src="@(HttpClient?.BaseAddress + Software?.Cover)"
                 class="cover animate__animated animate__fadeInDown" />
             <div class="mask" />
             
