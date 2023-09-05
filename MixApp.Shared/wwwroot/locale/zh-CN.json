@@ -65,5 +65,7 @@
     "p.setting.color": "主题色",
     "p.setting.download": "下载",
 
-    "p.help.help": "帮助"
+    "p.help.help": "帮助",
+    "p.help.about": "关于",
+    "p.help.feedback": "反馈"
 }

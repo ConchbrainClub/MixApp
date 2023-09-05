@@ -65,5 +65,7 @@
     "p.setting.color": "Color",
     "p.setting.download": "Download",
 
-    "p.help.help": "Help"
+    "p.help.help": "Help",
+    "p.help.about": "About",
+    "p.help.feedback": "Feedback"
 }
