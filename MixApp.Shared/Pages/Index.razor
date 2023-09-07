@@ -10,7 +10,7 @@
 
         <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000"
             Easing=ScrollEasing.EaseInOut>
-            @if (RecentlyUpdatedSoftwares.Count == 0)
+            @if (TrendingSoftwares.Count == 0)
             {
                 for (int index = 0; index < 2; index++)
                 {
@@ -19,7 +19,7 @@
             }
             else
             {
-                @foreach (Software software in RecentlyUpdatedSoftwares)
+                @foreach (Software software in TrendingSoftwares)
                 {
                     <FluentCard Appearance="Appearance.Accent">
                         <div class="bannerDesc">

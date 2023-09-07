@@ -15,7 +15,7 @@ namespace MixApp.Shared.Pages
         
         public Software? SelectedSoftware { get; set; }
 
-        public List<Software> Softwares { get; set; } = new();
+        public List<Software> TrendingSoftwares { get; set; } = new();
 
         public List<Software> RandomSoftwares { get; set; } = new();
 
@@ -35,7 +35,7 @@ namespace MixApp.Shared.Pages
                 .GetFromJsonAsync<List<Software>>("/top") 
                 ?? new();
             
-            softwares.ForEach(Softwares.Add);
+            softwares.ForEach(TrendingSoftwares.Add);
             StateHasChanged();
         }
 
