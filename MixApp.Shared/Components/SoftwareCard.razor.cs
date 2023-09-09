@@ -14,12 +14,6 @@ namespace MixApp.Shared.Components
         [Parameter]
         public Software Software { get; set; } = new();
 
-        public string GetIcon()
-        {
-            Uri uri = new(Software.PackageUrl ?? "https://www.conchbrain.club");
-            return $"https://icon.horse/icon/{uri.Host}";
-        }
-
         protected override void OnAfterRender(bool firstRender)
         {
             if (!firstRender) return;

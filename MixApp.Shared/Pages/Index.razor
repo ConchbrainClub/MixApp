@@ -24,8 +24,18 @@
                 {
                     <FluentCard Appearance="Appearance.Accent">
                         <div class="bannerDesc">
+                            <img src="@(GlobalEvent.GetIcon(software))" />
                             <h2>@software.PackageName</h2>
-                            <p>@software.ShortDescription</p>
+                            <p>
+                                @if(software.ShortDescription?.Length > 150)
+                                {
+                                    @(software.ShortDescription?.Substring(0, 150) + "...");
+                                }
+                                else
+                                {
+                                    @software.ShortDescription
+                                }
+                            </p>
                             <FluentButton Appearance="Appearance.Outline" @onclick=@(_ => GlobalEvent.OpenSoftware(software))>
                                 @LM.Scripts["p.index.more_info"]
                             </FluentButton>
@@ -138,14 +148,21 @@
         font-weight: bold;
         max-width: 400px;
         position: absolute;
-        top: 45%;
-        left: 6%;
+        top: 30%;
+        left: 10%;
         z-index: 4;
         transition: all .2s ease-out;
     }
 
     .bannerDesc fluent-button {
         backdrop-filter: saturate(110%) blur(10px);
+    }
+
+    .bannerDesc img {
+        width: 60px;
+        height: 60px;
+        margin: 20px 0;
+        border-radius: 5px;
     }
 
     .banner fluent-card:hover .bannerDesc {

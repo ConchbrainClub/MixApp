@@ -63,6 +63,20 @@ namespace MixApp.Shared.Services
         }
 
         /// <summary>
+        /// Get software or manifest icon
+        /// </summary>
+        /// <returns>icon url</returns>
+        public static string GetIcon(Software software) => GetIcon(software.PackageUrl ?? string.Empty);
+
+        public static string GetIcon(Manifest manifest) => GetIcon(manifest.PackageUrl ?? string.Empty);
+
+        public static string GetIcon(string packageUrl)
+        {
+            Uri uri = new(packageUrl ?? "https://www.conchbrain.club");
+            return $"https://icon.horse/icon/{uri.Host}";
+        }
+
+        /// <summary>
         /// Open software detail interface
         /// </summary>
         /// <param name="software">Software info to fetch Manifests</param>

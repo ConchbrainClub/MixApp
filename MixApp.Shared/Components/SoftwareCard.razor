@@ -10,7 +10,7 @@
                 <p>@Software.PackageIdentifier</p>
                 <FluentDivider></FluentDivider>
                 
-                <img class="icon" src=@(GetIcon()) onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" />
+                <img class="icon" src=@(GlobalEvent.GetIcon(Software)) onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" />
                 <h3 class="title">@Software.PackageName</h3>
                 <FluentBadge Appearance="Appearance.Neutral">@Software.Publisher</FluentBadge>
                 <p class="desc">@Software.ShortDescription</p>
