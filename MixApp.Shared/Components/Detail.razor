@@ -13,7 +13,8 @@
 
         <div class="detail">
             <img src="@(HttpClient?.BaseAddress + Software?.Cover)"
-                class="cover animate__animated animate__fadeInDown" />
+                class="cover animate__animated animate__fadeInDown"
+                onerror="javascript:this.src='https://www.conchbrain.club/images/notfound.png'" />
             <div class="mask" />
             
             @if(Latest != null)
@@ -29,10 +30,8 @@
                             @if((GlobalEvent.DownloadQueue.FindIndex(i => i.Manifest.PackageIdentifier == Latest.PackageIdentifier) < 0))
                             {
                                 <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
-                                    IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())"
-                                    Autofocus="true">
+                                    IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())">
                                     @LM.Scripts["c.detail.download"]
-                                    
                                 </FluentButton>
                             }
                             else
@@ -174,7 +173,6 @@
 }
 
 <style scoped>
-
     .detailSkeleton{
         display: flex;
         box-sizing: border-box;

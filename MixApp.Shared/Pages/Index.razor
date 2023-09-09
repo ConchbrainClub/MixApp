@@ -71,6 +71,13 @@
                 <SoftwareCard Software="software" />
             }
         </div>
+
+        <FluentStack class="footer" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center">
+            <p>
+                <span>© 2023 - Conchbrain Club</span>
+                &nbsp;<strong><a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备18041216号-5</a></strong>
+            </p>
+        </FluentStack>
         
     </FluentStack>
 </BaseLayerLuminance>
@@ -79,13 +86,14 @@
     .page {
         height: 100%;
         overflow-y: scroll;
+        padding: 10px 20px;
     }
 
     .banner {
         width: 100%;
     }
 
-    .text {
+    .page .text {
         font-weight: bold;
         font-size: 17px;
         font-family: inherit;
@@ -101,12 +109,17 @@
     .banner fluent-card:hover {
         -webkit-box-shadow: 0 0 6px #999;
         box-shadow: 0 0 6px #999;
-        -webkit-transition: all .5s ease-out;
-        transition: all .5s ease-out;
+        -webkit-transition: all .2s ease-out;
+        transition: all .2s ease-out;
     }
 
     .banner .cover {
         height: 100%;
+        transition: all .2s ease-out;
+    }
+
+    .banner fluent-card:hover .cover {
+        transform: scale(1.08);
     }
 
     .banner .mask {
@@ -127,10 +140,15 @@
         top: 45%;
         left: 6%;
         z-index: 4;
+        transition: all .2s ease-out;
     }
 
     .bannerDesc fluent-button {
         backdrop-filter: saturate(110%) blur(10px);
+    }
+
+    .banner fluent-card:hover .bannerDesc {
+        transform: translateY(-10px);
     }
 
     .content {
@@ -155,6 +173,10 @@
         .content {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+
+        .banner fluent-card {
+            width: calc(100vw - 20px);
+        }
     }
 
     @@media only screen and (max-width: 700px) {
@@ -164,9 +186,14 @@
         }
     }
 
-    .recommended {
+    .page .recommended {
         width: 100%;
         margin-top: 20px;
         text-align: left;
+    }
+
+    .page .footer {
+        padding-top: 30px;
+        padding-bottom: 20px;
     }
 </style>

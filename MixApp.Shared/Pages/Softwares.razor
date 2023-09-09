@@ -26,14 +26,23 @@
             }
         </div>
 
-        <FluentProgressRing class="progress"></FluentProgressRing>
-
+        @if(IsLoading)
+        {
+            <FluentProgressRing class="progress"></FluentProgressRing>
+        }
+        else
+        {
+            <FluentButton class="progress" OnClick="(_ => LoadData())" Appearance="Appearance.Outline">
+                @LM.Scripts["p.softwares.load_more"]
+            </FluentButton>
+        }
     </FluentStack>
 </BaseLayerLuminance>
 
 <style>
     .page {
         height: 100%;
+        padding: 10px 20px;
         overflow-y: scroll;
     }
     
@@ -69,8 +78,6 @@
     }
 
     .progress {
-        margin: 10px; 
-        width: 42px;
-        height: 42px;
+        margin: 20px; 
     }
 </style>

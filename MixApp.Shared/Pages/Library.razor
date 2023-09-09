@@ -112,7 +112,7 @@
             </TemplateColumn>
 
             <TemplateColumn Title=@LM.Scripts["p.library.action"]>
-                <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.AppsAddIn())" />
+                @* <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.AppsAddIn())" /> *@
                 <FluentButton OnClick="(_ => GlobalEvent.DownloadInstaller(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowReset())" />
                 <FluentButton OnClick="(_ => GlobalEvent.RemoveFromHistoryQueue(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
             </TemplateColumn>
@@ -123,15 +123,12 @@
 <style>
     .page {
         width: 100%;
-        padding: 10px;
-    }
-
-    .page .list {
+        padding: 10px 20px;
         margin: 20px;
     }
 
     .page h1 {
-        margin: 0 10px 20px 10px;
+        margin-bottom: 20px;
     }
 
     .page img {

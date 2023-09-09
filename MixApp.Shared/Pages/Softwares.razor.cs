@@ -17,6 +17,8 @@ namespace MixApp.Shared.Pages
         [Inject]
         public GlobalEvent GlobalEvent { get; set; } = default!;
 
+        public bool IsLoading { get; set; } = false;
+
         public int PageIndex { get; set; } = -1;
 
         public List<Software> Softwares { get; set; } = new();
@@ -31,8 +33,11 @@ namespace MixApp.Shared.Pages
             LoadData();
         }
 
-        private async void LoadData()
+        public async void LoadData()
         {
+            IsLoading = true;
+            StateHasChanged();
+
             SelectedSoftware = null;
 
             List<Software> softwares = await HttpClient
@@ -40,6 +45,7 @@ namespace MixApp.Shared.Pages
                 ?? new();
 
             softwares.ForEach(Softwares.Add);
+            IsLoading = false;
             StateHasChanged();
         }
 
