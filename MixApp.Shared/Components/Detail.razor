@@ -2,6 +2,7 @@
 @using System.Text.Json
 
 @inject LocaleManager LM
+@inject RemoteAssets RemoteAssets
 @inject GlobalEvent GlobalEvent
 
 @if (Software != null)
@@ -12,7 +13,7 @@
             @onclick="(_ => { OnDismiss.Invoke(new DialogEventArgs()); Software = null; })"/>
 
         <div class="detail">
-            <img src="@(HttpClient?.BaseAddress + Software?.Cover)"
+            <img src="@(RemoteAssets.GetAssets(Software?.Cover))"
                 class="cover animate__animated animate__fadeInDown"
                 onerror="javascript:this.src='https://www.conchbrain.club/images/notfound.png'" />
             <div class="mask" />

@@ -2,6 +2,7 @@
 @inherits MixApp.Shared.Pages.IndexBase
 
 @inject LocaleManager LM
+@inject RemoteAssets RemoteAssets
 
 <PageTitle>@LM.Scripts["p.index.home"]</PageTitle>
 
@@ -29,7 +30,7 @@
                                 @LM.Scripts["p.index.more_info"]
                             </FluentButton>
                         </div>
-                        <img src=@(HttpClient?.BaseAddress + software.Cover) class="cover">
+                        <img src=@(RemoteAssets.GetAssets(software.Cover)) class="cover">
                         <div class="mask" />
                     </FluentCard>
                 }
