@@ -12,6 +12,9 @@ public class Manifest
 
     public string? Installers { get; set; }
 
+    /// <summary>
+    /// Installer type have exe、msi。。。
+    /// </summary>
     public string? InstallerType { get; set; }
 
     public string? NestedInstallerType { get; set; }
