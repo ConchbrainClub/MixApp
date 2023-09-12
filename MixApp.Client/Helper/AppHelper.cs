@@ -61,7 +61,13 @@ public static class AppHelper
 
     public static void UnInstall()
     {
-
+        Process process = new();
+        process.StartInfo.UseShellExecute = false;
+        process.StartInfo.CreateNoWindow = true;
+        process.StartInfo.Verb = "runas";
+        process.StartInfo.FileName = Path.Combine(Environment.SystemDirectory, "control.exe");
+        process.StartInfo.Arguments = "/name Microsoft.ProgramsAndFeatures";
+        process.Start();
     }
 
     /// <summary>
@@ -146,8 +152,6 @@ public static class AppHelper
             }
         }
     }
-
-
 
 }
 

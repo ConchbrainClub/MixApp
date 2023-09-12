@@ -57,7 +57,7 @@ class Program
         //string hash = "0BA639B6DACDF573D847C911BD147C6384381A54DAC082B1E8C77BC73D58958B";
         //AppHelper.Install(type, appPath, installPath, hash);
 
-        AppHelper.GetSoftewares();
+        AppHelper.UnInstall();
 
     }
 }
