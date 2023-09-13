@@ -1,12 +1,35 @@
 ﻿using Microsoft.Win32;
+using MixApp.Client.Model;
 using System;
 using System.Diagnostics;
+using System.Runtime.Versioning;
 using System.Security.Cryptography;
+using System.Text.Json;
 
 namespace MixApp.Client;
 
 public static class AppHelper
 {
+    private const string UninstallKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+
+    public static void Install(string paraStr)
+    {
+        var param = JsonSerializer.Deserialize(paraStr, InstallParameterJsonCtx.Default.InstallParameter);
+        if (param != null)
+            Install(param);
+    }
+
+    public static void UnInstall(string _)
+    {
+        UnInstall();
+    }
+
+    [SupportedOSPlatform("windows")]
+    public static void GetSoftewares(string _)
+    {
+        GetSoftewares();
+    }
+
     /// <summary>
     /// Install Application
     /// </summary>
@@ -15,48 +38,43 @@ public static class AppHelper
     /// <param name="defaultPath">default installation path</param>
     /// <param name="checkHash">Verify installation</param>
     /// <param name="silent">Whether to install silently</param>
-    public static void Install(string pkgtype, string pkgPath, string defaultPath, string checkHash, bool silent = true)
+    public static void Install(InstallParameter param)
     {
-        if (string.IsNullOrEmpty(pkgtype))
-            throw new ArgumentException($"“{nameof(pkgtype)}”不能为 null 或空。", nameof(pkgtype));
-
-        if (string.IsNullOrEmpty(pkgPath))
-            throw new ArgumentException($"“{nameof(pkgPath)}”不能为 null 或空。", nameof(pkgPath));
-
-        if (!CheckPkgPath(pkgPath))
-            throw new ArgumentException("Invalid installation package path");
-
-        if (silent && !CheckInstallPath(defaultPath))
-            throw new ArgumentException("Invalid default installation path");
-        if (!CheckHash(pkgPath, checkHash))
-            throw new ArgumentException("。。。");
-        Process process = new();
-        process.StartInfo.UseShellExecute = false;
-        process.StartInfo.CreateNoWindow = true;
-        process.StartInfo.Verb = "runas";
-
-        switch (pkgtype)
+        if (!param.IsValid(out string errorMsg))
         {
-            case PkgType.msi:
-                CreateMsiProcess(process, pkgPath, defaultPath, silent);
-                break;
-            case PkgType.exe:
-                CreateExeProcess(process, pkgPath, defaultPath, silent);
-                break;
-            default:
-                throw new ArgumentException("Invalid package type");
+            throw new ArgumentException($"“{nameof(param)}”不合法");
         }
 
-        process.Start();
-        process.WaitForExit();
-        if (process.ExitCode == 0)
+        Task.Run(() =>
         {
-            Console.WriteLine("Installation completed successfully");
-        }
-        else
-        {
-            Console.WriteLine("Installation failed ");
-        }
+            Process process = new();
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.Verb = "runas";
+
+            switch (param.PkgType)
+            {
+                case PkgType.msi:
+                    CreateMsiProcess(process, param.PkgPath, param.DefaultPath, param.Silent);
+                    break;
+                case PkgType.exe:
+                    CreateExeProcess(process, param.PkgPath, param.DefaultPath, param.Silent);
+                    break;
+                default:
+                    throw new ArgumentException("Invalid package type");
+            }
+
+            process.Start();
+            process.WaitForExit();
+            if (process.ExitCode == 0)
+            {
+                Console.WriteLine("Installation completed successfully");
+            }
+            else
+            {
+                Console.WriteLine("Installation failed ");
+            }
+        });
     }
 
     public static void UnInstall()
@@ -70,33 +88,30 @@ public static class AppHelper
         process.Start();
     }
 
+
     /// <summary>
     /// Obtain a list of all installed software on this computer
     /// </summary>
-    public static void GetSoftewares()
+    [SupportedOSPlatform("windows")]
+    public static List<SoftInfo> GetSoftewares()
     {
-        // 创建一个空的列表，用来存储软件的名称
-        var softwareList = new List<string>();
-        // 打开注册表中的软件安装信息的键
-        var softwareKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
-        // 遍历该键下的所有子键
-        foreach (var subKeyName in softwareKey.GetSubKeyNames())
+        List<SoftInfo> lst = new();
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
-            // 打开子键
-            var subKey = softwareKey.OpenSubKey(subKeyName);
-            // 获取子键中的DisplayName值，如果存在，就表示该子键对应一个软件
-            var displayName = subKey.GetValue("DisplayName") as string;
-            var uninstallString = subKey.GetValue("UninstallString") as string;
-            var displayVersion = subKey.GetValue("DisplayVersion") as string;
-            int systemComponent = (int)subKey.GetValue("SystemComponent", 0);
-            // 如果displayName不为空，就将其添加到列表中
-            if (!string.IsNullOrEmpty(displayName) && systemComponent != 1)
-            {
-                softwareList.Add(displayName);
-            }
+            RegistryKey? regUninstall = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(UninstallKey, false);
+            if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry32);
+
+            regUninstall = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(UninstallKey, false);
+            if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry64);
+
+            regUninstall = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32).OpenSubKey(UninstallKey, false);
+            if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry32);
+
+            regUninstall = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64).OpenSubKey(UninstallKey, false);
+            if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry64);
         }
-        // 关闭注册表键
-        softwareKey.Close();
+
+        return lst;
     }
 
     private static void CreateMsiProcess(Process process, string pkgPath, string defaultPath, bool silent)
@@ -119,13 +134,13 @@ public static class AppHelper
         process.StartInfo.Arguments += $"/D={defaultPath}";
     }
 
-    private static bool CheckInstallPath(string path)
+    public static bool CheckInstallPath(string? path)
     {
         bool exists = Directory.Exists(path);
         return exists;
     }
 
-    private static bool CheckPkgPath(string path)
+    public static bool CheckPkgPath(string? path)
     {
         bool exists = File.Exists(path);
         return exists;
@@ -138,7 +153,7 @@ public static class AppHelper
     /// <param name="checkHash"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    private static bool CheckHash(string path, string checkHash)
+    public static bool CheckHash(string? path, string? checkHash)
     {
         // 判断文件是否存在
         if (!File.Exists(path))
@@ -156,6 +171,72 @@ public static class AppHelper
         }
     }
 
+    [SupportedOSPlatform("windows")]
+    private static void FindSoft(RegistryKey regUninstall, ref List<SoftInfo> lst, RegistryView registryView)
+    {
+        foreach (var item in regUninstall.GetSubKeyNames())
+        {
+            RegistryKey? regSub = regUninstall.OpenSubKey(item, false);
+            if (regSub == null) continue;
+
+            string displayName = regSub.GetValue("DisplayName") as string ?? string.Empty;
+            string installLocation = regSub.GetValue("InstallLocation") as string ?? string.Empty;
+            string uninstallString = regSub.GetValue("UninstallString") as string ?? string.Empty;
+            string displayVersion = regSub.GetValue("DisplayVersion") as string ?? string.Empty;
+            string installDate = regSub.GetValue("InstallDate") as string ?? string.Empty;
+            string publisher = regSub.GetValue("Publisher") as string ?? string.Empty;
+            string displayIcon = regSub.GetValue("DisplayIcon") as string ?? string.Empty;
+            int estimatedSize = (int)regSub.GetValue("EstimatedSize", 0);
+
+            int systemComponent = (int)regSub.GetValue("SystemComponent", 0);
+
+            if (string.IsNullOrWhiteSpace(displayName)) continue;
+            if (string.IsNullOrWhiteSpace(uninstallString)) continue;
+            if (string.IsNullOrWhiteSpace(displayVersion) && string.IsNullOrWhiteSpace(displayIcon)) continue;
+            if (systemComponent == 1) continue;
+
+            if (string.IsNullOrWhiteSpace(installDate) && !string.IsNullOrWhiteSpace(displayIcon))
+            {
+                try
+                {
+                    string[] array = displayIcon.Split(',');
+                    if (array.Length >= 2)
+                    {
+                        uninstallString = array[0];
+                    }
+                    FileInfo fileInfo = new(uninstallString);
+                    installDate = fileInfo.CreationTime.ToShortDateString(); //使用文件创建时间作为安装时间
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            SoftInfo? softModel = lst.FirstOrDefault(item1 => item1.Name == displayName);
+
+            if (softModel == null)
+            {
+                lst.Add(new(
+                    displayName,
+                    displayVersion,
+                    installDate,
+                    uninstallString,
+                    publisher,
+                    estimatedSize == 0 ? "未知" : (estimatedSize / 1024.0).ToString("0.00M"),
+                    installLocation,
+                    registryView));
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(softModel.DateTime) && !string.IsNullOrWhiteSpace(installDate))
+                {
+                    softModel.DateTime = installDate;
+                }
+            }
+        }
+    }
+
 }
 
 public static class PkgType
@@ -163,3 +244,4 @@ public static class PkgType
     public const string msi = "msi";
     public const string exe = "exe";
 }
+
