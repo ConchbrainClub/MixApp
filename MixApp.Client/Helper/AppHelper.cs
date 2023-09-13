@@ -86,8 +86,11 @@ public static class AppHelper
             var subKey = softwareKey.OpenSubKey(subKeyName);
             // 获取子键中的DisplayName值，如果存在，就表示该子键对应一个软件
             var displayName = subKey.GetValue("DisplayName") as string;
+            var uninstallString = subKey.GetValue("UninstallString") as string;
+            var displayVersion = subKey.GetValue("DisplayVersion") as string;
+            int systemComponent = (int)subKey.GetValue("SystemComponent", 0);
             // 如果displayName不为空，就将其添加到列表中
-            if (!string.IsNullOrEmpty(displayName))
+            if (!string.IsNullOrEmpty(displayName) && systemComponent != 1)
             {
                 softwareList.Add(displayName);
             }
