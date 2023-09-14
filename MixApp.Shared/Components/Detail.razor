@@ -15,7 +15,10 @@
         <div class="detail">
             <img src="@(RemoteAssets.GetAssets(Software?.Cover))"
                 class="cover animate__animated animate__fadeInDown"
+                fetchpriority="low"
+                loading="lazy"
                 onerror="javascript:this.src='https://www.conchbrain.club/images/notfound.png'" />
+                
             <div class="mask" />
             
             @if(Latest != null)
@@ -37,8 +40,8 @@
                             }
                             else
                             {
-                                <FluentButton OnClick="(_ => ShowInLibrary())">
-                                    <FluentBadge Appearance="Appearance.Accent" slot="end">@LM.Scripts["c.detail.downloading"]</FluentBadge>
+                                <FluentButton>
+                                    @LM.Scripts["c.detail.downloading"]
                                     <FluentProgressRing style="width:20px; height:20px;"></FluentProgressRing>
                                 </FluentButton>
                             }

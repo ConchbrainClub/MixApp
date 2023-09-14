@@ -51,7 +51,8 @@ window.downloadFile = (dotnet, fileName, url, cancelId) => {
 
         let controller = new AbortController()
         let res = await fetch(url, {
-            signal: controller.signal
+            signal: controller.signal,
+            priority: 'low'
         })
 
         downloadQueue.push({
