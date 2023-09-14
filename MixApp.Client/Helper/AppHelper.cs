@@ -23,19 +23,16 @@ public static class AppHelper
 
     private static void ExecuteMethod<T>(int id, PhotinoWindow? window, string paraStr, JsonTypeInfo type, AppMethod<T> appMethod) where T : ParamsBase
     {
-        if (JsonSerializer.Deserialize(paraStr, type) is not ParamsBase param)
+        if (JsonSerializer.Deserialize(paraStr, type) is not T param)
         {
             window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(id, false, $"参数解析失败"), ReceveMsgJsonCtx.Default.ReceveMsg));
             return;
         }
-        param.Window = window;
-        if (param is T realParam)
-        {
-            if (appMethod(realParam, out string msg))
-                window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(id, true, msg), ReceveMsgJsonCtx.Default.ReceveMsg));
-            else
-                window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(id, false, msg), ReceveMsgJsonCtx.Default.ReceveMsg));
-        }
+
+        if (appMethod(param, out string msg))
+            window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(id, true, msg), ReceveMsgJsonCtx.Default.ReceveMsg));
+        else
+            window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(id, false, msg), ReceveMsgJsonCtx.Default.ReceveMsg));
     }
 
     public static void Install(int id, PhotinoWindow? window, string paraStr)

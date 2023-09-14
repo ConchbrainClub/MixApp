@@ -9,6 +9,5 @@ namespace MixApp.Client.Model.Params
 {
     public class ParamsBase
     {
-        public PhotinoWindow? Window { get; set; }
     }
 }
