@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MixApp.Client.Model
@@ -29,6 +30,12 @@ namespace MixApp.Client.Model
         public string EstimatedSize { get; set; } = string.Empty;
         public string InstallLocation { get; set; } = string.Empty;
         public RegistryView RegistryView { get; set; }
-
     }
+
+    [JsonSerializable(typeof(SoftInfo))]
+    internal partial class SoftInfoJsonCtx : JsonSerializerContext { }
+
+
+    [JsonSerializable(typeof(List<SoftInfo>))]
+    internal partial class ListSoftInfoJsonCtx : JsonSerializerContext { }
 }

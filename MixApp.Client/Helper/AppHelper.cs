@@ -1,33 +1,62 @@
 ﻿using Microsoft.Win32;
 using MixApp.Client.Model;
+using MixApp.Client.Model.Params;
+using PhotinoNET;
 using System;
 using System.Diagnostics;
 using System.Runtime.Versioning;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
+using static MixApp.Client.AppHelper;
 
 namespace MixApp.Client;
 
 public static class AppHelper
 {
     private const string UninstallKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+    private const string Explorer = "explorer.exe";
+    private const string Control = "control.exe";
+    private const string Dowdloads = "Downloads";
 
-    public static void Install(string paraStr)
+    public delegate bool AppMethod<T>(T param, out string msg) where T : ParamsBase;
+
+    private static void ExecuteMethod<T>(int id, PhotinoWindow? window, string paraStr, JsonTypeInfo type, AppMethod<T> appMethod) where T : ParamsBase
     {
-        var param = JsonSerializer.Deserialize(paraStr, InstallParameterJsonCtx.Default.InstallParameter);
-        if (param != null)
-            Install(param);
+        if (JsonSerializer.Deserialize(paraStr, type) is not ParamsBase param)
+        {
+            window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(id, false, $"参数解析失败"), ReceveMsgJsonCtx.Default.ReceveMsg));
+            return;
+        }
+        param.Window = window;
+        if (param is T realParam)
+        {
+            if (appMethod(realParam, out string msg))
+                window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(id, true, msg), ReceveMsgJsonCtx.Default.ReceveMsg));
+            else
+                window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(id, false, msg), ReceveMsgJsonCtx.Default.ReceveMsg));
+        }
     }
 
-    public static void UnInstall(string _)
+    public static void Install(int id, PhotinoWindow? window, string paraStr)
     {
-        UnInstall();
+        ExecuteMethod<InstallParameter>(id, window, paraStr, InstallParameterJsonCtx.Default.InstallParameter, Install);
+    }
+
+    public static void UnInstall(int id, PhotinoWindow? window, string paraStr)
+    {
+        ExecuteMethod<UnInstallParameter>(id, window, paraStr, UnInstallParameterJsonCtx.Default.UnInstallParameter, UnInstall);
     }
 
     [SupportedOSPlatform("windows")]
-    public static void GetSoftewares(string _)
+    public static void GetSoftewares(int id, PhotinoWindow? window, string paraStr)
     {
-        GetSoftewares();
+        ExecuteMethod<GetSoftewaresParameter>(id, window, paraStr, GetSoftewaresParameterJsonCtx.Default.GetSoftewaresParameter, GetSoftewares);
+    }
+
+    public static void OpenDownloadFolder(int id, PhotinoWindow? window, string paraStr)
+    {
+        ExecuteMethod<OpenDownloadFolderParameter>(id, window, paraStr, OpenDownloadFolderParameterJsonCtx.Default.OpenDownloadFolderParameter, OpenDownloadFolder);
     }
 
     /// <summary>
@@ -38,137 +67,96 @@ public static class AppHelper
     /// <param name="defaultPath">default installation path</param>
     /// <param name="checkHash">Verify installation</param>
     /// <param name="silent">Whether to install silently</param>
-    public static void Install(InstallParameter param)
+    private static bool Install(InstallParameter param, out string msg)
     {
-        if (!param.IsValid(out string errorMsg))
+        if (!param.IsValid(out msg))
         {
-            throw new ArgumentException($"“{nameof(param)}”不合法");
+            return false;
         }
 
-        Task.Run(() =>
-        {
-            Process process = new();
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.Verb = "runas";
-
-            switch (param.PkgType)
-            {
-                case PkgType.msi:
-                    CreateMsiProcess(process, param.PkgPath, param.DefaultPath, param.Silent);
-                    break;
-                case PkgType.exe:
-                    CreateExeProcess(process, param.PkgPath, param.DefaultPath, param.Silent);
-                    break;
-                default:
-                    throw new ArgumentException("Invalid package type");
-            }
-
-            process.Start();
-            process.WaitForExit();
-            if (process.ExitCode == 0)
-            {
-                Console.WriteLine("Installation completed successfully");
-            }
-            else
-            {
-                Console.WriteLine("Installation failed ");
-            }
-        });
-    }
-
-    public static void UnInstall()
-    {
         Process process = new();
         process.StartInfo.UseShellExecute = false;
         process.StartInfo.CreateNoWindow = true;
         process.StartInfo.Verb = "runas";
-        process.StartInfo.FileName = Path.Combine(Environment.SystemDirectory, "control.exe");
-        process.StartInfo.Arguments = "/name Microsoft.ProgramsAndFeatures";
+        switch (param.PkgType)
+        {
+            case PkgType.msi:
+                CreateMsiProcess(process, param.PkgPath, param.DefaultPath, param.Silent);
+                break;
+            case PkgType.exe:
+                CreateExeProcess(process, param.PkgPath, param.DefaultPath, param.Silent);
+                break;
+            default:
+                throw new ArgumentException("Invalid package type");
+        }
         process.Start();
+        process.WaitForExit();
+
+        if (process.ExitCode == 0)
+        {
+            return true;
+        }
+        else
+        {
+            msg = "Installation failed ";
+            return false;
+        }
     }
 
+    private static bool UnInstall(UnInstallParameter _, out string msg)
+    {
+        msg = string.Empty;
+        var fileName = Path.Combine(Environment.SystemDirectory, Control);
+        var arguments = "/name Microsoft.ProgramsAndFeatures";
+        Process.Start(fileName, arguments);
+        return true;
+    }
+
+    private static bool OpenDownloadFolder(OpenDownloadFolderParameter _, out string msg)
+    {
+        msg = string.Empty;
+        string downloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), Dowdloads);
+        Process.Start(Explorer, downloadsPath);
+        return true;
+    }
 
     /// <summary>
     /// Obtain a list of all installed software on this computer
     /// </summary>
     [SupportedOSPlatform("windows")]
-    public static List<SoftInfo> GetSoftewares()
+    private static bool GetSoftewares(GetSoftewaresParameter _, out string msg)
     {
         List<SoftInfo> lst = new();
-        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-        {
-            RegistryKey? regUninstall = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(UninstallKey, false);
-            if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry32);
 
-            regUninstall = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(UninstallKey, false);
-            if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry64);
+        RegistryKey? regUninstall = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(UninstallKey, false);
+        if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry32);
 
-            regUninstall = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32).OpenSubKey(UninstallKey, false);
-            if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry32);
+        regUninstall = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(UninstallKey, false);
+        if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry64);
 
-            regUninstall = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64).OpenSubKey(UninstallKey, false);
-            if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry64);
-        }
+        regUninstall = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32).OpenSubKey(UninstallKey, false);
+        if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry32);
 
-        return lst;
+        regUninstall = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64).OpenSubKey(UninstallKey, false);
+        if (regUninstall != null) FindSoft(regUninstall, ref lst, RegistryView.Registry64);
+
+        msg = JsonSerializer.Serialize(lst, ListSoftInfoJsonCtx.Default.ListSoftInfo) ?? string.Empty;
+
+        return string.IsNullOrEmpty(msg);
     }
 
     private static void CreateMsiProcess(Process process, string pkgPath, string defaultPath, bool silent)
     {
         process.StartInfo.FileName = "msiexec.exe";
-
-        if (silent)
-            process.StartInfo.Arguments = "/quiet ";
-
+        if (silent) process.StartInfo.Arguments = "/quiet ";
         process.StartInfo.Arguments += $"/i \"{pkgPath}\" INSTALLDIR=\"{defaultPath}\" /l*v \"{defaultPath}\\install.log\"";
     }
 
     private static void CreateExeProcess(Process process, string pkgPath, string defaultPath, bool silent)
     {
         process.StartInfo.FileName = pkgPath;
-
-        if (silent)
-            process.StartInfo.Arguments = $"/S ";
-
+        if (silent) process.StartInfo.Arguments = $"/S ";
         process.StartInfo.Arguments += $"/D={defaultPath}";
-    }
-
-    public static bool CheckInstallPath(string? path)
-    {
-        bool exists = Directory.Exists(path);
-        return exists;
-    }
-
-    public static bool CheckPkgPath(string? path)
-    {
-        bool exists = File.Exists(path);
-        return exists;
-    }
-
-    /// <summary>
-    /// 根据path获取文件hash和checkHash比较，检查文件是否损坏
-    /// </summary>
-    /// <param name="path"></param>
-    /// <param name="checkHash"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public static bool CheckHash(string? path, string? checkHash)
-    {
-        // 判断文件是否存在
-        if (!File.Exists(path))
-        {
-            throw new FileNotFoundException("文件不存在");
-        }
-        using (var hashAlgorithm = SHA256.Create())
-        {
-            using (var fileStream = File.OpenRead(path))
-            {
-                var fileHash = hashAlgorithm.ComputeHash(fileStream);
-                var fileHashString = BitConverter.ToString(fileHash).Replace("-", "");
-                return fileHashString.Equals(checkHash, StringComparison.OrdinalIgnoreCase);
-            }
-        }
     }
 
     [SupportedOSPlatform("windows")]
@@ -187,7 +175,6 @@ public static class AppHelper
             string publisher = regSub.GetValue("Publisher") as string ?? string.Empty;
             string displayIcon = regSub.GetValue("DisplayIcon") as string ?? string.Empty;
             int estimatedSize = (int)regSub.GetValue("EstimatedSize", 0);
-
             int systemComponent = (int)regSub.GetValue("SystemComponent", 0);
 
             if (string.IsNullOrWhiteSpace(displayName)) continue;
@@ -205,11 +192,10 @@ public static class AppHelper
                         uninstallString = array[0];
                     }
                     FileInfo fileInfo = new(uninstallString);
-                    installDate = fileInfo.CreationTime.ToShortDateString(); //使用文件创建时间作为安装时间
+                    installDate = fileInfo.CreationTime.ToShortDateString();
                 }
                 catch (Exception)
                 {
-
                 }
             }
 

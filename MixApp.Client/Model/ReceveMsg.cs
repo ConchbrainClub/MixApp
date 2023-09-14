@@ -9,13 +9,25 @@ namespace MixApp.Client.Model
 {
     public class ReceveMsg
     {
+        public ReceveMsg()
+        {
+
+        }
+        public ReceveMsg(int iD)
+        {
+            ID = iD;
+        }
+        public ReceveMsg(int iD, bool result, string msg = "")
+        {
+            ID = iD;
+            Result = result;
+            Msg = msg;
+        }
         public int ID { get; set; }
 
-        public bool Result { get; set; }
+        public bool Result { get; set; } = true;
 
         public string Msg { get; set; } = string.Empty;
-
-        public string ErrorMsg { get; set; } = string.Empty;
     }
 
     [JsonSerializable(typeof(ReceveMsg))]

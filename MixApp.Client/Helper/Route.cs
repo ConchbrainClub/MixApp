@@ -1,4 +1,5 @@
 ﻿using MixApp.Client.Model;
+using MixApp.Client.Model.Params;
 using PhotinoNET;
 using System;
 using System.Collections.Generic;
@@ -19,25 +20,32 @@ namespace MixApp.Client.Helper
             Routers.Add(new Router(nameof(AppHelper.Install), AppHelper.Install, InstallParameterJsonCtx.Default.InstallParameter));
             Routers.Add(new Router(nameof(AppHelper.UnInstall), AppHelper.UnInstall, UnInstallParameterJsonCtx.Default.UnInstallParameter));
             Routers.Add(new Router(nameof(AppHelper.GetSoftewares), AppHelper.GetSoftewares, GetSoftewaresParameterJsonCtx.Default.GetSoftewaresParameter));
+            Routers.Add(new Router(nameof(AppHelper.OpenDownloadFolder), AppHelper.OpenDownloadFolder, OpenDownloadFolderParameterJsonCtx.Default.OpenDownloadFolderParameter));
         }
 
         public static void Map(PhotinoWindow? window, string message)
         {
             var sendMsg = JsonSerializer.Deserialize(message, SendMsgJsonCtx.Default.SendMsg);
-
-            if(sendMsg == null)
+            if (sendMsg == null)
             {
+                window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(-1, false, $"参数解析失败"), ReceveMsgJsonCtx.Default.ReceveMsg));
                 return;
             }
-            Routers.FirstOrDefault(x => x.MethodName == sendMsg.MethodName)?.Method?.Invoke(sendMsg.Parameters);
 
-            var receveMsg = new ReceveMsg
+            try
             {
-                ID = sendMsg.ID,
-                Result = true
-            };
-            string? res = JsonSerializer.Serialize(receveMsg, ReceveMsgJsonCtx.Default.ReceveMsg);
-            window?.SendWebMessage(res);
+                Routers.FirstOrDefault(x => x.MethodName == sendMsg.MethodName)?.Method?.Invoke(sendMsg.ID, window, sendMsg.Parameters);
+            }
+            catch (Exception e)
+            {
+                window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(sendMsg.ID, false, $"执行失败:{e}"), ReceveMsgJsonCtx.Default.ReceveMsg));
+            }
+            finally
+            {
+                window?.SendWebMessage(JsonSerializer.Serialize(new ReceveMsg(sendMsg.ID), ReceveMsgJsonCtx.Default.ReceveMsg));
+            }
+
+
 
         }
     }
