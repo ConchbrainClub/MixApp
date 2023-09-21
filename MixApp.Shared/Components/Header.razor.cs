@@ -16,7 +16,9 @@ namespace MixApp.Shared.Components
 
         public string? KeyWord { get; set; }
 
-        public List<Software> SearchResults { get; set; } = new();
+        public bool IsFocus { get; set; }
+
+        public List<Software> SearchResults { get; set; } = [];
 
         public async void UserInput(ChangeEventArgs args)
         {
@@ -37,13 +39,23 @@ namespace MixApp.Shared.Components
 
         public void OnFocus(FocusEventArgs args)
         {
-            Console.WriteLine("====================");
+            if (args.Type == "focusin")
+            {
+                IsFocus = true;
+                StateHasChanged();
+                return;
+            }
+            
+            Task.Run(() => 
+            {
+                Thread.Sleep(500);
+                IsFocus = false;
+                StateHasChanged();
+            });
         }
 
         public void OpenSoftware(Software software)
         {
-            KeyWord = string.Empty;
-            SearchResults.Clear();
             GlobalEvent.OpenSoftware(software);
             StateHasChanged();
         }
