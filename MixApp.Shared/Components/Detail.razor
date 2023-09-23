@@ -210,27 +210,28 @@
         margin: 5px;
     }
 
-
     .installer{
         padding: 20px;
-
     }
 
     fluent-dialog::part(control) {
-        --dialog-width: 60vw;
+        --dialog-width: 80vw;
+        --dialog-height: 100%;
         padding: 20px 0;
         position: relative;
     }
     
     @@media only screen and (max-width: 1200px) {
         fluent-dialog::part(control) {
-                --dialog-width: calc(100% - 30px);
-                margin: 14px;
-            }
-            .detailSkeletonButtonRight{
-                width: 175px;
-            }
-            .detailSkeletonIntroLeft{
+            --dialog-width: calc(100% - 30px);
+            margin: 14px;
+        }
+
+        .detailSkeletonButtonRight{
+            width: 175px;
+        }
+
+        .detailSkeletonIntroLeft{
             width: calc(100% - 175px);
         }
     }
@@ -246,7 +247,8 @@
     }
 
     .detail {
-        height: 80vh;
+        overflow-y: scroll;
+        height: calc(100% - 30px);
         position: relative;
     }
 
@@ -256,7 +258,6 @@
         width: 100%;
         border-radius: 5px;
     }
-
 
     .detail .mask {
         position: absolute;
