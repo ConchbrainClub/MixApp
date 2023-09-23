@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MixApp.Client.Model
 {
-    public partial class SendMsg
+    public class SendMsg
     {
         public int ID { get; set; }
 

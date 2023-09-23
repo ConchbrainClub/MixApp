@@ -68,7 +68,7 @@ Section "Dummy Section" SecDummy
   File /nonfatal /r "MixApp.Client\bin\Release\net8.0\win-x64\publish\*.*"
   
   ;Store installation folder
-  WriteRegStr HKCU "Software\MixStore" "" $INSTDIR
+  ;WriteRegStr HKCU "Software\MixStore" "" $INSTDIR
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -79,9 +79,9 @@ Section "Dummy Section" SecDummy
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     
     ;Create shortcuts
-    CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-    CreateShortcut "$SMPROGRAMS\$StartMenuFolder\MixStore.lnk" "$INSTDIR\MixStore.exe"
-    CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+    CreateDirectory "$SMPROGRAMS\$StartMenuFolder\MixStore"
+    CreateShortcut "$SMPROGRAMS\$StartMenuFolder\MixStore\MixStore.lnk" "$INSTDIR\MixStore.exe"
+    CreateShortcut "$SMPROGRAMS\$StartMenuFolder\MixStore\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   
   !insertmacro MUI_STARTMENU_WRITE_END
 
@@ -97,12 +97,12 @@ Section "Uninstall"
   RMDir /r "$INSTDIR"
   
   !insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
-    
-  Delete "$SMPROGRAMS\$StartMenuFolder\MixStore.lnk"
-  Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
-  RMDir "$SMPROGRAMS\$StartMenuFolder"
+  
+  RMDir "$SMPROGRAMS\$StartMenuFolder\MixStore"
+  ;Delete "$SMPROGRAMS\$StartMenuFolder\MixStore.lnk"
+  ;Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
   
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\MixStore"
-  DeleteRegKey /ifempty HKCU "Software\MixStore"
+  ;DeleteRegKey /ifempty HKCU "Software\MixStore"
 
 SectionEnd

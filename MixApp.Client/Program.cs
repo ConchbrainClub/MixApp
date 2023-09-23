@@ -22,10 +22,10 @@ class Program
         //    // .SetDevToolsEnabled(false)
         //    .SetGrantBrowserPermissions(true)
         //    .Center()
-        //    .RegisterWebMessageReceivedHandler((object? sender, string message) =>
+        //    .RegisterWebMessageReceivedHandler((object? sender, string sendMsgStr) =>
         //    {
         //        PhotinoWindow? window = sender as PhotinoWindow;
-        //        Route.Map(window, message);
+        //        Route.Map(window, sendMsgStr);
         //    })
         //    .Load(new Uri("https://mixstore.conchbrain.club/"));
 
@@ -44,29 +44,32 @@ class Program
         //AppHelper.Install(type, appPath, installPath, hash);
 
         //AppHelper.UnInstall();
+
+        //AppHelper.OpenDownloadFolder(string.Empty);
+
         Route.Init();
 
-        var b = new InstallParameter
+        var param = new InstallParameter
         {
             PkgType = "msi",
             PkgPath = "D:\\MyProject\\TestApp\\7-Zip.msi",
             DefaultPath = "D:\\MyProject\\TestApp",
-            CheckHash = "0BA639B6DACDF573D847C911BD147C6384381A54DAC082B1E8C77BC73D58958B",
+            Hash = "0BA639B6DACDF573D847C911BD147C6384381A54DAC082B1E8C77BC73D58958B",
             Silent = true
         };
 
-        var bb = JsonSerializer.Serialize(b, InstallParameterJsonCtx.Default.InstallParameter);
+        var paramStr = JsonSerializer.Serialize(param, InstallParameterJsonCtx.Default.InstallParameter);
 
-        var a = new SendMsg
+        var sendMsg = new SendMsg
         {
             ID = 123,
-            MethodName = "Install",
-            Parameters = bb
+            MethodName = "GetSoftewares",
+            Parameters = paramStr
         };
-        var message = JsonSerializer.Serialize(a, SendMsgJsonCtx.Default.SendMsg);
+        var sendMsgStr = JsonSerializer.Serialize(sendMsg, SendMsgJsonCtx.Default.SendMsg);
 
 
-        Route.Map(null, message);
+        Route.Map(new PhotinoWindow(), sendMsgStr);
 
 
 

@@ -11,6 +11,7 @@ chmod +x dotnet-install.sh
 ./dotnet-install.sh -v 8.0.100-rc.1.23463.5
 rm dotnet-install.sh
 
+dotnet workload restore
 dotnet restore
 dotnet watch run --project MixApp.Shared/MixApp.csproj
 ```
