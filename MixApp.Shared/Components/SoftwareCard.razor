@@ -26,7 +26,7 @@
                     @LM.Scripts["c.software_card.more_info"]
                 </FluentButton>
 
-                @if(GlobalEvent.WaitQueue.FindIndex(i => Software.PackageIdentifier == i.PackageIdentifier) < 0)
+                @if(GlobalEvent.WaitQueue.FindIndex(i => Software.PackageIdentifier == i.Software?.PackageIdentifier) < 0)
                 {
                     <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software)) IconEnd="@(new Icons.Regular.Size20.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
                 }

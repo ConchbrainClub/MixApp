@@ -14,25 +14,25 @@
             <FluentDataGrid Items="@GlobalEvent.WaitQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 9fr 3fr 2fr" ResizableColumns=true>
                 <TemplateColumn Title=@LM.Scripts["p.library.logo"]>
                     <img class="icon" 
-                        src=@("https://icon.horse/icon/" + new Uri(context.PackageUrl ?? "https://www.conchbrain.club").Host) 
+                        src=@("https://icon.horse/icon/" + new Uri(context.Software?.PackageUrl ?? "https://www.conchbrain.club").Host) 
                         onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" 
                         />
                 </TemplateColumn>
 
                 <TemplateColumn Title=@LM.Scripts["p.library.package_name"] >
-                    <p class="line">@context.PackageName</p>
+                    <p class="line">@context.Software?.PackageName</p>
                 </TemplateColumn>
 
                 <TemplateColumn Title=@LM.Scripts["p.library.description"]>
-                    <p class="line">@context.ShortDescription</p>
+                    <p class="line">@context.Software?.ShortDescription</p>
                 </TemplateColumn>
 
                 <TemplateColumn Title=@LM.Scripts["p.library.publisher"]>
-                    <p class="line">@context.Publisher</p>
+                    <p class="line">@context.Software?.Publisher</p>
                 </TemplateColumn>
 
                 <TemplateColumn Title=@LM.Scripts["p.library.action"]>
-                    <FluentButton OnClick="(_ => DownloadFromWaitQueue(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowDownload())" />
+                    <FluentButton OnClick="(_ => DownloadFromWaitQueue(context))" Disabled="context.IsFetchingInfo" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowDownload())" />
                     <FluentButton OnClick="(_ => GlobalEvent.WaitQueue.Remove(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
                 </TemplateColumn>
             </FluentDataGrid>
@@ -125,6 +125,10 @@
         width: 100%;
         padding: 10px 20px;
         margin: 20px;
+    }
+
+    .page .list {
+        margin-bottom: 40px;
     }
 
     .page h1 {

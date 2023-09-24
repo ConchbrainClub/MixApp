@@ -44,17 +44,17 @@ namespace MixApp.Shared.Services
         /// <summary>
         /// Wait for download queue
         /// </summary>
-        public List<Software> WaitQueue { get; set; } = new();
+        public List<WaitItem> WaitQueue { get; set; } = [];
 
         /// <summary>
         /// Downloading queue
         /// </summary>
-        public List<DownloadTask> DownloadQueue { get; set; } = new();
+        public List<DownloadTask> DownloadQueue { get; set; } = [];
 
         /// <summary>
         /// Download history queue
         /// </summary>
-        public List<DownloadTask> HistoryQueue { get; set; } = new();
+        public List<DownloadTask> HistoryQueue { get; set; } = [];
 
         private async void Initialize()
         {
@@ -88,11 +88,14 @@ namespace MixApp.Shared.Services
         /// <param name="software">software info</param>
         public void Add2WaitQueue(Software software)
         {
-            int index = WaitQueue.FindIndex(i => i.PackageIdentifier ==  software.PackageIdentifier);
+            int index = WaitQueue.FindIndex(i => 
+            {
+                return i.Software?.PackageIdentifier == software.PackageIdentifier;
+            });
 
             if (index < 0)
             {
-                WaitQueue.Add(software);
+                WaitQueue.Add(new (){ Software = software });
             }
             else
             {

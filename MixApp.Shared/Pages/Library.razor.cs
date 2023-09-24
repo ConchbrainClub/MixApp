@@ -20,9 +20,11 @@ namespace MixApp.Shared.Pages
             base.OnInitialized();
         }
 
-        public async void DownloadFromWaitQueue(Software software)
+        public async void DownloadFromWaitQueue(WaitItem waitItem)
         {
-            IEnumerable<Manifest> manifests = await HttpClient.GetFromJsonAsync<IEnumerable<Manifest>>($"/softwares/{software?.PackageIdentifier}")
+            waitItem.IsFetchingInfo = true;
+            IEnumerable<Manifest> manifests = await HttpClient
+                .GetFromJsonAsync<IEnumerable<Manifest>>($"/softwares/{waitItem.Software?.PackageIdentifier}")
                 ?? Array.Empty<Manifest>();
 
             Manifest latest = manifests.OrderByDescending(i =>
@@ -44,7 +46,7 @@ namespace MixApp.Shared.Pages
             .First();
 
             GlobalEvent.DownloadInstaller(latest);
-            GlobalEvent.WaitQueue.Remove(software!);
+            GlobalEvent.WaitQueue.Remove(waitItem!);
         }
     }
 }
