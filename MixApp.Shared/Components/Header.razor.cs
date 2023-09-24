@@ -14,25 +14,56 @@ namespace MixApp.Shared.Components
         [Inject]
         public GlobalEvent GlobalEvent { get; set; } = default!;
 
-        public string? KeyWord { get; set; }
+        private System.Timers.Timer? timer = null;
+
+        private string? keyword;
+
+        public string? Keyword
+        {
+            get => keyword;
+            set
+            {
+                keyword = value;
+                DisposeTimer();
+                timer = new System.Timers.Timer(400);
+                timer.Elapsed += TimerElapsed_TickAsync;
+                timer.Enabled = true;
+                timer.Start();
+            }
+        }
 
         public bool IsFocus { get; set; }
 
         public List<Software> SearchResults { get; set; } = [];
 
-        public async void UserInput(ChangeEventArgs args)
+        private async void TimerElapsed_TickAsync(object? sender, EventArgs e)
         {
-            KeyWord = args.Value?.ToString();
+            DisposeTimer();
+            await InvokeAsync(OnSearch);
+        }
 
-            if (string.IsNullOrEmpty(args.Value?.ToString())) 
+        private void DisposeTimer()
+        {
+            if (timer != null)
+            {
+                timer.Enabled = false;
+                timer.Elapsed -= TimerElapsed_TickAsync;
+                timer.Dispose();
+                timer = null;
+            }
+        }
+
+        private async void OnSearch()
+        {
+            if (string.IsNullOrEmpty(Keyword))
             {
                 SearchResults.Clear();
                 return;
             }
-            
+
             SearchResults = await HttpClient
-                .GetFromJsonAsync<List<Software>>($"/softwares?keyword={args.Value}") 
-                ?? new();
+                .GetFromJsonAsync<List<Software>>($"/softwares?keyword={Keyword}")
+                ?? [];
 
             StateHasChanged();
         }
@@ -45,10 +76,10 @@ namespace MixApp.Shared.Components
                 StateHasChanged();
                 return;
             }
-            
-            Task.Run(() => 
+
+            Task.Run(() =>
             {
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
                 IsFocus = false;
                 StateHasChanged();
             });
