@@ -1,6 +1,5 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using MixApp.Shared.Models;
 using MixApp.Shared.Services;
 
@@ -31,8 +30,6 @@ namespace MixApp.Shared.Components
                 timer.Start();
             }
         }
-
-        public bool IsFocus { get; set; }
 
         public List<Software> SearchResults { get; set; } = [];
 
@@ -66,23 +63,6 @@ namespace MixApp.Shared.Components
                 ?? [];
 
             StateHasChanged();
-        }
-
-        public void OnFocus(FocusEventArgs args)
-        {
-            if (args.Type == "focusin")
-            {
-                IsFocus = true;
-                StateHasChanged();
-                return;
-            }
-
-            Task.Run(() =>
-            {
-                Thread.Sleep(1000);
-                IsFocus = false;
-                StateHasChanged();
-            });
         }
 
         public void OpenSoftware(Software software)

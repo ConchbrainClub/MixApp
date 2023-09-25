@@ -9,12 +9,10 @@
     </div>
     <FluentSearch @bind-Value="@Keyword" 
         @oninput="@(e => Keyword = e.Value?.ToString())"
-        @onfocusin="OnFocus" 
-        @onfocusout="OnFocus" 
         class="search" 
         Placeholder=@LM.Scripts["c.search_box.search"] />
 
-    @if(IsFocus && !string.IsNullOrEmpty(Keyword))
+    @if(!string.IsNullOrEmpty(Keyword))
     {
         <div class="searchContent animate__animated animate__fadeInDown">
             <FluentDataGrid class="searchResult" Items="@SearchResults.AsQueryable()" GridTemplateColumns="1fr 1fr 2fr 1fr" ResizableColumns=true Virtualize="true" >
