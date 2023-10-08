@@ -1,0 +1,25 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: build and publish
+      run: bash ./.build.sh
+      
+    - uses: actions/checkout@master
+    - uses: manyuanrong/setup-ossutil@v2.0
+      with:
+        endpoint: "oss.aliyuncs.com"
+        access-key-id: "your_key_id"
+        access-key-secret: "your_key_secret"
+        sts-token: "sts_token"
+    - run: ossutil cp -rf /MixApp.Shared/bin/Release/net8.0/publish/wwwroot oss://bucket/path
