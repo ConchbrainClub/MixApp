@@ -26,7 +26,7 @@
 ;Interface Settings
 
   !define MUI_HEADERIMAGE
-  !define MUI_HEADERIMAGE_BITMAP "MixApp.Client\header.bmp" ; optional
+  !define MUI_HEADERIMAGE_BITMAP "header.bmp" ; optional
   !define MUI_ABORTWARNING
 
 ;--------------------------------
@@ -65,7 +65,7 @@ Section "Dummy Section" SecDummy
   SetOutPath "$INSTDIR"
   
   ;ADD YOUR OWN FILES HERE...
-  File /nonfatal /r "MixApp.Client\bin\Release\net8.0\win-x64\publish\*.*"
+  File /nonfatal /r "bin\Release\net8.0\win-x64\publish\*.*"
   
   ;Store installation folder
   ;WriteRegStr HKCU "Software\MixStore" "" $INSTDIR
