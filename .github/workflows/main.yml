@@ -25,6 +25,7 @@ jobs:
     - name: upload to oss
       run: |
         dirs
-        ls
-        ossutil cp -rf /home/runner/work/MixApp/MixApp/MixApp.Shared/bin/Release/net8.0/publish/wwwroot oss://mixstore/
+        ls MixApp.Shared/bin/Release/net8.0/publish
+        ls MixApp.Shared/bin/Release/net8.0/publish/wwwroot
+        ossutil cp -rf MixApp.Shared/bin/Release/net8.0/publish/wwwroot/* oss://mixstore/
 
