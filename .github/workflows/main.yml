@@ -21,4 +21,10 @@ jobs:
         endpoint: "oss-cn-shenzhen.aliyuncs.com"
         access-key-id: "${{ secrets.KEY_ID }}"
         access-key-secret: "${{ secrets.SECRET_KEY }}"
-    - run: ossutil cp -rf /home/runner/work/MixApp/MixApp/MixApp.Shared/bin/Release/net8.0/publish/ oss://mixstore/
+      
+    - name: upload to oss
+      run: |
+        dirs
+        ls
+        ossutil cp -rf /home/runner/work/MixApp/MixApp/MixApp.Shared/bin/Release/net8.0/publish/wwwroot oss://mixstore/
+
