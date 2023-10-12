@@ -7,20 +7,21 @@
 
 @if (Software != null)
 {
-    <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn">
+    <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn">        
+        <FluentDialogHeader Visible="false" />
+        <FluentDialogFooter Visible="false" />
+
         <FluentIcon class="cancelButton" 
             Value="@(new Icons.Regular.Size20.PresenceOffline())" 
             @onclick="(_ => { OnDismiss.Invoke(new DialogEventArgs()); Software = null; })"/>
 
-        <FluentDialogHeader>
+        <div class="detail">
             <img src="@(RemoteAssets.GetAssets(Software?.Cover))"
                 class="cover animate__animated animate__fadeInDown"
                 fetchpriority="low"
                 loading="lazy"
                 onerror="javascript:this.src='https://www.conchbrain.club/images/notfound.png'" />
-        </FluentDialogHeader>
-
-        <FluentDialogBody class="detail">
+                
             <div class="mask" />
             
             @if(Latest != null)
@@ -69,8 +70,6 @@
                             </a>
                         </div>
                     </div>
-
-                    <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
 
                     <div class="info">
 
@@ -173,7 +172,7 @@
                 </div>
                 <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
             }
-        </FluentDialogBody>
+        </div>
     </FluentDialog>
 }
 
@@ -224,8 +223,7 @@
     
     @@media only screen and (max-width: 1270px) {
         fluent-dialog::part(control) {
-            --dialog-width: calc(100% - 30px);
-            margin: 14px;
+            --dialog-width: 100%;
         }
 
         .detailSkeletonButtonRight{
@@ -249,11 +247,12 @@
 
     .detail {
         overflow-y: scroll;
-        height: calc(100% - 30px);
+        height: calc(100% - 40px);
+        margin: 20px 0;
         position: relative;
     }
 
-    .cover {
+    .detail .cover {
         object-fit: cover;
         height: 55vh;
         width: 100%;
@@ -266,7 +265,6 @@
         height: 55vh;
         width: 100%;
         background: linear-gradient(to top, var(--fill-color), rgba(255, 255, 255, 0));
-        z-index: -1;
     }
 
     .head {
@@ -290,11 +288,15 @@
     }
 
     .info {
-        padding: 20px;
+        padding: 0 20px;
     }
 
     .info>div {
         margin-bottom: 20px;
+    }
+
+    .info>div:last-child {
+        margin-bottom: 0;
     }
 
     .info fluent-text-field {
