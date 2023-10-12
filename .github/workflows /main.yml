@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "prod" ]
 
 jobs:
 
@@ -18,8 +18,8 @@ jobs:
     - uses: actions/checkout@master
     - uses: manyuanrong/setup-ossutil@v2.0
       with:
-        endpoint: "oss.aliyuncs.com"
-        access-key-id: "your_key_id"
-        access-key-secret: "your_key_secret"
+        endpoint: "oss-cn-shenzhen.aliyuncs.com"
+        access-key-id: "${{ secrets.KEY_ID }}"
+        access-key-secret: "${{ secrets.SECRET_KEY }}"
         sts-token: "sts_token"
-    - run: ossutil cp -rf /MixApp.Shared/bin/Release/net8.0/publish/wwwroot oss://bucket/path
+    - run: ossutil cp -rf MixApp.Shared/bin/Release/net8.0/publish/wwwroot oss://mixstore/
