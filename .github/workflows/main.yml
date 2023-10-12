@@ -23,7 +23,4 @@ jobs:
         access-key-secret: "${{ secrets.SECRET_KEY }}"
       
     - name: upload to oss
-      run: |
-        ls
-        ossutil cp -rf ./MixApp.Shared/bin/Release/net8.0/publish/wwwroot oss://mixstore
-
+      run: ossutil cp -rf ./MixApp.Shared oss://mixstore
