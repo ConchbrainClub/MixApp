@@ -12,15 +12,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: build and publish
-      run: bash ./.build.sh
-      
     - uses: actions/checkout@master
     - uses: manyuanrong/setup-ossutil@v2.0
       with:
         endpoint: "oss-cn-shenzhen.aliyuncs.com"
         access-key-id: "${{ secrets.KEY_ID }}"
         access-key-secret: "${{ secrets.SECRET_KEY }}"
-      
+
+    - name: build and publish
+      run: bash ./.build.sh
+
     - name: upload to oss
-      run: ossutil cp -rf ./MixApp.Shared oss://mixstore
+      run: ossutil cp -rf ./MixApp.Shared/bin/Release/net8.0/publish/wwwroot oss://mixstore
