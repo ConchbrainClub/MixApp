@@ -68,6 +68,7 @@ namespace MixApp.Shared.Components
         public void OpenSoftware(Software software)
         {
             GlobalEvent.OpenSoftware(software);
+            Keyword = string.Empty;
             StateHasChanged();
         }
     }
