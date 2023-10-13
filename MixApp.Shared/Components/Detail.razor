@@ -9,7 +9,6 @@
 {
     <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn">        
         <FluentDialogHeader Visible="false" />
-        <FluentDialogFooter Visible="false" />
 
         <FluentIcon class="cancelButton" 
             Value="@(new Icons.Regular.Size20.PresenceOffline())" 
@@ -218,9 +217,10 @@
         --dialog-width: 60%;
         --dialog-height: 100%;
         padding: 20px 0;
+        overflow: hidden;
         position: relative;
     }
-    
+
     @@media only screen and (max-width: 1270px) {
         fluent-dialog::part(control) {
             --dialog-width: 100%;
@@ -241,8 +241,8 @@
         width: 32px;
         height: 32px;
         z-index: 5;
-        right: -10px;
-        top: -15px;
+        right: 2px;
+        top: -3px;
     }
 
     .detail {
