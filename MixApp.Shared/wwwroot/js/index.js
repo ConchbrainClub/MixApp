@@ -107,7 +107,9 @@ window.cancelDownloading = (cancelId) => {
     } catch (error) { }
 }
 
-window.reload = location.reload
+window.reload = () => {
+    location.reload()
+}
 
 async function init() {
     let registration = await navigator.serviceWorker.register('service-worker.js')
@@ -118,9 +120,15 @@ async function init() {
         registration.installing.onstatechange = () => {
             if (installingWorker.state != 'installed') return
 
+            if (!localStorage.getItem('isInstalled')) {
+                console.log('first install')
+                localStorage.setItem('isInstalled', 'true')
+                return
+            }
+
             if (confirm('New update available, upgrade now?')) {
                 registration.waiting.postMessage('SKIP_WAITING')
-                setTimeout(() => { location.reload() }, 1000)
+                setTimeout(window.reload, 1000)
             }
         }
     }
