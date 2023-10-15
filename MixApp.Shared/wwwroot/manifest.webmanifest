@@ -8,13 +8,6 @@
   "theme_color": "#03173d",
   "prefer_related_applications": false,
   "description": "conchbrain club windows application store",
-  "display_override": [
-    "browser",
-    "fullscreen",
-    "minimal-ui",
-    "standalone",
-    "window-controls-overlay"
-  ],
   "categories": [
     "utilities"
   ],
