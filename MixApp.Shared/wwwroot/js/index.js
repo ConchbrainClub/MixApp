@@ -107,6 +107,10 @@ window.cancelDownloading = (cancelId) => {
     } catch (error) { }
 }
 
+window.resetSetting = () => {
+    localStorage.clear()
+}
+
 window.reload = () => {
     location.reload()
 }
