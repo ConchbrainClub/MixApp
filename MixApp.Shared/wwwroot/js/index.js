@@ -1,7 +1,7 @@
 try {
     window.external.receiveMessage(message => alert(message))
     console.log('client app')
-} 
+}
 catch (error) {
     console.log('web app')
 }
@@ -83,7 +83,7 @@ window.downloadFile = (dotnet, fileName, url, cancelId) => {
         }
 
         downloadQueue.splice(downloadQueue.findIndex(i => i.cancelId == cancelId), 1)
-        
+
         let blob = new Blob(buffer)
         let ele = document.createElement('a')
         ele.href = URL.createObjectURL(blob)
@@ -104,9 +104,26 @@ window.cancelDownloading = (cancelId) => {
     try {
         downloadQueue[index].controller.abort()
         downloadQueue.splice(index, 1)
-    } catch (error) {}
+    } catch (error) { }
 }
 
-window.reload = () => {
-    location.reload()
+window.reload = location.reload
+
+async function init() {
+    let registration = await navigator.serviceWorker.register('service-worker.js')
+    
+    registration.onupdatefound = () => {
+        let installingWorker = registration.installing;
+    
+        registration.installing.onstatechange = () => {
+            if (installingWorker.state != 'installed') return
+
+            if (confirm('New update available, upgrade now?')) {
+                registration.waiting.postMessage('SKIP_WAITING')
+                setTimeout(() => { location.reload() }, 1000)
+            }
+        }
+    }
 }
+
+init()
