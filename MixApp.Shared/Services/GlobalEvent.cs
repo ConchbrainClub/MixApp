@@ -1,4 +1,6 @@
 using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Fast.Components.FluentUI;
 using Microsoft.JSInterop;
 using MixApp.Shared.Models;
 using System.Text.Json;
@@ -13,13 +15,19 @@ namespace MixApp.Shared.Services
 
         private ILocalStorageService LocalStorage { get; set; }
 
-        public GlobalEvent(IServiceScopeFactory scopeFactory, IJSRuntime runtime, ILocalStorageService localStorage)
+        public GlobalEvent(IServiceScopeFactory scopeFactory)
         {
-            HttpClient = scopeFactory.CreateScope().ServiceProvider.GetRequiredService<HttpClient>();
-            JSRuntime = runtime;
-            LocalStorage = localStorage;
+            IServiceProvider serviceProvider = scopeFactory.CreateScope().ServiceProvider;
+            HttpClient = serviceProvider.GetRequiredService<HttpClient>();
+            JSRuntime = serviceProvider.GetRequiredService<IJSRuntime>();
+            LocalStorage = serviceProvider.GetRequiredService<ILocalStorageService>();
             Initialize();
         }
+
+        /// <summary>
+        /// When need show toast
+        /// </summary>
+        public event Action<ToastParameters<CommunicationToastContent>>? OnToast;
 
         /// <summary>
         /// When user want open software detail interface
@@ -77,10 +85,55 @@ namespace MixApp.Shared.Services
         }
 
         /// <summary>
+        /// Show custome toast in toast container
+        /// </summary>
+        /// <param name="title">toast title</param>
+        /// <param name="content">toast content</param>
+        /// <param name="timeout">toast timeout (default is 5s)</param>
+        /// <param name="intent">toast intent (default is Success)</param>
+        /// <param name="primaryAction">primary action text</param>
+        /// <param name="onPrimaryAction">primary action</param>
+        /// <param name="secondaryAction">secondary action text</param>
+        /// <param name="onSecondaryAction">secondary action</param>
+        public void ShowToast(
+            string title, 
+            CommunicationToastContent content, 
+            int timeout = 5,
+            ToastIntent intent = ToastIntent.Success,
+            string? primaryAction = null,
+            EventCallback<ToastResult>? onPrimaryAction = null,
+            string? secondaryAction = null,
+            EventCallback<ToastResult>? onSecondaryAction = null)
+        {
+            OnToast?.Invoke(new ToastParameters<CommunicationToastContent>()
+            {
+                Intent = intent,
+                Title = title,
+                Content = content,
+                Timeout = timeout,
+                PrimaryAction = primaryAction,
+                OnPrimaryAction = onPrimaryAction,
+                SecondaryAction = secondaryAction,
+                OnSecondaryAction = onSecondaryAction
+            });
+        }
+
+        /// <summary>
         /// Open software detail interface
         /// </summary>
         /// <param name="software">Software info to fetch Manifests</param>
-        public void OpenSoftware(Software software) => OnOpenSoftware?.Invoke(software);
+        public void OpenSoftware(Software software)
+        {
+            // ========== Test ==========
+            ShowToast("Your dataset is ready",  new CommunicationToastContent()
+            {
+                Subtitle = "A communication toast subtitle",
+                Details = "Let Power BI help you explore your data.",
+            });
+            // ==========================
+            
+            OnOpenSoftware?.Invoke(software);
+        }
 
         /// <summary>
         /// Add Software to wait to download queue
@@ -121,6 +174,7 @@ namespace MixApp.Shared.Services
             if (index >= 0) HistoryQueue.RemoveAt(index);
             HistoryQueue.Insert(0, task);
             LocalStorage.SetItemAsync("history_queue", HistoryQueue).AsTask();
+            OnHistoryQueueChanged?.Invoke();
         }
 
         /// <summary>

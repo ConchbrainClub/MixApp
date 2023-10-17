@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Fast.Components.FluentUI;
 using MixApp.Shared.Models;
 using MixApp.Shared.Services;
 
@@ -14,6 +15,9 @@ namespace MixApp.Shared.Shared
         [Inject]
         private GlobalEvent GlobalEvent { get; set; } = default!;
 
+        [Inject]
+        private IToastService ToastService { get; set; } = default!;
+
         public bool Expanded { get; set; } = false;
 
         public Software? Software { get; set; }
@@ -24,6 +28,8 @@ namespace MixApp.Shared.Shared
 
         protected override async Task OnInitializedAsync()
         {
+            GlobalEvent.OnToast += ToastService.ShowCommunicationToast;
+
             GlobalEvent.OnOpenSoftware += software => 
             {
                 Software = software;
