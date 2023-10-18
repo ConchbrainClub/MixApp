@@ -119,7 +119,7 @@ async function init() {
     let registration = await navigator.serviceWorker.register('service-worker.js')
 
     registration.onupdatefound = () => {
-        let installingWorker = registration.installing;
+        let installingWorker = registration.installing
 
         registration.installing.onstatechange = () => {
             if (installingWorker.state != 'installed') return
@@ -132,7 +132,7 @@ async function init() {
 
             let updateReload = document.querySelector("#update-reload")
 
-            updateReload.style.display = "block"
+            updateReload.style.display = "flex"
 
             document.querySelector('#upgrade').onclick = () => {
                 registration.waiting.postMessage('SKIP_WAITING')
@@ -140,7 +140,6 @@ async function init() {
             }
 
             document.querySelector('#later').onclick = () => updateReload.style.display = "none"
-
         }
     }
 }
