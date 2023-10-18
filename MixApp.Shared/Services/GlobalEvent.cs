@@ -14,12 +14,15 @@ namespace MixApp.Shared.Services
 
         private ILocalStorageService LocalStorage { get; set; }
 
+        private LocaleManager LM { get; set; }
+
         public GlobalEvent(IServiceScopeFactory scopeFactory)
         {
             IServiceProvider serviceProvider = scopeFactory.CreateScope().ServiceProvider;
             HttpClient = serviceProvider.GetRequiredService<HttpClient>();
             JSRuntime = serviceProvider.GetRequiredService<IJSRuntime>();
             LocalStorage = serviceProvider.GetRequiredService<ILocalStorageService>();
+            LM = serviceProvider.GetRequiredService<LocaleManager>();
             Initialize();
         }
 
@@ -81,27 +84,20 @@ namespace MixApp.Shared.Services
                 return i.Software?.PackageIdentifier == software.PackageIdentifier;
             });
 
+            string title = string.Empty;
+
             if (index < 0)
             {
-                // Notification.ShowToast("Your dataset is ready",  new CommunicationToastContent()
-                // {
-                //     Subtitle = "A communication toast subtitle",
-                //     Details = "Let Power BI help you explore your data.",
-                // });
-
+                title = LM.Scripts["n.global_event.add_to_waitlist"];
                 WaitQueue.Add(new (){ Software = software });
             }
             else
             {
-                // Notification.ShowToast("Your dataset is ready",  new CommunicationToastContent()
-                // {
-                //     Subtitle = "A communication toast subtitle",
-                //     Details = "Let Power BI help you explore your data.",
-                // });
-
+                title = LM.Scripts["n.global_event.remove_from_waitlist"];
                 WaitQueue.RemoveAt(index);
             }
 
+            Notification.ShowToast(title, new() { Details = software.PackageName });
             OnWaitQueueChanged?.Invoke();
         }
 
@@ -111,6 +107,16 @@ namespace MixApp.Shared.Services
         /// <param name="task">download task info</param>
         public void AddToHistoryQueue(DownloadTask task)
         {
+            // Do not notify same task
+            if (HistoryQueue.FindIndex(i => i.CancelId == task.CancelId) < 0)
+            {
+                Notification.ShowToast(
+                    LM.Scripts["n.global_event.download_complete"], new() 
+                    { 
+                        Details = task.Manifest.PackageName
+                    });
+            }
+
             int index = HistoryQueue.FindIndex(history => 
             {
                 return history.Manifest.PackageIdentifier == task.Manifest.PackageIdentifier &&
@@ -170,11 +176,14 @@ namespace MixApp.Shared.Services
 
             task.OnProgressChanged += i => 
             {
+                if (i.Progress < 0) DownloadFailed(i);
+
                 if (i.Progress == 100) 
                 {
                     DownloadQueue.Remove(i);
                     AddToHistoryQueue(i);
                 }
+
                 OnDownloadQueueChanged?.Invoke();
             };
 
@@ -192,6 +201,24 @@ namespace MixApp.Shared.Services
 
             // Invoke javascript to fetch the installer
             JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url, task.CancelId).AsTask();
+
+            Notification.ShowToast(
+                LM.Scripts["n.global_event.start_download"], new() 
+                { 
+                    Details = manifest?.PackageName
+                });
+        }
+
+        private void DownloadFailed(DownloadTask task)
+        {
+            DownloadQueue.Remove(task);
+
+            Notification.ShowToast(
+                LM.Scripts["n.global_event.download_failed"], new() 
+                {
+                    Subtitle = task.Manifest.PackageName,
+                    Details = task.Installer.InstallerUrl
+                }, 20, ToastIntent.Error);
         }
 
         public void CancelDownloadingTask(DownloadTask task)

@@ -47,13 +47,13 @@ window.initHighLight = (card) => {
 window.downloadQueue = []
 
 window.downloadFile = (dotnet, fileName, url, cancelId) => {
-    new Promise(async () => {
+    new Promise(async (_, reject) => {
 
         let controller = new AbortController()
         let res = await fetch(url, {
             signal: controller.signal,
             priority: 'low'
-        })
+        }).catch(reject)
 
         downloadQueue.push({
             cancelId: cancelId,
