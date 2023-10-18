@@ -1,5 +1,4 @@
 using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components;
 using Microsoft.Fast.Components.FluentUI;
 using Microsoft.JSInterop;
 using MixApp.Shared.Models;
@@ -23,11 +22,6 @@ namespace MixApp.Shared.Services
             LocalStorage = serviceProvider.GetRequiredService<ILocalStorageService>();
             Initialize();
         }
-
-        /// <summary>
-        /// When need show toast
-        /// </summary>
-        public event Action<ToastParameters<CommunicationToastContent>>? OnToast;
 
         /// <summary>
         /// When user want open software detail interface
@@ -71,69 +65,10 @@ namespace MixApp.Shared.Services
         }
 
         /// <summary>
-        /// Get software or manifest icon
-        /// </summary>
-        /// <returns>icon url</returns>
-        public static string GetIcon(Software software) => GetIcon(software.PackageUrl ?? string.Empty);
-
-        public static string GetIcon(Manifest manifest) => GetIcon(manifest.PackageUrl ?? string.Empty);
-
-        public static string GetIcon(string packageUrl)
-        {
-            Uri uri = new(packageUrl ?? "https://www.conchbrain.club");
-            return $"https://icon.horse/icon/{uri.Host}";
-        }
-
-        /// <summary>
-        /// Show custome toast in toast container
-        /// </summary>
-        /// <param name="title">toast title</param>
-        /// <param name="content">toast content</param>
-        /// <param name="timeout">toast timeout (default is 5s)</param>
-        /// <param name="intent">toast intent (default is Success)</param>
-        /// <param name="primaryAction">primary action text</param>
-        /// <param name="onPrimaryAction">primary action</param>
-        /// <param name="secondaryAction">secondary action text</param>
-        /// <param name="onSecondaryAction">secondary action</param>
-        public void ShowToast(
-            string title, 
-            CommunicationToastContent content, 
-            int timeout = 5,
-            ToastIntent intent = ToastIntent.Success,
-            string? primaryAction = null,
-            EventCallback<ToastResult>? onPrimaryAction = null,
-            string? secondaryAction = null,
-            EventCallback<ToastResult>? onSecondaryAction = null)
-        {
-            OnToast?.Invoke(new ToastParameters<CommunicationToastContent>()
-            {
-                Intent = intent,
-                Title = title,
-                Content = content,
-                Timeout = timeout,
-                PrimaryAction = primaryAction,
-                OnPrimaryAction = onPrimaryAction,
-                SecondaryAction = secondaryAction,
-                OnSecondaryAction = onSecondaryAction
-            });
-        }
-
-        /// <summary>
         /// Open software detail interface
         /// </summary>
         /// <param name="software">Software info to fetch Manifests</param>
-        public void OpenSoftware(Software software)
-        {
-            // ========== Test ==========
-            ShowToast("Your dataset is ready",  new CommunicationToastContent()
-            {
-                Subtitle = "A communication toast subtitle",
-                Details = "Let Power BI help you explore your data.",
-            });
-            // ==========================
-            
-            OnOpenSoftware?.Invoke(software);
-        }
+        public void OpenSoftware(Software software) => OnOpenSoftware?.Invoke(software);
 
         /// <summary>
         /// Add Software to wait to download queue
@@ -148,10 +83,22 @@ namespace MixApp.Shared.Services
 
             if (index < 0)
             {
+                // Notification.ShowToast("Your dataset is ready",  new CommunicationToastContent()
+                // {
+                //     Subtitle = "A communication toast subtitle",
+                //     Details = "Let Power BI help you explore your data.",
+                // });
+
                 WaitQueue.Add(new (){ Software = software });
             }
             else
             {
+                // Notification.ShowToast("Your dataset is ready",  new CommunicationToastContent()
+                // {
+                //     Subtitle = "A communication toast subtitle",
+                //     Details = "Let Power BI help you explore your data.",
+                // });
+
                 WaitQueue.RemoveAt(index);
             }
 
