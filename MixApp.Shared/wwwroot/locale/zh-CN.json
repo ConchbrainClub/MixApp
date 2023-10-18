@@ -1,4 +1,10 @@
 {
+    "n.global_event.start_download": "开始下载",
+    "n.global_event.download_complete": "下载完成",
+    "n.global_event.download_failed": "下载失败",
+    "n.global_event.add_to_waitlist": "添加到待下载列表",
+    "n.global_event.remove_from_waitlist": "从待下载列表中移除",
+
     "c.detail.identifier": "标识",
     "c.detail.latest": "最新",
     "c.detail.date": "日期",

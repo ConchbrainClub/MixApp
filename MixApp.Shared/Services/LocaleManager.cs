@@ -4,9 +4,9 @@ namespace MixApp.Shared.Services
 {
     public class LocaleManager
     {
-        private readonly string[] supportLocale = new [] { "zh-CN", "en-US" };
+        private readonly string[] supportLocale = ["zh-CN", "en-US"];
 
-        public Dictionary<string, string> Scripts { get; set; } = new();
+        public Dictionary<string, string> Scripts { get; set; } = [];
 
         public async Task<LocaleManager> Initialize(HttpClient httpClient, string locale = "en-US")
         {
