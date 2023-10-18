@@ -133,7 +133,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--neutral-fill-layer-rest);
+    background-color: var(--neutral-foreground-rest);
     padding: 20px;
     width: 400px;
     height: 105px;
@@ -141,7 +141,7 @@
     border: calc(var(--stroke-width) * 1px) solid var(--neutral-stroke-layer-rest);
     box-shadow: var(--elevation-shadow-card-rest);
     border-radius: calc(var(--layer-corner-radius) * 1px);
-    display: none;
+    display: block;
 }
 
 .btns {

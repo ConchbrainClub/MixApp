@@ -129,19 +129,20 @@ async function init() {
                 localStorage.setItem('isInstalled', 'true')
                 return
             }
-            var updateReload = document.getElementById("update-reload")
+
+            let updateReload = document.querySelector("#update-reload")
+
             updateReload.style.display = "block"
+
+            document.querySelector('#upgrade').onclick = () => {
+                registration.waiting.postMessage('SKIP_WAITING')
+                setTimeout(window.reload, 1000)
+            }
+
+            document.querySelector('#later').onclick = () => updateReload.style.display = "none"
+
         }
     }
 }
 
-window.upgradeNowReload = async () => {
-    let registration = await navigator.serviceWorker.register('service-worker.js')
-    registration.waiting.postMessage('SKIP_WAITING')
-    setTimeout(window.reload, 1000)
-}
-window.laterReload = () => {
-    var updateReload = document.getElementById("update-reload")
-    updateReload.style.display = "none"
-}
 init()
