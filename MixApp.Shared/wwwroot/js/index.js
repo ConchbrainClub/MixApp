@@ -129,14 +129,10 @@ async function init() {
                 localStorage.setItem('isInstalled', 'true')
                 return
             }
-            window.updateReload()
+            var updateReload = document.getElementById("update-reload")
+            updateReload.style.display = "block"
         }
     }
-}
-
-window.updateReload = () => {
-    var updateReload = document.getElementById("update-reload")
-    updateReload.style.display = "block"
 }
 
 window.upgradeNowReload = async () => {
