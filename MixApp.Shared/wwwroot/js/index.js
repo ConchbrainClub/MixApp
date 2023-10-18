@@ -117,10 +117,10 @@ window.reload = () => {
 
 async function init() {
     let registration = await navigator.serviceWorker.register('service-worker.js')
-    
+
     registration.onupdatefound = () => {
         let installingWorker = registration.installing;
-    
+
         registration.installing.onstatechange = () => {
             if (installingWorker.state != 'installed') return
 
@@ -129,13 +129,23 @@ async function init() {
                 localStorage.setItem('isInstalled', 'true')
                 return
             }
-
-            if (confirm('New update available, upgrade now?')) {
-                registration.waiting.postMessage('SKIP_WAITING')
-                setTimeout(window.reload, 1000)
-            }
+            window.updateReload()
         }
     }
 }
 
+window.updateReload = () => {
+    var updateReload = document.getElementById("update-reload")
+    updateReload.style.display = "block"
+}
+
+window.upgradeNowReload = async () => {
+    let registration = await navigator.serviceWorker.register('service-worker.js')
+    registration.waiting.postMessage('SKIP_WAITING')
+    setTimeout(window.reload, 1000)
+}
+window.laterReload = () => {
+    var updateReload = document.getElementById("update-reload")
+    updateReload.style.display = "none"
+}
 init()
