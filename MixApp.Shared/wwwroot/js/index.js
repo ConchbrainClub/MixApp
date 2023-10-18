@@ -47,13 +47,13 @@ window.initHighLight = (card) => {
 window.downloadQueue = []
 
 window.downloadFile = (dotnet, fileName, url, cancelId) => {
-    new Promise(async () => {
+    new Promise(async (resolve, reject) => {
 
         let controller = new AbortController()
         let res = await fetch(url, {
             signal: controller.signal,
             priority: 'low'
-        })
+        }).catch(err => reject(err))
 
         downloadQueue.push({
             cancelId: cancelId,
@@ -91,6 +91,7 @@ window.downloadFile = (dotnet, fileName, url, cancelId) => {
         ele.click()
         ele.remove()
         URL.revokeObjectURL(url)
+        resolve()
 
     }).catch(() => {
         dotnet.invokeMethodAsync('ChangedProgress', -1)
@@ -117,10 +118,10 @@ window.reload = () => {
 
 async function init() {
     let registration = await navigator.serviceWorker.register('service-worker.js')
-    
+
     registration.onupdatefound = () => {
-        let installingWorker = registration.installing;
-    
+        let installingWorker = registration.installing
+
         registration.installing.onstatechange = () => {
             if (installingWorker.state != 'installed') return
 
@@ -130,10 +131,16 @@ async function init() {
                 return
             }
 
-            if (confirm('New update available, upgrade now?')) {
+            let updateReload = document.querySelector("#update-reload")
+
+            updateReload.style.display = "flex"
+
+            document.querySelector('#upgrade').onclick = () => {
                 registration.waiting.postMessage('SKIP_WAITING')
                 setTimeout(window.reload, 1000)
             }
+
+            document.querySelector('#later').onclick = () => updateReload.style.display = "none"
         }
     }
 }

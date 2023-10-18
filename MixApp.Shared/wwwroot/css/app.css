@@ -126,3 +126,31 @@
 ::-webkit-scrollbar-corner {
     background: none;
 }
+
+#update-reload {
+    z-index: 20;
+    position: fixed;
+    bottom: 1%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgba(30, 30, 30, 0.5);
+    backdrop-filter: saturate(110%) blur(10px);
+    padding: 15px;
+    width: 50vw;
+    height: 65px;
+    border-radius: 10px;
+    justify-content: space-between;
+    display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+    #update-reload {
+        width: calc(100vw - 30px);
+    }
+}
+
+#update-reload > p {
+    padding: 7px;
+    font-weight: bold;
+}

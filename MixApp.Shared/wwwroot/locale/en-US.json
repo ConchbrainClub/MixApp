@@ -1,4 +1,10 @@
 {
+    "n.global_event.start_download": "Start downloading",
+    "n.global_event.download_complete": "Download complete",
+    "n.global_event.download_failed": "Download defeat",
+    "n.global_event.add_to_waitlist": "Add to pending list",
+    "n.global_event.remove_from_waitlist": "Remove from pending list",
+
     "c.detail.identifier": "Identifier",
     "c.detail.latest": "Latest",
     "c.detail.date": "Date",
