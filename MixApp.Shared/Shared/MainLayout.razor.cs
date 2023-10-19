@@ -28,7 +28,7 @@ namespace MixApp.Shared.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            Notification.OnToast += ToastService.ShowCommunicationToast;
+            // Notification.OnToast += ToastService.ShowCommunicationToast;
 
             GlobalEvent.OnOpenSoftware += software => 
             {
