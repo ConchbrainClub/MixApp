@@ -71,6 +71,9 @@
     "p.setting.dark": "Dark",
     "p.setting.color": "Color",
     "p.setting.download": "Download",
+    "p.setting.reset_setting":"Reset Setting",
+    "p.setting.reset_to_default_setting":"Revert to default setting",
+    "p.setting.reset_now":"Reset",
 
     "p.help.help": "Help",
     "p.help.about": "About",

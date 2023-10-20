@@ -71,6 +71,9 @@
     "p.setting.dark": "深色",
     "p.setting.color": "主题色",
     "p.setting.download": "下载",
+    "p.setting.reset_setting":"重置设置",
+    "p.setting.reset_to_default_setting":"将设置还原为其默认值",
+    "p.setting.reset_now":"立即重置",
 
     "p.help.help": "帮助",
     "p.help.about": "关于",

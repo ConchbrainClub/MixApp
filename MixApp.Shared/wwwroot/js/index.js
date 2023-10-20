@@ -110,6 +110,11 @@ window.cancelDownloading = (cancelId) => {
 
 window.resetSetting = () => {
     localStorage.clear()
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+        registrations.forEach(sw => sw.unregister())
+    })
+    caches.keys().then(keys=>keys.forEach(key=>caches.delete(key)))
+    reload()
 }
 
 window.reload = () => {
