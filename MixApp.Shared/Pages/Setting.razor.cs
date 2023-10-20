@@ -66,30 +66,30 @@ namespace MixApp.Shared.Pages
         {
             // Init locale options
 
-            LocaleOptions = new List<Option<string>>()
-            {
+            LocaleOptions =
+            [
                 new Option<string> { Text = "p.setting.auto", Value = "" },
                 new Option<string> { Text = "p.setting.zh_cn", Value = "zh-CN" },
                 new Option<string> { Text = "p.setting.en_us", Value = "en-US" }
-            };
+            ];
 
             string locale = await LocalStorage.GetItemAsStringAsync("locale").AsTask();
             selectedLocale = LocaleOptions.SingleOrDefault(i => i.Value == locale);
 
             // Init theme options
 
-            ThemeOptions = new List<Option<string>>()
-            {
+            ThemeOptions =
+            [
                 new Option<string> { Text = "p.setting.light", Value = "#f5f5f5" },
                 new Option<string> { Text = "p.setting.dark", Value = "#333333" }
-            };
+            ];
 
             string theme = await LocalStorage.GetItemAsStringAsync("theme").AsTask();
-            selectedTheme = ThemeOptions.SingleOrDefault(i => i.Value == theme) 
+            selectedTheme = ThemeOptions.SingleOrDefault(i => i.Value == theme)
                 ?? ThemeOptions.Single(i => i.Text == "p.setting.dark");
 
             // Init base color
-            
+
             string color = await LocalStorage.GetItemAsStringAsync("color").AsTask();
 
             if (string.IsNullOrEmpty(color))
@@ -98,6 +98,11 @@ namespace MixApp.Shared.Pages
             }
 
             selectedColor = color;
+        }
+
+        public async void CleanUpNow()
+        {
+            await JSRunTime!.InvokeVoidAsync("resetSetting").AsTask();
         }
     }
 }
