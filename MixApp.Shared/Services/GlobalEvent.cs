@@ -1,5 +1,5 @@
+using Append.Blazor.Notifications;
 using Blazored.LocalStorage;
-using Microsoft.Fast.Components.FluentUI;
 using Microsoft.JSInterop;
 using MixApp.Shared.Models;
 using System.Text.Json;
@@ -14,6 +14,8 @@ namespace MixApp.Shared.Services
 
         private ILocalStorageService LocalStorage { get; set; }
 
+        private INotificationService NotificationService { get; set; }
+
         private LocaleManager LM { get; set; }
 
         public GlobalEvent(IServiceScopeFactory scopeFactory)
@@ -23,6 +25,7 @@ namespace MixApp.Shared.Services
             JSRuntime = serviceProvider.GetRequiredService<IJSRuntime>();
             LocalStorage = serviceProvider.GetRequiredService<ILocalStorageService>();
             LM = serviceProvider.GetRequiredService<LocaleManager>();
+            NotificationService = serviceProvider.GetRequiredService<INotificationService>();
             Initialize();
         }
 
@@ -97,7 +100,7 @@ namespace MixApp.Shared.Services
                 WaitQueue.RemoveAt(index);
             }
 
-            Notification.ShowToast(title, new() { Details = software.PackageName });
+            NotificationService.CreateAsync(title, software.PackageName, "favicon.png").AsTask();
             OnWaitQueueChanged?.Invoke();
         }
 
@@ -110,11 +113,12 @@ namespace MixApp.Shared.Services
             // Do not notify same task
             if (HistoryQueue.FindIndex(i => i.CancelId == task.CancelId) < 0)
             {
-                Notification.ShowToast(
-                    LM.Scripts["n.global_event.download_complete"], new() 
-                    { 
-                        Details = task.Manifest.PackageName
-                    });
+                NotificationService.CreateAsync
+                (
+                    LM.Scripts["n.global_event.download_complete"],
+                    task.Manifest.PackageName, 
+                    "favicon.png"
+                ).AsTask();
             }
 
             int index = HistoryQueue.FindIndex(history => 
@@ -202,23 +206,23 @@ namespace MixApp.Shared.Services
             // Invoke javascript to fetch the installer
             JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url, task.CancelId).AsTask();
 
-            Notification.ShowToast(
-                LM.Scripts["n.global_event.start_download"], new() 
-                { 
-                    Details = manifest?.PackageName
-                });
+            NotificationService.CreateAsync
+            (
+                LM.Scripts["n.global_event.start_download"],
+                manifest?.PackageName, 
+                "favicon.png"
+            ).AsTask();
         }
 
         private void DownloadFailed(DownloadTask task)
         {
             DownloadQueue.Remove(task);
 
-            Notification.ShowToast(
-                LM.Scripts["n.global_event.download_failed"], new() 
-                {
-                    Subtitle = task.Manifest.PackageName,
-                    Details = task.Installer.InstallerUrl
-                }, 20, ToastIntent.Error);
+            NotificationService.CreateAsync(
+                LM.Scripts["n.global_event.download_failed"], 
+                task.Installer.InstallerUrl, 
+                "favicon.png"
+            ).AsTask();
         }
 
         public void CancelDownloadingTask(DownloadTask task)
