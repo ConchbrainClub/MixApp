@@ -8,6 +8,11 @@
   "theme_color": "#03173d",
   "prefer_related_applications": false,
   "description": "conchbrain club windows application store",
+  "permissions": {
+    "desktop-notification": {
+      "description": "Needed for creating system notifications."
+    }
+  },
   "categories": [
     "utilities"
   ],

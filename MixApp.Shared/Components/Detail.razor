@@ -5,175 +5,174 @@
 @inject RemoteAssets RemoteAssets
 @inject GlobalEvent GlobalEvent
 
-@if (Software != null)
-{
-    <FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn">        
-        <FluentDialogHeader Visible="false" />
+@if (Software == null) return;
 
-        <FluentIcon class="cancelButton" 
-            Value="@(new Icons.Regular.Size20.PresenceOffline())" 
-            @onclick="(_ => { OnDismiss.Invoke(new DialogEventArgs()); Software = null; })"/>
+<FluentDialog @ondialogdismiss="OnDismiss" Modal="true" class="animate__animated animate__fadeIn">        
+    <FluentDialogHeader Visible="false" />
 
-        <div class="detail">
-            <img src="@(RemoteAssets.GetAssets(Software?.Cover))"
-                class="cover animate__animated animate__fadeInDown"
-                fetchpriority="low"
-                loading="lazy"
-                onerror="javascript:this.src='https://www.conchbrain.club/images/notfound.png'" />
-                
-            <div class="mask" />
+    <FluentIcon class="cancelButton" 
+        Value="@(new Icons.Regular.Size20.PresenceOffline())" 
+        @onclick="(_ => { OnDismiss.Invoke(new DialogEventArgs()); Software = null; })"/>
+
+    <div class="detail">
+        <img src="@(RemoteAssets.GetAssets(Software?.Cover))"
+            class="cover animate__animated animate__fadeInDown"
+            fetchpriority="low"
+            loading="lazy"
+            onerror="javascript:this.src='https://www.conchbrain.club/images/notfound.png'" />
             
-            @if(Latest != null)
-            {
-                <div>
-                    <div class="head">
-                        <div class="animate__animated animate__fadeInLeft">
-                            <h1>@Software?.PackageName</h1>
+        <div class="mask" />
+        
+        @if(Latest != null)
+        {
+            <div>
+                <div class="head">
+                    <div class="animate__animated animate__fadeInLeft">
+                        <h1>@Software?.PackageName</h1>
 
-                            <p>@Software?.ShortDescription</p>
-                            <p>@Latest.Description</p>
+                        <p>@Software?.ShortDescription</p>
+                        <p>@Latest.Description</p>
 
-                            @if((GlobalEvent.DownloadQueue.FindIndex(i => i.Manifest.PackageIdentifier == Latest.PackageIdentifier) < 0))
-                            {
-                                <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
-                                    IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())">
-                                    @LM.Scripts["c.detail.download"]
-                                </FluentButton>
-                            }
-                            else
-                            {
-                                <FluentButton>
-                                    <FluentProgressRing style="width:20px; height:20px;"></FluentProgressRing>
-                                </FluentButton>
-                            }
+                        @if((GlobalEvent.DownloadQueue.FindIndex(i => i.Manifest.PackageIdentifier == Latest.PackageIdentifier) < 0))
+                        {
+                            <FluentButton @onclick="(_ => GlobalEvent.DownloadInstaller(Latest))"
+                                IconEnd="@(new Icons.Regular.Size16.ArrowCircleDown())">
+                                @LM.Scripts["c.detail.download"]
+                            </FluentButton>
+                        }
+                        else
+                        {
+                            <FluentButton>
+                                <FluentProgressRing style="width:20px; height:20px;"></FluentProgressRing>
+                            </FluentButton>
+                        }
 
-                            @if(GlobalEvent.WaitQueue.FindIndex(i => Software!.PackageIdentifier == i.Software?.PackageIdentifier) < 0)
-                            {
-                                <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
-                            }
-                            else
-                            {
-                                <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Filled.Size16.Dismiss())" Appearance="Appearance.Stealth" Title="Remove from list" />
-                            }
-                        </div>
-
-                        <div class="animate__animated animate__fadeInRight">
-                            <p>@LM.Scripts["c.detail.identifier"]: @Software?.PackageIdentifier</p>
-                            <p>@LM.Scripts["c.detail.latest"]: @Latest.PackageVersion</p>
-                            <p>@LM.Scripts["c.detail.date"]: @Latest.ReleaseDate</p>
-                            <p>
-                                <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
-                            </p>
-                            <a href="@Latest.PublisherUrl" target="_blank">
-                                <FluentBadge Appearance="Appearance.Accent" Fill="highlight">@LM.Scripts["c.detail.official_website"]</FluentBadge>
-                            </a>
-                        </div>
+                        @if(GlobalEvent.WaitQueue.FindIndex(i => Software!.PackageIdentifier == i.Software?.PackageIdentifier) < 0)
+                        {
+                            <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                        }
+                        else
+                        {
+                            <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Filled.Size16.Dismiss())" Appearance="Appearance.Stealth" Title="Remove from list" />
+                        }
                     </div>
 
-                    <div class="info">
-
-                        <div>
-                            <h4>@LM.Scripts["c.detail.installers"]</h4>
-
-                            <FluentDataGrid Items=@(JsonSerializer.Deserialize<List<Installer>>(Latest.Installers ?? "[]")!.AsQueryable()) 
-                                TGridItem="Installer" 
-                                GridTemplateColumns="1fr 5fr 7fr 1fr" 
-                                ResizableColumns=true 
-                                Virtualize="true" >
-                                
-                                <PropertyColumn Title=@LM.Scripts["c.detail.arch"] Property=@(i => i!.Architecture) />
-                                <TemplateColumn Title=@LM.Scripts["c.detail.url"]>
-                                    <a @onclick=@(_ => GlobalEvent.DownloadInstaller(Latest, context)) href="javascript:void(0)">@context.InstallerUrl</a>
-                                </TemplateColumn>
-                                <PropertyColumn Title=@LM.Scripts["c.detail.sha256"] Property=@(i => i!.InstallerSha256) />
-                                <PropertyColumn Title=@LM.Scripts["c.detail.scope"] Property=@(i => i!.Scope) />
-                            </FluentDataGrid>
-                        </div>
-
-                        <div>
-                            <h4>@LM.Scripts["c.detail.winget"]</h4>
-
-                            <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) />
-                        </div>
-
-                        <div>
-                            <h4>@LM.Scripts["c.detail.tags"]</h4>
-
-                            @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
-                            {
-                                <FluentBadge Appearance="Appearance.Accent" Fill="highlight">
-                                    @tags
-                                </FluentBadge>
-                            }
-                        </div>
-
-                        <div>
-                            <h4>@LM.Scripts["c.detail.other_version"]</h4>
-
-                            <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 5fr 1fr 2fr" ResizableColumns=true Virtualize="true" >
-                                <PropertyColumn Title=@LM.Scripts["c.detail.version"] Property=@(i => i!.PackageVersion) Sortable="true" />
-                                <PropertyColumn Title=@LM.Scripts["c.detail.release_notes"] Property=@(i => i!.ReleaseNotes ?? "None") Sortable="true" />
-                                <PropertyColumn Title=@LM.Scripts["c.detail.release_date"] Property=@(i => i!.ReleaseDate ?? "-") Sortable="true" />
-                                <TemplateColumn Title="Dwonload">
-                                    @foreach (Installer installer in JsonSerializer.Deserialize<List<Installer>>(context.Installers ?? "[]")!)
-                                    {
-                                        <a @onclick=@(_ => GlobalEvent.DownloadInstaller(context, installer)) href="javascript:void(0)">
-                                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight">@(installer.Architecture + installer.Scope)</FluentBadge>
-                                        </a>
-                                    }
-                                </TemplateColumn>
-                            </FluentDataGrid>
-                        </div>
-
-                        <div>
-                            <h4>@LM.Scripts["c.detail.license"]</h4>
-
-                            <a href="@Latest.LicenseUrl" target="_blank">
-                                <FluentBadge Appearance="Appearance.Accent" Fill="highlight">
-                                    @Latest.License
-                                </FluentBadge>
-                            </a>
-                        </div>
-
-                        <div>
-                            <h4>@LM.Scripts["c.detail.privacy"]</h4>
-
-                            <a href="@Latest.PrivacyUrl" target="_blank">
-                                <FluentBadge Appearance="Appearance.Accent" Fill="highlight">
-                                    @Latest.PrivacyUrl
-                                </FluentBadge>
-                            </a>
-                        </div>
-
-                        <div class="copyright">
-                            <a href="@Latest.CopyrightUrl" target="_blank">
-                                @Latest.Copyright
-                            </a>
-                        </div>
-
+                    <div class="animate__animated animate__fadeInRight">
+                        <p>@LM.Scripts["c.detail.identifier"]: @Software?.PackageIdentifier</p>
+                        <p>@LM.Scripts["c.detail.latest"]: @Latest.PackageVersion</p>
+                        <p>@LM.Scripts["c.detail.date"]: @Latest.ReleaseDate</p>
+                        <p>
+                            <FluentBadge Appearance="Appearance.Accent">@Software?.Publisher</FluentBadge>
+                        </p>
+                        <a href="@Latest.PublisherUrl" target="_blank">
+                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight">@LM.Scripts["c.detail.official_website"]</FluentBadge>
+                        </a>
                     </div>
                 </div>
-            }
-            else
-            {
-                <div class="detailSkeleton">
-                    <div class="detailSkeletonIntroLeft">
-                        <FluentSkeleton class="firstOnLeft" Width="27%" Height="40px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="secondOnLeft" Width="34%" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="buttonOnLeft"  Width="76px" Height="32px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+
+                <div class="info">
+
+                    <div>
+                        <h4>@LM.Scripts["c.detail.installers"]</h4>
+
+                        <FluentDataGrid Items=@(JsonSerializer.Deserialize<List<Installer>>(Latest.Installers ?? "[]")!.AsQueryable()) 
+                            TGridItem="Installer" 
+                            GridTemplateColumns="1fr 5fr 7fr 1fr" 
+                            ResizableColumns=true 
+                            Virtualize="true" >
+                            
+                            <PropertyColumn Title=@LM.Scripts["c.detail.arch"] Property=@(i => i!.Architecture) />
+                            <TemplateColumn Title=@LM.Scripts["c.detail.url"]>
+                                <a @onclick=@(_ => GlobalEvent.DownloadInstaller(Latest, context)) href="javascript:void(0)">@context.InstallerUrl</a>
+                            </TemplateColumn>
+                            <PropertyColumn Title=@LM.Scripts["c.detail.sha256"] Property=@(i => i!.InstallerSha256) />
+                            <PropertyColumn Title=@LM.Scripts["c.detail.scope"] Property=@(i => i!.Scope) />
+                        </FluentDataGrid>
                     </div>
-                    <div class="detailSkeletonButtonRight">
-                        <FluentSkeleton class="detailSkeletonRight firstOnRight" Width="90px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="detailSkeletonRight secondOnRight" Width="100px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="detailSkeletonRight thirdOnRight" Width="70px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-                        <FluentSkeleton class="detailSkeletonRight fourthOnRight" Width="50px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+
+                    <div>
+                        <h4>@LM.Scripts["c.detail.winget"]</h4>
+
+                        <FluentTextField Value=@("winget install " + Latest.PackageIdentifier) />
                     </div>
+
+                    <div>
+                        <h4>@LM.Scripts["c.detail.tags"]</h4>
+
+                        @foreach (string tags in JsonSerializer.Deserialize<List<string>>(Latest.Tags ?? "[]")!)
+                        {
+                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight">
+                                @tags
+                            </FluentBadge>
+                        }
+                    </div>
+
+                    <div>
+                        <h4>@LM.Scripts["c.detail.other_version"]</h4>
+
+                        <FluentDataGrid Items="@Manifests.AsQueryable()" GridTemplateColumns="1fr 5fr 1fr 2fr" ResizableColumns=true Virtualize="true" >
+                            <PropertyColumn Title=@LM.Scripts["c.detail.version"] Property=@(i => i!.PackageVersion) Sortable="true" />
+                            <PropertyColumn Title=@LM.Scripts["c.detail.release_notes"] Property=@(i => i!.ReleaseNotes ?? "None") Sortable="true" />
+                            <PropertyColumn Title=@LM.Scripts["c.detail.release_date"] Property=@(i => i!.ReleaseDate ?? "-") Sortable="true" />
+                            <TemplateColumn Title="Dwonload">
+                                @foreach (Installer installer in JsonSerializer.Deserialize<List<Installer>>(context.Installers ?? "[]")!)
+                                {
+                                    <a @onclick=@(_ => GlobalEvent.DownloadInstaller(context, installer)) href="javascript:void(0)">
+                                        <FluentBadge Appearance="Appearance.Accent" Fill="highlight">@(installer.Architecture + installer.Scope)</FluentBadge>
+                                    </a>
+                                }
+                            </TemplateColumn>
+                        </FluentDataGrid>
+                    </div>
+
+                    <div>
+                        <h4>@LM.Scripts["c.detail.license"]</h4>
+
+                        <a href="@Latest.LicenseUrl" target="_blank">
+                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight">
+                                @Latest.License
+                            </FluentBadge>
+                        </a>
+                    </div>
+
+                    <div>
+                        <h4>@LM.Scripts["c.detail.privacy"]</h4>
+
+                        <a href="@Latest.PrivacyUrl" target="_blank">
+                            <FluentBadge Appearance="Appearance.Accent" Fill="highlight">
+                                @Latest.PrivacyUrl
+                            </FluentBadge>
+                        </a>
+                    </div>
+
+                    <div class="copyright">
+                        <a href="@Latest.CopyrightUrl" target="_blank">
+                            @Latest.Copyright
+                        </a>
+                    </div>
+
                 </div>
-                <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
-            }
-        </div>
-    </FluentDialog>
-}
+            </div>
+        }
+        else
+        {
+            <div class="detailSkeleton">
+                <div class="detailSkeletonIntroLeft">
+                    <FluentSkeleton class="firstOnLeft" Width="27%" Height="40px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="secondOnLeft" Width="34%" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="buttonOnLeft"  Width="76px" Height="32px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                </div>
+                <div class="detailSkeletonButtonRight">
+                    <FluentSkeleton class="detailSkeletonRight firstOnRight" Width="90px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="detailSkeletonRight secondOnRight" Width="100px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="detailSkeletonRight thirdOnRight" Width="70px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                    <FluentSkeleton class="detailSkeletonRight fourthOnRight" Width="50px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                </div>
+            </div>
+            <FluentDivider Style="width: 100%;" Role="DividerRole.Presentation"></FluentDivider>
+        }
+    </div>
+</FluentDialog>
 
 <style scoped>
     .detailSkeleton{

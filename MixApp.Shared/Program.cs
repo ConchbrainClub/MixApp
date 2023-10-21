@@ -1,3 +1,4 @@
+using Append.Blazor.Notifications;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -41,6 +42,8 @@ builder.Services.AddSingleton(new RemoteAssets
 );
 
 builder.Services.AddBlazoredLocalStorageAsSingleton();
+
+builder.Services.AddNotifications();
 
 builder.Services.AddFluentUIComponents(options =>
 {

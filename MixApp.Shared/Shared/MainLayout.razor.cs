@@ -1,3 +1,4 @@
+using Append.Blazor.Notifications;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Fast.Components.FluentUI;
@@ -16,7 +17,10 @@ namespace MixApp.Shared.Shared
         private GlobalEvent GlobalEvent { get; set; } = default!;
 
         [Inject]
-        private IToastService ToastService { get; set; } = default!;
+        private IDialogService DialogService { get; set; } = default!;
+
+        [Inject]
+        private INotificationService NotificationService { get; set; } = default!;
 
         public bool Expanded { get; set; } = false;
 
@@ -28,8 +32,6 @@ namespace MixApp.Shared.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            // Notification.OnToast += ToastService.ShowCommunicationToast;
-
             GlobalEvent.OnOpenSoftware += software => 
             {
                 Software = software;
@@ -49,6 +51,38 @@ namespace MixApp.Shared.Shared
             {
                 Color = color;
             }
+
+            CheckNotifyPermission();
+        }
+
+        private async void CheckNotifyPermission()
+        {
+            if(!await NotificationService.IsSupportedByBrowserAsync()) return;
+
+            if (await LocalStorage.GetItemAsStringAsync("NotificationPermission") == "Granted") return;
+
+            IDialogReference dialog = await DialogService.ShowMessageBoxAsync(new DialogParameters<MessageBoxContent>()
+            {
+                Content = new()
+                {
+                    Title = "获得更好的使用体验",
+                    MarkupMessage = new MarkupString
+                    (
+                        """
+                        <i>MixStore 推荐您开启以下权限</i>
+                        <br/><br/>
+                        允许 <u><strong>通知</strong></u> 权限来提醒您软件的下载状态
+                        """
+                    )
+                }
+            });
+
+            if ((await dialog.Result).Cancelled) return;
+
+            PermissionType permission = await NotificationService.RequestPermissionAsync();
+            if (permission != PermissionType.Granted) return;
+
+            await LocalStorage.SetItemAsStringAsync("NotificationPermission", permission.ToString());
         }
     }
 }
