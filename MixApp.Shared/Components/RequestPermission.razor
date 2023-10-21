@@ -1,0 +1,29 @@
+@inherits MixApp.Shared.Components.RequestPermissionBase
+
+@if(!ShowDialog) return;
+
+<FluentDialog Modal="true" class="animate__animated animate__fadeIn">        
+    <FluentDialogHeader>
+        <h2>获得更好的使用体验</h2>
+    </FluentDialogHeader>
+
+    <FluentDialogBody>
+        <p><i>MixStore 推荐您开启以下权限</i></p>
+        <p>允许 <u><strong>通知</strong></u> 权限来提醒您软件的下载状态</p>
+    </FluentDialogBody>
+
+    <div class="dialogFooter">
+        <FluentButton Appearance="Appearance.Accent" @onclick="(_ => RequestPermission())">允许</FluentButton>
+        <FluentButton @onclick="(_ => { ShowDialog = false; })">关闭</FluentButton>
+    </div>
+</FluentDialog>
+
+<style>
+    .dialogFooter {
+        margin-bottom: 20px;
+    }
+
+    .dialogFooter > fluent-button {
+        margin-right: 10px;
+    }
+</style>
