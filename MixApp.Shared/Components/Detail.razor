@@ -46,14 +46,14 @@
                                 <FluentProgressRing style="width:20px; height:20px;"></FluentProgressRing>
                             </FluentButton>
                         }
-
+                        
                         @if(GlobalEvent.WaitQueue.FindIndex(i => Software!.PackageIdentifier == i.Software?.PackageIdentifier) < 0)
                         {
-                            <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title="Add to list" />
+                            <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Regular.Size16.Add())" Appearance="Appearance.Stealth" Title=@LM.Scripts["n.global_event.add_to_waitlist"] />
                         }
                         else
                         {
-                            <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Filled.Size16.Dismiss())" Appearance="Appearance.Stealth" Title="Remove from list" />
+                            <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software!)) IconEnd="@(new Icons.Filled.Size16.Dismiss())" Appearance="Appearance.Stealth" Title=@LM.Scripts["n.global_event.remove_from_waitlist"] />
                         }
                     </div>
 
@@ -270,6 +270,10 @@
         display: flex;
         justify-content: space-between;
         padding: 20px;
+    }
+
+    .head>div fluent-button+fluent-button {
+        margin-left: 10px;
     }
 
     .head>div:first-child {
