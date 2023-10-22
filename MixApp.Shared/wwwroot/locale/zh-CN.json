@@ -25,6 +25,12 @@
     "c.detail.license": "许可证",
     "c.detail.privacy": "隐私",
 
+    "c.request_permission.better_experience": "获得更好的使用体验",
+    "c.request_permission.recommended_to_enable": "<i>MixStore 推荐您开启以下权限</i>",
+    "c.request_permission.allow_notification": "允许 <u><strong>通知</strong></u> 权限来提醒您软件的下载状态",
+    "c.request_permission.allow": "允许",
+    "c.request_permission.close": "关闭",
+
     "c.side_bar.home": "主页",
     "c.side_bar.apps": "软件",
     "c.side_bar.library": "库",
