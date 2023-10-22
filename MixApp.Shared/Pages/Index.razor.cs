@@ -52,8 +52,7 @@ namespace MixApp.Shared.Pages
         private async void LoadRecentlyUpdatedData()
         {
             List<Software> softwares = await HttpClient
-                .GetFromJsonAsync<List<Software>>("/recentlyUpdated") 
-                ?? new();
+                .GetFromJsonAsync<List<Software>>("/recent") ?? [];
             
             softwares.ForEach(RecentlyUpdatedSoftwares.Add);
             StateHasChanged();
