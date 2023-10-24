@@ -9,7 +9,9 @@
 <BaseLayerLuminance>
     <FluentStack class="page" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
 
-        <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" Speed="2000"
+        <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" 
+            @ref="HorizontalScroll" 
+            Speed="2000"
             Easing=ScrollEasing.EaseInOut>
             @if (TrendingSoftwares.Count == 0)
             {
@@ -22,7 +24,7 @@
             {
                 @foreach (Software software in TrendingSoftwares)
                 {
-                    <FluentCard Appearance="Appearance.Accent">
+                    <FluentCard Appearance="Appearance.Accent" @onclick="(_ => ScrollToFirst(software))">
                         <div class="bannerDesc">
                             <img src="@(RemoteAssets.GetIcon(software))" />
                             <h2>@software.PackageName</h2>

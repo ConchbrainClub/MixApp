@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Fast.Components.FluentUI;
 using MixApp.Shared.Models;
 using MixApp.Shared.Services;
 
@@ -13,13 +14,15 @@ namespace MixApp.Shared.Pages
         [Inject]
         public GlobalEvent GlobalEvent { get; set; } = default!;
         
+        public FluentHorizontalScroll HorizontalScroll { get; set; } = default!;
+
         public Software? SelectedSoftware { get; set; }
 
-        public List<Software> TrendingSoftwares { get; set; } = new();
+        public List<Software> TrendingSoftwares { get; set; } = [];
 
-        public List<Software> RandomSoftwares { get; set; } = new();
+        public List<Software> RandomSoftwares { get; set; } = [];
 
-        public List<Software> RecentlyUpdatedSoftwares { get; set; } = new();
+        public List<Software> RecentlyUpdatedSoftwares { get; set; } = [];
 
         protected override void OnInitialized()
         {
@@ -32,8 +35,7 @@ namespace MixApp.Shared.Pages
         private async void LoadTopData()
         {
             List<Software> softwares = await HttpClient
-                .GetFromJsonAsync<List<Software>>("/top") 
-                ?? new();
+                .GetFromJsonAsync<List<Software>>("/top") ?? [];
             
             softwares.ForEach(TrendingSoftwares.Add);
             StateHasChanged();
@@ -43,7 +45,7 @@ namespace MixApp.Shared.Pages
         {
             List<Software> softwares = await HttpClient
                 .GetFromJsonAsync<List<Software>>("/random") 
-                ?? new();
+                ?? [];
             
             softwares.ForEach(RandomSoftwares.Add);
             StateHasChanged();
@@ -56,6 +58,12 @@ namespace MixApp.Shared.Pages
             
             softwares.ForEach(RecentlyUpdatedSoftwares.Add);
             StateHasChanged();
+        }
+
+        public void ScrollToFirst(Software software)
+        {
+            int index = TrendingSoftwares.IndexOf(software);
+            HorizontalScroll.ScrollInView(index);
         }
     }
     
