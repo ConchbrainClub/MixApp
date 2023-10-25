@@ -2,20 +2,13 @@
 
 namespace MixApp.Shared.Models;
 
-public class DownloadTask
+public class DownloadTask(Manifest manifest, Installer installer)
 {
-    public DownloadTask(Manifest manifest, Installer installer)
-    {
-        Manifest = manifest;
-        Installer = installer;
-        CancelId = Guid.NewGuid().ToString();
-    }
+    public string CancelId { get; } = Guid.NewGuid().ToString();
 
-    public string CancelId { get; }
+    public Manifest Manifest { get; set; } = manifest;
 
-    public Manifest Manifest { get; set; }
-
-    public Installer Installer { get; set; }
+    public Installer Installer { get; set; } = installer;
 
     public int Progress { get; set; }
 
@@ -24,6 +17,7 @@ public class DownloadTask
     [JSInvokable]
     public void ChangedProgress(int progress)
     {
+        if (Progress == progress) return;
         Progress = progress;
         OnProgressChanged?.Invoke(this);
     }
