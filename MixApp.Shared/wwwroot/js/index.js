@@ -65,6 +65,7 @@ window.downloadFile = (dotnet, fileName, url, cancelId) => {
         let contentLength = res.headers.get('Content-Length')
         let receivedLength = 0
         let buffer = []
+        let lastProgress = 0
 
         while (true) {
             let { done, value } = await reader.read()
@@ -77,8 +78,10 @@ window.downloadFile = (dotnet, fileName, url, cancelId) => {
             receivedLength += value.length
 
             let progress = Math.round(receivedLength / contentLength * 100)
-            if (isNaN(progress) || !isFinite(progress)) progress = 0
+            if (isNaN(progress) || !isFinite(progress)) progress = lastProgress
 
+            if (lastProgress == progress) continue
+            lastProgress = progress
             dotnet.invokeMethodAsync('ChangedProgress', progress)
         }
 

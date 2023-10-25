@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Fast.Components.FluentUI;
 using MixApp.Shared.Models;
+using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Components
 {
@@ -13,13 +14,16 @@ namespace MixApp.Shared.Components
         [Inject]
         NavigationManager NavigationManager { get; set; } = default!;
 
+        [Inject]
+        public GlobalEvent GlobalEvent { get; set; } = default!;
+
         [Parameter]
         public Action<DialogEventArgs> OnDismiss { get; set; }
 
         [Parameter]
         public Software? Software { get; set; }
 
-        public List<Manifest> Manifests { get; set; } = new();
+        public List<Manifest> Manifests { get; set; } = [];
 
         public Manifest? Latest { get; set; }
 
@@ -30,7 +34,16 @@ namespace MixApp.Shared.Components
 
         protected async override void OnParametersSet()
         {
-            if (Software == null) return;
+            if (Software == null)
+            {
+                GlobalEvent.OnDownloadQueueChanged -= StateHasChanged;
+                return;
+            }
+            else
+            {
+                GlobalEvent.OnDownloadQueueChanged += StateHasChanged;
+            }
+
             Latest = null;
 
             Manifests = (await HttpClient

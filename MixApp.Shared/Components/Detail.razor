@@ -3,7 +3,6 @@
 
 @inject LocaleManager LM
 @inject RemoteAssets RemoteAssets
-@inject GlobalEvent GlobalEvent
 
 @if (Software == null) return;
 
@@ -42,7 +41,7 @@
                         }
                         else
                         {
-                            <FluentButton>
+                            <FluentButton @onclick="(_ => ShowInLibrary())">
                                 <FluentProgressRing style="width:20px; height:20px;"></FluentProgressRing>
                             </FluentButton>
                         }

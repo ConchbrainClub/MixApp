@@ -21,8 +21,8 @@ namespace MixApp.Shared.Components
 
         public SideBarBase()
         {
-            Top = new()
-            {
+            Top =
+            [
                 new()
                 {
                     Href = "/",
@@ -44,10 +44,10 @@ namespace MixApp.Shared.Components
                     IconRegular = new Icons.Regular.Size24.Library(),
                     Name = "c.side_bar.library"
                 }
-            };
+            ];
 
-            Bottom = new()
-            {
+            Bottom =
+            [
                 new()
                 {
                     Href = "/Setting",
@@ -62,7 +62,7 @@ namespace MixApp.Shared.Components
                     IconRegular = new Icons.Regular.Size24.ChatHelp(),
                     Name = "c.side_bar.help"
                 }
-            };
+            ];
 
             CurrentHref = "/";
         }
