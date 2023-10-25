@@ -253,7 +253,7 @@
 
     .detail .cover {
         object-fit: cover;
-        height: 55vh;
+        height: 50vh;
         width: 100%;
         border-radius: 5px;
     }
@@ -261,18 +261,18 @@
     .detail .mask {
         position: absolute;
         top: 0;
-        height: 55vh;
+        height: 50vh;
         width: 100%;
         background: linear-gradient(to top, var(--fill-color), rgba(255, 255, 255, 0));
     }
 
-    .head {
+    .detail .head {
         display: flex;
         justify-content: space-between;
         padding: 20px;
     }
 
-    .head>div fluent-button+fluent-button {
+    .detail .head > div fluent-button+fluent-button {
         margin-left: 10px;
     }
 
@@ -280,38 +280,38 @@
         text-align: left;
     }
 
-    .head>div:last-child {
+    .detail .head > div:last-child {
         text-align: right;
         padding: 20px;
         min-width: 250px;
     }
 
-    .head>div:last-child p {
+    .detail .head > div:last-child p {
         margin: 5px;
     }
 
-    .info {
-        padding: 0 20px;
+    .detail .info {
+        padding: 0 20px 10px 20px;
     }
 
-    .info>div {
+    .detail .info > div {
         margin-bottom: 20px;
     }
 
-    .info>div:last-child {
+    .detail .info > div:last-child {
         margin-bottom: 0;
     }
 
-    .info fluent-text-field {
+    .detail .info fluent-text-field {
         width: 300px;
     }
 
-    .info fluent-data-grid {
+    .detail .info fluent-data-grid {
         max-height: 400px;
         overflow-y: scroll;
     }
 
-    .copyright {
+    .detail .copyright {
         text-align: center;
     }
 </style>
