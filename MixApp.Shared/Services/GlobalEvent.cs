@@ -158,9 +158,9 @@ namespace MixApp.Shared.Services
         /// </summary>
         /// <param name="manifest">software's manifest</param>
         /// <param name="installer">manifest's installer</param>
-        public void DownloadInstaller(Manifest manifest, Installer? installer = null)
+        public async void DownloadInstaller(Manifest manifest, Installer? installer = null)
         {
-            List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(manifest.Installers!) ?? new();
+            List<Installer> installersObj = JsonSerializer.Deserialize<List<Installer>>(manifest.Installers!) ?? [];
 
             // Find the installer that the arch is x86 or x64 (default)
             if (installer == null)
@@ -176,10 +176,16 @@ namespace MixApp.Shared.Services
             // If can not find the default arch, download the first
             installer ??= installersObj.First();
 
-            string fileName = (manifest?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
-            string url = DownloadProxy + installer?.InstallerUrl;
-
             DownloadTask task = new(manifest!, installer!);
+            _ = HttpClient.GetAsync($"/meta/change?type={(int)MetaType.Download}&identifier={manifest?.PackageIdentifier}");
+
+            // Check if user disabled download proxy
+            if (!string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("disable_proxy").AsTask()))
+            {
+                _ = JSRuntime!.InvokeVoidAsync("open", installer?.InstallerUrl).AsTask();
+                AddToHistoryQueue(task);
+                return;
+            }
 
             task.OnProgressChanged += i => 
             {
@@ -202,17 +208,24 @@ namespace MixApp.Shared.Services
                     && i.Installer.InstallerSha256 == task.Installer.InstallerSha256;
             }) != null) return;
 
-            DownloadQueue.Add(task);
-            
-            HttpClient.GetAsync($"/meta/change?type={(int)MetaType.Download}&identifier={manifest?.PackageIdentifier}");
+            string fileName = (manifest?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
+            string url = DownloadProxy + installer?.InstallerUrl;
+
+            // Check if user set the custome download proxy
+            string customeProxy = await LocalStorage.GetItemAsStringAsync("download_proxy").AsTask();
+            if (!string.IsNullOrEmpty(customeProxy))
+            {
+                url = customeProxy + installer?.InstallerUrl;
+            }
 
             // Invoke javascript to fetch the installer
-            JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url, task.CancelId).AsTask();
+            _ = JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url, task.CancelId).AsTask();
+            DownloadQueue.Add(task);
 
-            NotificationService.CreateAsync
+            _ = NotificationService.CreateAsync
             (
                 LM.Scripts["n.global_event.start_download"],
-                manifest?.PackageName, 
+                manifest?.PackageName,
                 "favicon.png"
             ).AsTask();
         }

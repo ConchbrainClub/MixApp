@@ -77,6 +77,8 @@
     "p.setting.dark": "Dark",
     "p.setting.color": "Color",
     "p.setting.download": "Download",
+    "p.setting.enable_download_proxy": "Enable download proxy",
+    "p.setting.download_proxy_server": "Download proxy server",
     "p.setting.reset_setting":"Reset Setting",
     "p.setting.reset_to_default_setting":"Revert to default setting",
     "p.setting.reset_now":"Reset",

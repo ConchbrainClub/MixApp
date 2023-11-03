@@ -40,20 +40,39 @@
             </FluentStack>
         </FluentAccordionItem>
 
-        @* <FluentAccordionItem Heading=@LM.Scripts["p.setting.download"]>
-        <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.ArrowCircleDown())" Color=Color.Neutral />
+        <FluentAccordionItem Heading=@LM.Scripts["p.setting.download"] Expanded="true">
+            <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.ArrowCircleDown())" Color="@Color.Neutral" />
 
-        <div slot="end">
-        #end#
-        </div>
+            <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                <p class="title">@LM.Scripts["p.setting.enable_download_proxy"]</p>
+                <FluentSpacer />
 
-        <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
-        <p class="title">Download setting is here.</p>
-        </FluentStack>
-        </FluentAccordionItem> *@
-    </FluentAccordion>
+                <FluentSwitch @bind-Value="EnableProxy" />
+            </FluentStack>
 
-    <FluentAccordion>
+            @if(EnableProxy)
+            {
+                <FluentDivider />
+
+                <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                    <p class="title">@LM.Scripts["p.setting.download_proxy_server"]</p>
+                    <FluentSpacer />
+
+                    <FluentButton 
+                        IconEnd="@(new Icons.Regular.Size20.ArrowReset())"
+                        Appearance="Appearance.Stealth" 
+                        OnClick="(_ => DownloadProxy = string.Empty)" >
+                    </FluentButton>
+
+                    <FluentTextField 
+                        style="width: 250px;" 
+                        Placeholder="https://cors.conchbrain.club?"
+                        @bind-Value="DownloadProxy" >
+                    </FluentTextField>
+                </FluentStack>
+            }
+        </FluentAccordionItem>
+
         <FluentAccordionItem Heading=@LM.Scripts["p.setting.reset_setting"] Expanded="true">
             <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.ArrowReset())" Color="@Color.Neutral" />
 
@@ -62,7 +81,6 @@
                 <FluentSpacer />
 
                 <FluentButton Appearance="Appearance.Accent" OnClick="(_ => CleanUpNow())" >@LM.Scripts["p.setting.reset_now"]</FluentButton>
-                
             </FluentStack>
         </FluentAccordionItem>
     </FluentAccordion>
