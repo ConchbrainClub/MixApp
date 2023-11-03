@@ -36,10 +36,7 @@ builder.Services.AddSingleton<GlobalEvent>();
 
 builder.Services.AddSingleton(localeManager);
 
-builder.Services.AddSingleton(new RemoteAssets
-(
-    builder.Configuration.GetSection("AssetsAddress").Value ?? string.Empty)
-);
+builder.Services.AddSingleton<RemoteAssets>();
 
 builder.Services.AddBlazoredLocalStorageAsSingleton();
 

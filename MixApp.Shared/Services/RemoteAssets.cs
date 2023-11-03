@@ -2,9 +2,9 @@ using MixApp.Shared.Models;
 
 namespace MixApp.Shared.Services;
 
-public class RemoteAssets(string baseAddress)
+public class RemoteAssets(IConfiguration configuration)
 {
-    private readonly string baseAddress = baseAddress;
+    private readonly string baseAddress = configuration.GetValue<string>("AssetsAddress") ?? string.Empty;
 
     /// <summary>
     /// Get software or manifest icon

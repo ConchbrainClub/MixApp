@@ -18,7 +18,9 @@ namespace MixApp.Shared.Services
 
         private LocaleManager LM { get; set; }
 
-        public GlobalEvent(IServiceScopeFactory scopeFactory)
+        private string DownloadProxy { get; set; }
+
+        public GlobalEvent(IServiceScopeFactory scopeFactory, IConfiguration configuration)
         {
             IServiceProvider serviceProvider = scopeFactory.CreateScope().ServiceProvider;
             HttpClient = serviceProvider.GetRequiredService<HttpClient>();
@@ -26,6 +28,7 @@ namespace MixApp.Shared.Services
             LocalStorage = serviceProvider.GetRequiredService<ILocalStorageService>();
             LM = serviceProvider.GetRequiredService<LocaleManager>();
             NotificationService = serviceProvider.GetRequiredService<INotificationService>();
+            DownloadProxy = configuration.GetValue<string>("DownloadProxy") ?? string.Empty;
             Initialize();
         }
 
@@ -174,7 +177,7 @@ namespace MixApp.Shared.Services
             installer ??= installersObj.First();
 
             string fileName = (manifest?.PackageName ?? "unknow") + "." + installer?.InstallerUrl?.Split('.').Last() ?? "exe";
-            string url = "https://cors.conchbrain.club?" + installer?.InstallerUrl;
+            string url = DownloadProxy + installer?.InstallerUrl;
 
             DownloadTask task = new(manifest!, installer!);
 

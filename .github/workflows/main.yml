@@ -19,10 +19,6 @@ jobs:
         access-key-id: "${{ secrets.KEY_ID }}"
         access-key-secret: "${{ secrets.SECRET_KEY }}"
 
-    - name: config app setting
-      run: |
-        echo '{ "BaseAddress": "https://mixapi.conchbrain.club", "AssetsAddress": "https://mixassets.conchbrain.club/" }' > MixApp.Shared/wwwroot/appsettings.json
-
     - name: build and publish
       run: bash ./.build.sh
 
