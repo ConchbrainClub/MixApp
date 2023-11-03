@@ -62,6 +62,40 @@ namespace MixApp.Shared.Pages
             }
         }
 
+        private bool enableProxy;
+
+        public bool EnableProxy
+        {
+            get => enableProxy;
+            set
+            {
+                if (value)
+                {
+                    LocalStorage.RemoveItemAsync("disable_proxy").AsTask();
+                }
+                else
+                {
+                    LocalStorage.SetItemAsStringAsync("disable_proxy", "true").AsTask();
+                }
+                enableProxy = value;
+            }
+        }
+
+        private string? downloadProxy;
+
+        public string? DownloadProxy
+        {
+            get => downloadProxy;
+            set
+            {
+                // =============================================
+                // Check Download proxy is correct 
+
+                LocalStorage.SetItemAsStringAsync("download_proxy", value).AsTask();
+                downloadProxy = value;
+            }
+        }
+
         protected override async Task OnInitializedAsync()
         {
             // Init locale options
@@ -98,6 +132,11 @@ namespace MixApp.Shared.Pages
             }
 
             selectedColor = color;
+
+            // Init download proxy
+
+            enableProxy = string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("disable_proxy").AsTask());
+            downloadProxy = await LocalStorage.GetItemAsStringAsync("download_proxy").AsTask();
         }
 
         public async void CleanUpNow()
