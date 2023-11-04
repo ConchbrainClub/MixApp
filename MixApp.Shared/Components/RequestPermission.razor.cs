@@ -1,11 +1,10 @@
 using Append.Blazor.Notifications;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Fast.Components.FluentUI;
 
 namespace MixApp.Shared.Components
 {
-    public partial class RequestPermissionBase : ComponentBase
+    public class RequestPermissionBase : ComponentBase
     {
         [Inject]
         ILocalStorageService LocalStorage { get; set; } = default!;

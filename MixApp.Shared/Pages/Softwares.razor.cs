@@ -6,7 +6,7 @@ using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Pages
 {
-    public partial class SoftwaresBase : ComponentBase
+    public class SoftwaresBase : ComponentBase
     {
         [Inject]
         HttpClient HttpClient { get; set; } = new HttpClient();

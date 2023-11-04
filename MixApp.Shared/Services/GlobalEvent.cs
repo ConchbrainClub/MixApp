@@ -43,14 +43,19 @@ namespace MixApp.Shared.Services
         public event Action? OnWaitQueueChanged;
 
         /// <summary>
-        /// When download progress changed
+        /// When download queue changed
         /// </summary>
         public event Action? OnDownloadQueueChanged;
 
         /// <summary>
-        /// When download progress changed
+        /// When download history changed
         /// </summary>
         public event Action? OnHistoryQueueChanged;
+
+        /// <summary>
+        /// When download progress changed
+        /// </summary>
+        public event Action? OnDownloadProgressChanged;
 
         /// <summary>
         /// Wait for download queue
@@ -194,10 +199,11 @@ namespace MixApp.Shared.Services
                 if (i.Progress == 100) 
                 {
                     DownloadQueue.Remove(i);
+                    OnDownloadQueueChanged?.Invoke();
                     AddToHistoryQueue(i);
                 }
 
-                OnDownloadQueueChanged?.Invoke();
+                OnDownloadProgressChanged?.Invoke();
             };
 
             // Do not download installer repeat
@@ -220,7 +226,9 @@ namespace MixApp.Shared.Services
 
             // Invoke javascript to fetch the installer
             _ = JSRuntime!.InvokeVoidAsync("downloadFile", DotNetObjectReference.Create(task), fileName, url, task.CancelId).AsTask();
+            
             DownloadQueue.Add(task);
+            OnDownloadQueueChanged?.Invoke();
 
             _ = NotificationService.CreateAsync
             (

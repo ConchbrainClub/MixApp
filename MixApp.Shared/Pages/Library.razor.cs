@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace MixApp.Shared.Pages
 {
-    public partial class LibraryBase : ComponentBase, IDisposable
+    public class LibraryBase : ComponentBase
     {
         [Inject]
         public HttpClient HttpClient { get; set; } = new HttpClient();
@@ -17,6 +17,7 @@ namespace MixApp.Shared.Pages
         {
             GlobalEvent.OnHistoryQueueChanged += StateHasChanged;
             GlobalEvent.OnDownloadQueueChanged += StateHasChanged;
+            GlobalEvent.OnDownloadProgressChanged += StateHasChanged;
             base.OnInitialized();
         }
 
@@ -47,12 +48,6 @@ namespace MixApp.Shared.Pages
 
             GlobalEvent.DownloadInstaller(latest);
             GlobalEvent.WaitQueue.Remove(waitItem!);
-        }
-
-        public void Dispose()
-        {
-            GlobalEvent.OnHistoryQueueChanged -= StateHasChanged;
-            GlobalEvent.OnDownloadQueueChanged -= StateHasChanged;
         }
     }
 }

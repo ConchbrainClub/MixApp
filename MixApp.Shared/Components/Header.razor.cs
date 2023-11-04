@@ -5,7 +5,7 @@ using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Components
 {
-    public partial class HeaderBase : ComponentBase
+    public class HeaderBase : ComponentBase
     {
         [Inject]
         private HttpClient HttpClient { get; set; } = new();
