@@ -5,7 +5,7 @@ using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Components
 {
-    public partial class SideBarBase : ComponentBase
+    public class SideBarBase : ComponentBase
     {
         [Inject]
         public NavigationManager Navigation { get; set; } = default!;

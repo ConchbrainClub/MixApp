@@ -5,7 +5,7 @@ using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Shared
 {
-    public partial class MainLayoutBase : LayoutComponentBase 
+    public class MainLayoutBase : LayoutComponentBase 
     {
         [Inject]
         ILocalStorageService LocalStorage { get; set; } = default!;

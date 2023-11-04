@@ -6,7 +6,7 @@ using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Components
 {
-    public partial class DetailBase : ComponentBase
+    public class DetailBase : ComponentBase
     {
         [Inject]
         public HttpClient HttpClient { get; set; } = new HttpClient();
@@ -32,18 +32,13 @@ namespace MixApp.Shared.Components
             OnDismiss = (args) => Software = null;
         }
 
+        protected override void OnInitialized()
+        {
+            GlobalEvent.OnDownloadQueueChanged += StateHasChanged;
+        }
+
         protected async override void OnParametersSet()
         {
-            if (Software == null)
-            {
-                GlobalEvent.OnDownloadQueueChanged -= StateHasChanged;
-                return;
-            }
-            else
-            {
-                GlobalEvent.OnDownloadQueueChanged += StateHasChanged;
-            }
-
             Latest = null;
 
             Manifests = (await HttpClient

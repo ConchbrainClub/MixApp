@@ -5,7 +5,7 @@ using Microsoft.JSInterop;
 
 namespace MixApp.Shared.Pages
 {
-    public partial class SettingBase : ComponentBase
+    public class SettingBase : ComponentBase
     {
         [Inject]
         IJSRuntime? JSRunTime { get; set; }

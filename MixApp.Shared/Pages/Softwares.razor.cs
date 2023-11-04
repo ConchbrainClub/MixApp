@@ -6,7 +6,7 @@ using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Pages
 {
-    public partial class SoftwaresBase : ComponentBase
+    public class SoftwaresBase : ComponentBase
     {
         [Inject]
         HttpClient HttpClient { get; set; } = new HttpClient();
@@ -28,7 +28,6 @@ namespace MixApp.Shared.Pages
         protected override void OnAfterRender(bool firstRender)
         {
             if (!firstRender) return;
-            GlobalEvent.OnWaitQueueChanged += StateHasChanged;
             JSRunTime!.InvokeVoidAsync("initPageSoftware", DotNetObjectReference.Create(this)).AsTask();
             LoadData();
         }

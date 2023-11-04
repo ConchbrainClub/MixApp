@@ -10,15 +10,26 @@ public class DownloadTask(Manifest manifest, Installer installer)
 
     public Installer Installer { get; set; } = installer;
 
-    public int Progress { get; set; }
+    private int progress;
+
+    public int Progress 
+    { 
+        get => progress;
+        set
+        {
+            if (progress != value)
+            {
+                progress = value;
+            }
+        }
+    }
 
     public event Action<DownloadTask>? OnProgressChanged;
 
     [JSInvokable]
-    public void ChangedProgress(int progress)
+    public void ChangedProgress(int value)
     {
-        if (Progress == progress) return;
-        Progress = progress;
+        Progress = value;
         OnProgressChanged?.Invoke(this);
     }
 }

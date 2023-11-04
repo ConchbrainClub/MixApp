@@ -4,7 +4,7 @@ using MixApp.Shared.Models;
 
 namespace MixApp.Shared.Components
 {
-    public partial class SoftwareCardBase : ComponentBase
+    public class SoftwareCardBase : ComponentBase
     {
         [Inject]
         IJSRuntime JSRunTime { get; set; } = default!;
