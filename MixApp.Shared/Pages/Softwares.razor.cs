@@ -28,7 +28,6 @@ namespace MixApp.Shared.Pages
         protected override void OnAfterRender(bool firstRender)
         {
             if (!firstRender) return;
-            GlobalEvent.OnWaitQueueChanged += StateHasChanged;
             JSRunTime!.InvokeVoidAsync("initPageSoftware", DotNetObjectReference.Create(this)).AsTask();
             LoadData();
         }

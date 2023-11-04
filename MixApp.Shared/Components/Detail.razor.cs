@@ -32,18 +32,13 @@ namespace MixApp.Shared.Components
             OnDismiss = (args) => Software = null;
         }
 
+        protected override void OnInitialized()
+        {
+            GlobalEvent.OnDownloadQueueChanged += StateHasChanged;
+        }
+
         protected async override void OnParametersSet()
         {
-            if (Software == null)
-            {
-                GlobalEvent.OnDownloadQueueChanged -= StateHasChanged;
-                return;
-            }
-            else
-            {
-                GlobalEvent.OnDownloadQueueChanged += StateHasChanged;
-            }
-
             Latest = null;
 
             Manifests = (await HttpClient
