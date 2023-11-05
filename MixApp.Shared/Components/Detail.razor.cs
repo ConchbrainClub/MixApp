@@ -39,6 +39,7 @@ namespace MixApp.Shared.Components
 
         protected async override void OnParametersSet()
         {
+            if (Software == null) return;
             Latest = null;
 
             Manifests = (await HttpClient
