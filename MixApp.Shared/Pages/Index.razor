@@ -7,12 +7,10 @@
 <PageTitle>@LM.Scripts["p.index.home"]</PageTitle>
 
 <BaseLayerLuminance>
-    <FluentStack class="page" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
+    <FluentStack class="page" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center">
 
-        <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" 
-            @ref="HorizontalScroll" 
-            Speed="2000"
-            Easing=ScrollEasing.EaseInOut>
+        <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" @ref="HorizontalScroll"
+            Speed="2000" Easing=ScrollEasing.EaseInOut>
             @if (TrendingSoftwares.Count == 0)
             {
                 for (int index = 0; index < 2; index++)
@@ -29,9 +27,10 @@
                             <img src="@(RemoteAssets.GetIcon(software))" />
                             <h2>@software.PackageName</h2>
                             <p>
-                                @if(software.ShortDescription?.Length > 150)
+                                @if (software.ShortDescription?.Length > 150)
                                 {
-                                    @(software.ShortDescription?.Substring(0, 150) + "...");
+                                    @(software.ShortDescription?.Substring(0, 150) + "...")
+                                    ;
                                 }
                                 else
                                 {
@@ -91,7 +90,7 @@
                 &nbsp;<strong><a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备18041216号-5</a></strong>
             </p>
         </FluentStack>
-        
+
     </FluentStack>
 </BaseLayerLuminance>
 
@@ -165,6 +164,10 @@
         height: 60px;
         margin: 20px 0;
         border-radius: 5px;
+    }
+
+    .banner fluent-card {
+        padding: 0;
     }
 
     .banner fluent-card:hover .bannerDesc {
