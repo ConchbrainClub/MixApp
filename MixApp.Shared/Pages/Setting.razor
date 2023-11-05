@@ -2,6 +2,7 @@
 @inherits MixApp.Shared.Pages.SettingBase
 
 @inject LocaleManager LM
+@inject IConfiguration Configuration
 
 <PageTitle>@LM.Scripts["p.setting.setting"]</PageTitle>
 
@@ -66,7 +67,7 @@
 
                     <FluentTextField 
                         style="width: 250px;" 
-                        Placeholder="https://cors.conchbrain.club?"
+                        Placeholder="@(Configuration.GetValue<string>("DownloadProxy") ?? string.Empty)"
                         @bind-Value="DownloadProxy" >
                     </FluentTextField>
                 </FluentStack>
