@@ -121,6 +121,10 @@ window.reload = () => {
     location.reload()
 }
 
+function systemIsDarkTheme() {
+    return window.matchMedia("(prefers-color-scheme:dark)").matches;
+}
+
 async function init() {
     let registration = await navigator.serviceWorker.register('service-worker.js')
 
