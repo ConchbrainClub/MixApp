@@ -37,8 +37,16 @@
     <div id="update-reload">
         <p>新版本已经准备就绪，是否立即更新？</p>
         <div>
-            <fluent-button id="later" appearance="neutral">稍后更新</fluent-button>
-            <fluent-button id="upgrade" appearance="accent">立即更新</fluent-button>
+            <fluent-button 
+                id="later" 
+                onclick="document.querySelector('#update-reload').style.display = 'none'" 
+                appearance="neutral">
+                稍后更新
+            </fluent-button>
+
+            <fluent-button id="upgrade" onclick="reload()" appearance="accent">
+                立即更新
+            </fluent-button>
         </div>
     </div>
 
