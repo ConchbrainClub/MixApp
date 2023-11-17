@@ -117,12 +117,12 @@ window.resetSetting = () => {
     reload()
 }
 
-window.reload = () => {
-    location.reload()
+window.systemIsDarkTheme = () => {
+    return window.matchMedia("(prefers-color-scheme:dark)").matches;
 }
 
-function systemIsDarkTheme() {
-    return window.matchMedia("(prefers-color-scheme:dark)").matches;
+window.reload = () => {
+    location.reload()
 }
 
 async function init() {

@@ -35,15 +35,15 @@ namespace MixApp.Shared.Shared
             };
 
             string theme = await LocalStorage.GetItemAsStringAsync("theme");
-            bool dark = await JS.InvokeAsync<bool>("systemIsDarkTheme", new object[] { });
 
-            if (!string.IsNullOrEmpty(theme))
+            if (string.IsNullOrEmpty(theme))
             {
-                Theme = theme;
+                bool isDark = await JS.InvokeAsync<bool>("systemIsDarkTheme");
+                Theme = isDark ? "#333333" : "#f5f5f5";
             }
             else
             {
-                Theme = dark ? "#333333" : "#f5f5f5";
+                Theme = theme;
             }
 
             string color = await LocalStorage.GetItemAsStringAsync("color");

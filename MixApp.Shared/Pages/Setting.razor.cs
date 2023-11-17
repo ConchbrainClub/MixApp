@@ -112,8 +112,6 @@ namespace MixApp.Shared.Pages
 
             // Init theme options
 
-            // Application.Current!.RequestedTheme;
-
             ThemeOptions =
             [
                 new Option<string> { Text = "p.setting.theme_auto", Value = "" },
