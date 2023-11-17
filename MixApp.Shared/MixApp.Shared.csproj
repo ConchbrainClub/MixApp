@@ -7,7 +7,6 @@
     <PublishTrimmed>true</PublishTrimmed>
     <RunAOTCompilation>true</RunAOTCompilation>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
-    <!-- <WasmStripILAfterAOT>true</WasmStripILAfterAOT> -->
   </PropertyGroup>
 
   <ItemGroup>
