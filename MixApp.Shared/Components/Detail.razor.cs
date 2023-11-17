@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Fast.Components.FluentUI;
+using Microsoft.FluentUI.AspNetCore.Components;
 using MixApp.Shared.Models;
 using MixApp.Shared.Services;
 

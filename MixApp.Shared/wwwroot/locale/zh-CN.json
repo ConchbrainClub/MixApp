@@ -73,6 +73,7 @@
     "p.setting.zh_cn": "简体中文",
     "p.setting.en_us": "英文",
     "p.setting.theme": "主题",
+    "p.setting.theme_auto": "跟随系统",
     "p.setting.light": "浅色",
     "p.setting.dark": "深色",
     "p.setting.color": "主题色",

@@ -121,6 +121,10 @@ window.reload = () => {
     location.reload()
 }
 
+function systemIsDarkTheme() {
+    return window.matchMedia("(prefers-color-scheme:dark)").matches;
+}
+
 async function init() {
     let registration = await navigator.serviceWorker.register('service-worker.js')
 
@@ -136,16 +140,13 @@ async function init() {
                 return
             }
 
-            let updateReload = document.querySelector("#update-reload")
-
-            updateReload.style.display = "flex"
+            let updateReload = document.querySelector('#update-reload')
+            updateReload.style.display = 'flex'
 
             document.querySelector('#upgrade').onclick = () => {
                 registration.waiting.postMessage('SKIP_WAITING')
                 setTimeout(window.reload, 1000)
             }
-
-            document.querySelector('#later').onclick = () => updateReload.style.display = "none"
         }
     }
 }

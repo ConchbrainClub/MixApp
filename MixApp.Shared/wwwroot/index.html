@@ -12,11 +12,12 @@
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
 
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="MixApp.Shared.styles.css" rel="stylesheet" />
-    <link href="_content/Microsoft.Fast.Components.FluentUI/css/reboot.css" rel="stylesheet" />
-    <link href="_content/Microsoft.Fast.Components.FluentUI/css/variables.css" rel="stylesheet" />
+    <link href="_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.css" rel="stylesheet" />
     <link href="lib/animate.css/animate.min.css" rel="stylesheet" />
+    <link href="MixApp.Shared.styles.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+
+    <script src="_content/Microsoft.FluentUI.AspNetCore.Components/js/web-components-v2.5.16.min.js" type="module" async></script>
 </head>
 
 <body>
@@ -37,8 +38,16 @@
     <div id="update-reload">
         <p>新版本已经准备就绪，是否立即更新？</p>
         <div>
-            <fluent-button id="later" appearance="neutral">稍后更新</fluent-button>
-            <fluent-button id="upgrade" appearance="accent">立即更新</fluent-button>
+            <fluent-button 
+                id="later" 
+                onclick="document.querySelector('#update-reload').style.display = 'none'" 
+                appearance="neutral">
+                稍后更新
+            </fluent-button>
+
+            <fluent-button id="upgrade" onclick="reload()" appearance="accent">
+                立即更新
+            </fluent-button>
         </div>
     </div>
 

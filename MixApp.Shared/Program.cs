@@ -2,7 +2,7 @@ using Append.Blazor.Notifications;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Fast.Components.FluentUI;
+using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MixApp.Shared;
 using MixApp.Shared.Services;
@@ -42,9 +42,6 @@ builder.Services.AddBlazoredLocalStorageAsSingleton();
 
 builder.Services.AddNotifications();
 
-builder.Services.AddFluentUIComponents(options =>
-{
-    options.HostingModel = BlazorHostingModel.WebAssembly;
-});
+builder.Services.AddFluentUIComponents();
 
 await builder.Build().RunAsync();

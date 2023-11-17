@@ -1,6 +1,6 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Fast.Components.FluentUI;
+using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace MixApp.Shared.Pages
@@ -112,18 +112,22 @@ namespace MixApp.Shared.Pages
 
             // Init theme options
 
+            // Application.Current!.RequestedTheme;
+
             ThemeOptions =
             [
+                new Option<string> { Text = "p.setting.theme_auto", Value = "" },
                 new Option<string> { Text = "p.setting.light", Value = "#f5f5f5" },
                 new Option<string> { Text = "p.setting.dark", Value = "#333333" }
             ];
 
             string theme = await LocalStorage.GetItemAsStringAsync("theme").AsTask();
+            
             selectedTheme = ThemeOptions.SingleOrDefault(i => i.Value == theme)
-                ?? ThemeOptions.Single(i => i.Text == "p.setting.dark");
+                ?? ThemeOptions.Single(i => i.Text == "p.setting.theme_auto");
 
             // Init base color
-
+            
             string color = await LocalStorage.GetItemAsStringAsync("color").AsTask();
 
             if (string.IsNullOrEmpty(color))
