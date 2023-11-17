@@ -181,6 +181,7 @@
 
     .detailSkeletonIntroLeft{
         width: calc(100% - 135px);
+        padding: 20px;
     }
 
     .firstOnLeft {
@@ -214,7 +215,7 @@
     fluent-dialog::part(control) {
         --dialog-width: 60%;
         --dialog-height: 100%;
-        padding: 20px 0;
+        padding: 0 !important;
         overflow: hidden;
         position: relative;
     }
@@ -239,14 +240,13 @@
         width: 32px;
         height: 32px;
         z-index: 5;
-        right: 2px;
-        top: -3px;
+        right: 0;
+        top: -6px;
     }
 
     .detail {
         overflow-y: scroll;
-        height: calc(100% - 40px);
-        margin: 20px 0;
+        height: 100%;
         position: relative;
     }
 
@@ -268,20 +268,20 @@
     .detail .head {
         display: flex;
         justify-content: space-between;
-        padding: 20px;
+        padding: 30px;
     }
 
     .detail .head > div fluent-button+fluent-button {
         margin-left: 10px;
     }
 
-    .head>div:first-child {
+    .head > div:first-child {
         text-align: left;
     }
 
     .detail .head > div:last-child {
         text-align: right;
-        padding: 20px;
+        padding: 20px 0;
         min-width: 250px;
     }
 
@@ -290,7 +290,7 @@
     }
 
     .detail .info {
-        padding: 0 20px 10px 20px;
+        padding: 0 30px 20px 30px;
     }
 
     .detail .info > div {
