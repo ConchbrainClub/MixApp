@@ -4,6 +4,7 @@
     "n.global_event.download_failed": "下载失败",
     "n.global_event.add_to_waitlist": "添加到待下载列表",
     "n.global_event.remove_from_waitlist": "从待下载列表中移除",
+    "n.global_event.submit": "提交",
 
     "c.detail.identifier": "标识",
     "c.detail.latest": "最新",
@@ -86,5 +87,9 @@
 
     "p.help.help": "帮助",
     "p.help.about": "关于",
-    "p.help.feedback": "反馈"
+    "p.help.feedback": "反馈",
+
+    "p.help.feedback_page_title": "问题反馈",
+    "p.help.feedback_contact_placeholder": "联系方式",
+    "p.help.feedback_content_placeholder": "详细描述要反馈的问题"
 }
