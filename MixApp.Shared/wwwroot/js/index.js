@@ -121,6 +121,10 @@ window.systemIsDarkTheme = () => {
     return window.matchMedia("(prefers-color-scheme:dark)").matches;
 }
 
+window.getIsMacOS = () => {
+    return navigator.platform.toUpperCase().indexOf('MAC') >= 0
+}
+
 window.reload = () => {
     location.reload()
 }
