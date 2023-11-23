@@ -13,9 +13,6 @@ namespace MixApp.Shared.Components
         [Inject]
         INotificationService NotificationService { get; set; } = default!;
 
-        [Inject]
-        private IJSRuntime JS { get; set; } = default!;
-
         private bool showDialog = false;
 
         public bool ShowDialog
@@ -30,14 +27,18 @@ namespace MixApp.Shared.Components
 
         protected async override Task OnInitializedAsync()
         {
-            bool isMac = await JS.InvokeAsync<bool>("getIsMacOS");
-            if (!isMac)
+            if (string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("NotificationPermissionDialog")))
             {
                 if (!await NotificationService.IsSupportedByBrowserAsync()) return;
                 if (!string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("NotificationPermission"))) return;
-
                 ShowDialog = true;
             }
+        }
+
+        public async void NoLongerShowDialog()
+        {
+            await LocalStorage.SetItemAsStringAsync("NotificationPermissionDialog", "false");
+            ShowDialog = false;
         }
 
         public async void RequestPermission()
