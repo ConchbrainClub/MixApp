@@ -29,7 +29,7 @@
     "c.request_permission.recommended_to_enable": "<i>MixStore recommends that you enable the following permissions</i>",
     "c.request_permission.allow_notification": "Allow <u><strong>notifications</strong></u> permissions to remind you of the download status of the software",
     "c.request_permission.allow": "Allow",
-    "c.request_permission.close": "Close",
+    "c.request_permission.close": "Don't remind me again",
 
     "c.side_bar.home": "Home",
     "c.side_bar.apps": "Apps",
