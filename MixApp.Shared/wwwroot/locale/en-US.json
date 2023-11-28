@@ -4,6 +4,7 @@
     "n.global_event.download_failed": "Download defeat",
     "n.global_event.add_to_waitlist": "Add to pending list",
     "n.global_event.remove_from_waitlist": "Remove from pending list",
+    "n.global_event.submit": "Submit",
 
     "c.detail.identifier": "Identifier",
     "c.detail.latest": "Latest",
@@ -86,5 +87,9 @@
 
     "p.help.help": "Help",
     "p.help.about": "About",
-    "p.help.feedback": "Feedback"
+    "p.help.feedback": "Feedback",
+
+    "p.help.feedback_page_title": "Problem feedback",
+    "p.help.feedback_contact_placeholder": "Contact information",
+    "p.help.feedback_content_placeholder": "Provide a detailed description of the issues to be fed back"
 }
