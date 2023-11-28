@@ -6,26 +6,26 @@
 <PageTitle>@LM.Scripts["p.help.help"]</PageTitle>
 
 <div class="help-page">
-  <div style="height: 40px;"></div>
-  <h4>@LM.Scripts["p.help.feedback_page_title"]</h4>
-  <FluentTextField @bind-Value=contact style="width: 100%;" Placeholder=@LM.Scripts["p.help.feedback_contact_placeholder"]></FluentTextField>
+    <div style="height: 40px;"></div>
+    <h4>@LM.Scripts["p.help.feedback_page_title"]</h4>
+    <FluentTextField @bind-Value=Feedback.Contact style="width: 100%;" Placeholder=@LM.Scripts["p.help.feedback_contact_placeholder"]></FluentTextField>
 
-  <div style="height: 20px;"></div>
-  <FluentTextArea @bind-Value=content style="width: 100%;" Placeholder=@LM.Scripts["p.help.feedback_content_placeholder"] Rows="8"></FluentTextArea>
+    <div style="height: 20px;"></div>
+    <FluentTextArea @bind-Value=Feedback.Content style="width: 100%;" Placeholder=@LM.Scripts["p.help.feedback_content_placeholder"] Rows="8"></FluentTextArea>
 
-  <div style="height: 20px;"></div>
-  <div style="text-align: right;">
-    <FluentButton Loading=submitLoading Appearance="Appearance.Accent" OnClick="(_ => SubmitFeedback())">
-      @LM.Scripts["n.global_event.submit"]
-    </FluentButton>
-  </div>
+    <div style="height: 20px;"></div>
+    <div style="text-align: right;">
+        <FluentButton Loading=SubmitLoading Appearance="Appearance.Accent" OnClick="(_ => SubmitFeedback())">
+            @LM.Scripts["n.global_event.submit"]
+        </FluentButton>
+    </div>
 </div>
 
 <style>
-  .help-page {
-    width: 60%;
-    height: 100%;
-    padding: 20px;
-    justify-content: left;
-  }
+    .help-page {
+        width: 60%;
+        height: 100%;
+        padding: 20px;
+        justify-content: left;
+    }
 </style>
