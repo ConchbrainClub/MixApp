@@ -182,7 +182,7 @@ namespace MixApp.Shared.Services
             installer ??= installersObj.First();
 
             DownloadTask task = new(manifest!, installer!);
-            _ = HttpClient.GetAsync($"/v1/meta/change?type={(int)MetaType.Download}&identifier={manifest?.PackageIdentifier}");
+            _ = HttpClient.GetAsync($"/v1/meta/set?type={(int)MetaType.Download}&identifier={manifest?.PackageIdentifier}");
 
             // Check if user disabled download proxy
             if (!string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("disable_proxy").AsTask()))
