@@ -25,7 +25,7 @@ namespace MixApp.Shared.Pages
         {
             waitItem.IsFetchingInfo = true;
             IEnumerable<Manifest> manifests = await HttpClient
-                .GetFromJsonAsync<IEnumerable<Manifest>>($"/software/detail?id={waitItem.Software?.PackageIdentifier}")
+                .GetFromJsonAsync<IEnumerable<Manifest>>($"/v1/software/detail?id={waitItem.Software?.PackageIdentifier}")
                 ?? Array.Empty<Manifest>();
 
             Manifest latest = manifests.OrderByDescending(i =>

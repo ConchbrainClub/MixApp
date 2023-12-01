@@ -43,7 +43,7 @@ namespace MixApp.Shared.Components
             Latest = null;
 
             Manifests = (await HttpClient
-                .GetFromJsonAsync<IEnumerable<Manifest>>($"/software/detail?id={Software?.PackageIdentifier}") ?? Array.Empty<Manifest>())
+                .GetFromJsonAsync<IEnumerable<Manifest>>($"/v1/software/detail?id={Software?.PackageIdentifier}") ?? Array.Empty<Manifest>())
                 .OrderByDescending(i =>
                 {
                     if (DateTime.TryParse(i.ReleaseDate, out DateTime releaseDate))
@@ -65,7 +65,7 @@ namespace MixApp.Shared.Components
             Latest = Manifests.First();
 
             StateHasChanged();
-            _ = HttpClient.GetAsync($"/meta/set?type={(int)MetaType.Visit}&identifier={Latest?.PackageIdentifier}");
+            _ = HttpClient.GetAsync($"/v1/meta/set?type={(int)MetaType.Visit}&identifier={Latest?.PackageIdentifier}");
         }
 
         public void ShowInLibrary()
