@@ -40,7 +40,7 @@ namespace MixApp.Shared.Pages
             SelectedSoftware = null;
 
             List<Software> softwares = await HttpClient
-                .GetFromJsonAsync<List<Software>>($"/softwares?index={++PageIndex}") 
+                .GetFromJsonAsync<List<Software>>($"/software/index?index={++PageIndex}") 
                 ?? new();
 
             softwares.ForEach(Softwares.Add);

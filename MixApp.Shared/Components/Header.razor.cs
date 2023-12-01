@@ -59,7 +59,7 @@ namespace MixApp.Shared.Components
             }
 
             SearchResults = await HttpClient
-                .GetFromJsonAsync<List<Software>>($"/softwares?keyword={Keyword}")
+                .GetFromJsonAsync<List<Software>>($"/software/index?keyword={Keyword}")
                 ?? [];
 
             StateHasChanged();

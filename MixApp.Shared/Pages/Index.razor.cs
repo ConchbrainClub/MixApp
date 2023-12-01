@@ -34,7 +34,7 @@ namespace MixApp.Shared.Pages
         private async void LoadTopData()
         {
             List<Software> softwares = await HttpClient
-                .GetFromJsonAsync<List<Software>>("/top") ?? [];
+                .GetFromJsonAsync<List<Software>>("/software/trending") ?? [];
             
             softwares.ForEach(TrendingSoftwares.Add);
             StateHasChanged();
@@ -43,7 +43,7 @@ namespace MixApp.Shared.Pages
         private async void LoadRandomData()
         {
             List<Software> softwares = await HttpClient
-                .GetFromJsonAsync<List<Software>>("/random") 
+                .GetFromJsonAsync<List<Software>>("/software/recommend") 
                 ?? [];
             
             softwares.ForEach(RandomSoftwares.Add);
@@ -53,7 +53,7 @@ namespace MixApp.Shared.Pages
         private async void LoadRecentlyUpdatedData()
         {
             List<Software> softwares = await HttpClient
-                .GetFromJsonAsync<List<Software>>("/recent") ?? [];
+                .GetFromJsonAsync<List<Software>>("/software/latest") ?? [];
             
             softwares.ForEach(RecentlyUpdatedSoftwares.Add);
             StateHasChanged();

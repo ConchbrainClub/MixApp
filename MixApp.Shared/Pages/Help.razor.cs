@@ -31,7 +31,7 @@ namespace MixApp.Shared.Pages
 
             SubmitLoading = true;
             StringContent content = new(JsonSerializer.Serialize(Feedback));
-            _ = HttpClient.PostAsync("/v1/feedback", content);
+            _ = HttpClient.PostAsync("/feedback", content);
             SubmitLoading = false;
         }
     }
