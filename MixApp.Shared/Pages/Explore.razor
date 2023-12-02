@@ -1,0 +1,7 @@
+@page "/Explore"
+@inherits MixApp.Shared.Pages.ExploreBase
+
+@foreach(var collection in Collections)
+{
+    <h1>@collection.Name</h1>
+}

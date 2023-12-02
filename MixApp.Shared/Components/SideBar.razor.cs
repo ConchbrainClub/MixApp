@@ -32,6 +32,13 @@ namespace MixApp.Shared.Components
                 },
                 new()
                 {
+                    Href = "/Explore",
+                    IconFilled = new Icons.Filled.Size24.BoxSearch(),
+                    IconRegular = new Icons.Regular.Size24.BoxSearch(),
+                    Name = "c.side_bar.explore"
+                },
+                new()
+                {
                     Href = "/Softwares",
                     IconFilled = new Icons.Filled.Size24.Apps(),
                     IconRegular = new Icons.Regular.Size24.Apps(),

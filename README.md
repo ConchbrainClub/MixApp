@@ -10,7 +10,7 @@ mv ./node_modules/ ./MixApp.Shared/wwwroot/lib
 
 wget https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh
 chmod +x dotnet-install.sh
-./dotnet-install.sh -v 8.0.100-rc.2.23502.2
+./dotnet-install.sh -v 8.0.100
 rm dotnet-install.sh
 
 dotnet workload restore
