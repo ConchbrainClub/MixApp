@@ -1,0 +1,140 @@
+@page "/Collections"
+@inherits MixApp.Shared.Pages.CollectionsBase
+
+<div class="page">
+    @for(int i = 0; i < Collections.Count; i++) {
+        Collection collection = Collections[i];
+        string style = $"background-image: var(--bg-{i % 2});";
+        
+        <FluentCard class="collection" style=@style>
+            <div class="content">
+                <div class="left">
+                    <h2>@collection.Name</h2>
+                    <p>@collection.Introduction</p>
+                    <FluentButton Appearance="Appearance.Outline">Discover More</FluentButton>
+                </div>
+
+                <div class="right">
+                    <img class="icon" src="https://icon.horse/icon/1ic.nl" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+                    <img class="icon" src="https://icon.horse/icon/www.123pan.com" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+                    <img class="icon" src="https://icon.horse/icon/visualstudio.microsoft.com" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+                    <img class="icon" src="https://icon.horse/icon/flameshot.org" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+                    <img class="icon" src="https://icon.horse/icon/dotnet.microsoft.com" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+                </div>
+            </div>
+        </FluentCard>
+    }
+</div>
+
+<style>
+    .page {
+        width: 100%;
+        padding: 10px 20px;
+
+        --bg-0: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
+
+        --bg-1: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(137 160 49),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69 149 72),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(130 59 147),rgba(248,192,147,0));
+        
+        --bg-2: radial-gradient(closest-side,rgb(12 8 243),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(143 11 64),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(17 250 49),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69 29 72),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(130 5 147),rgba(248,192,147,0));
+
+        --bg-3: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(137 160 49),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69 149 72),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(130 59 147),rgba(248,192,147,0));
+
+        --bg-4: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(137 160 49),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69 149 72),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(130 59 147),rgba(248,192,147,0));
+
+        --bg-5: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(137 160 49),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69 149 72),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(130 59 147),rgba(248,192,147,0));
+        
+        --bg-6: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(137 160 49),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69 149 72),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(130 59 147),rgba(248,192,147,0));
+
+    
+        --bg-7: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(137 160 49),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69 149 72),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(130 59 147),rgba(248,192,147,0));
+        
+        --bg-8: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(137 160 49),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69 149 72),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(130 59 147),rgba(248,192,147,0));
+
+        --bg-9: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(137 160 49),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(69 149 72),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(130 59 147),rgba(248,192,147,0));
+    }
+
+    .page .collection {
+        background-attachment: fixed;
+        background-size: 130vmax 130vmax, 80vmax 80vmax, 90vmax 90vmax, 110vmax 110vmax, 90vmax 90vmax;
+        background-position: -80vmax -80vmax, 60vmax -30vmax, 10vmax 10vmax, -30vmax -10vmax, 50vmax 50vmax;
+        background-repeat: no-repeat;
+        animation: 10s movement linear infinite;
+        margin-bottom: 10px;
+        height: 200px;
+    }
+
+    @@keyframes movement {
+        0%, 100% {
+            background-size: 130vmax 130vmax, 80vmax 80vmax, 90vmax 90vmax, 110vmax 110vmax, 90vmax 90vmax;
+            background-position: -80vmax -80vmax, 60vmax -30vmax, 10vmax 10vmax, -30vmax -10vmax, 50vmax 50vmax;
+        }
+        25% {
+            background-size: 100vmax 100vmax, 90vmax 90vmax, 100vmax 100vmax, 90vmax 90vmax, 60vmax 60vmax;
+            background-position: -60vmax -90vmax, 50vmax -40vmax, 0vmax -20vmax, -40vmax -20vmax, 40vmax 60vmax;
+        }
+        50% {
+            background-size: 80vmax 80vmax, 110vmax 110vmax, 80vmax 80vmax, 60vmax 60vmax, 80vmax 80vmax;
+            background-position: -50vmax -70vmax, 40vmax -30vmax, 10vmax 0vmax, 20vmax 10vmax, 30vmax 70vmax;
+        }
+        75% {
+            background-size: 90vmax 90vmax, 90vmax 90vmax, 100vmax 100vmax, 90vmax 90vmax, 70vmax 70vmax;
+            background-position: -50vmax -40vmax, 50vmax -30vmax, 20vmax 0vmax, -10vmax 10vmax, 40vmax 60vmax;
+        }
+    }
+
+    .collection .content {
+        display: flex;
+        justify-content: space-around;
+        height: 100%;
+    }
+
+    .collection .content > div {
+        margin: auto 0;
+    }
+
+    .right .icon {
+        margin: 5px;
+        height: 50px;
+        border-radius: 5px;
+    }
+</style>

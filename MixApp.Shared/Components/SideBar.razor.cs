@@ -32,10 +32,10 @@ namespace MixApp.Shared.Components
                 },
                 new()
                 {
-                    Href = "/Explore",
+                    Href = "/Collections",
                     IconFilled = new Icons.Filled.Size24.BoxSearch(),
                     IconRegular = new Icons.Regular.Size24.BoxSearch(),
-                    Name = "c.side_bar.explore"
+                    Name = "c.side_bar.collections"
                 },
                 new()
                 {
