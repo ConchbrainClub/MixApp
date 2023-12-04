@@ -1,5 +1,6 @@
 @page "/Collections"
 @inherits MixApp.Shared.Pages.CollectionsBase
+@using System.Text.Json;
 
 <div class="page">
     <div class="group">
@@ -11,16 +12,18 @@
                 <div class="content">
                     <div class="left">
                         <h2>@collection.Name</h2>
-                        <p>@collection.Introduction</p>
+                        <p class="intro">@collection.Introduction</p>
                         <FluentButton Appearance="Appearance.Outline">Discover More</FluentButton>
                     </div>
 
                     <div class="right">
-                        <img class="icon" src="https://icon.horse/icon/1ic.nl" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
-                        <img class="icon" src="https://icon.horse/icon/www.123pan.com" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
-                        <img class="icon" src="https://icon.horse/icon/visualstudio.microsoft.com" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
-                        <img class="icon" src="https://icon.horse/icon/flameshot.org" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
-                        <img class="icon" src="https://icon.horse/icon/dotnet.microsoft.com" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+                        @foreach(Software software in JsonSerializer.Deserialize<List<Software>>(collection.Softwares!) ?? [])
+                        {
+                            @if(software.Pin ?? false)
+                            {
+                                <img class="icon" src="@RemoteAssets.GetIcon(software)" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+                            }
+                        }
                     </div>
                 </div>
             </FluentCard>
@@ -139,6 +142,10 @@
 
     .collection .content > div {
         margin: auto 0;
+    }
+
+    .left .intro {
+        max-width: 300px;
     }
 
     .right .icon {
