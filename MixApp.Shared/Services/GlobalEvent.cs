@@ -33,6 +33,11 @@ namespace MixApp.Shared.Services
         }
 
         /// <summary>
+        /// Notify the layout to change the theme
+        /// </summary>
+        public event Action? OnThemeChanged;
+
+        /// <summary>
         /// When user want open software detail interface
         /// </summary>
         public event Action<Software>? OnOpenSoftware;
@@ -77,6 +82,11 @@ namespace MixApp.Shared.Services
             HistoryQueue = (await LocalStorage.GetItemAsync<List<DownloadTask>>("history_queue")) ?? new();
             OnHistoryQueueChanged?.Invoke();
         }
+
+        /// <summary>
+        /// Change the base theme
+        /// </summary>
+        public void ChangeTheme() => OnThemeChanged?.Invoke();
 
         /// <summary>
         /// Open software detail interface

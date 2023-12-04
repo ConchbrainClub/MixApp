@@ -19,17 +19,20 @@ namespace MixApp.Shared.Pages
 
         public bool IsLoading { get; set; } = false;
 
+        public bool IsFirstRender { get; set; } = true;
+
         public int PageIndex { get; set; } = -1;
 
-        public List<Software> Softwares { get; set; } = new();
+        public List<Software> Softwares { get; set; } = [];
 
         public Software? SelectedSoftware { get; set; }
 
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (!firstRender) return;
-            JSRunTime!.InvokeVoidAsync("initPageSoftware", DotNetObjectReference.Create(this)).AsTask();
+            await JSRunTime!.InvokeVoidAsync("initPageSoftware", DotNetObjectReference.Create(this));
             LoadData();
+            IsFirstRender = false;
         }
 
         public async void LoadData()
@@ -41,7 +44,7 @@ namespace MixApp.Shared.Pages
 
             List<Software> softwares = await HttpClient
                 .GetFromJsonAsync<List<Software>>($"/v1/software/index?index={++PageIndex}") 
-                ?? new();
+                ?? [];
 
             softwares.ForEach(Softwares.Add);
             IsLoading = false;

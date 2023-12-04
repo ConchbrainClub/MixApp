@@ -4,7 +4,7 @@
 <div class="page">
     @for(int i = 0; i < Collections.Count; i++) {
         Collection collection = Collections[i];
-        string style = $"background-image: var(--bg-{i % 2});";
+        string style = $"background-image: var(--bg-{i % 10});";
         
         <FluentCard class="collection" style=@style>
             <div class="content">
@@ -37,17 +37,17 @@
             radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
             radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
 
-        --bg-1: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
+        --bg-1: radial-gradient(closest-side,rgb(8, 243, 59),rgba(235,105,78,0)), 
             radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
             radial-gradient(closest-side,rgb(137 160 49),rgba(254,234,131,0)),
             radial-gradient(closest-side,rgb(69 149 72),rgba(170,142,245,0)),
             radial-gradient(closest-side,rgb(130 59 147),rgba(248,192,147,0));
         
-        --bg-2: radial-gradient(closest-side,rgb(12 8 243),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(143 11 64),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(17 250 49),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69 29 72),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(130 5 147),rgba(248,192,147,0));
+        --bg-2: radial-gradient(closest-side,rgb(2 9 23),rgba(235,105,78,0)), 
+            radial-gradient(closest-side,rgb(13 111 164),rgba(243,11,164,0)),
+            radial-gradient(closest-side,rgb(191, 147, 241),rgba(254,234,131,0)),
+            radial-gradient(closest-side,rgb(214, 250, 8),rgba(170,142,245,0)),
+            radial-gradient(closest-side,rgb(30 5 147),rgba(248,192,147,0));
 
         --bg-3: radial-gradient(closest-side,rgb(122 8 243),rgba(235,105,78,0)), 
             radial-gradient(closest-side,rgb(143 101 64),rgba(243,11,164,0)),
