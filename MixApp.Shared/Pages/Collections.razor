@@ -4,11 +4,9 @@
 
 <div class="page">
     <div class="group">
-        @for(int i = 0; i < Collections.Count; i++) {
-            Collection collection = Collections[i];
-            string style = $"background-image: var(--bg-{i % 10});";
-            
-            <FluentCard class="collection" style=@style>
+        @foreach(var collection in Collections)
+        {
+            <FluentCard class="collection">
                 <div class="content">
                     <div class="left">
                         <h2>@collection.Name</h2>
@@ -21,7 +19,15 @@
                         {
                             @if(software.Pin ?? false)
                             {
-                                <img class="icon" src="@RemoteAssets.GetIcon(software)" fetchpriority="low" loading="lazy" onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+                                <img id="@software.PackageIdentifier" class="icon" 
+                                    src="@RemoteAssets.GetIcon(software)" 
+                                    @onclick=@(_ => GlobalEvent.OpenSoftware(software))
+                                    fetchpriority="low" loading="lazy" 
+                                    onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+                                
+                                <FluentTooltip Anchor="@software.PackageIdentifier">
+                                    @software.PackageName
+                                </FluentTooltip>
                             }
                         }
                     </div>
@@ -36,61 +42,7 @@
         width: 100%;
         padding: 10px 20px;
 
-        --bg-0: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
-
-        --bg-1: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
-        
-        --bg-2: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
-
-        --bg-3: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
-
-        --bg-4: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
-
-        --bg-5: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
-        
-        --bg-6: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
-
-        --bg-7: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
-        
-        --bg-8: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
-            radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
-            radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
-            radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
-            radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
-
-        --bg-9: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
+        --bg: radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
             radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
             radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
             radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
@@ -113,6 +65,7 @@
         height: 220px;
         width: calc(50% - 6px);
         min-width: 580px;
+        background-image: var(--bg);
     }
 
     @@keyframes movement {
