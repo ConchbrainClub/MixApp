@@ -15,6 +15,8 @@ namespace MixApp.Shared.Pages
 
         public List<Collection> Collections { get; set; } = [];
 
+        public Collection? SelectedCollection { get; set; }
+
         protected override void OnAfterRender(bool firstRender)
         {
             if (!firstRender) return;
