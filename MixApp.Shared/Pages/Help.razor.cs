@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
+using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Components;
 
@@ -30,7 +30,7 @@ namespace MixApp.Shared.Pages
             if (!Validator.TryValidateObject(Feedback, new ValidationContext(Feedback), null)) return;
 
             SubmitLoading = true;
-            StringContent content = new(JsonSerializer.Serialize(Feedback));
+            JsonContent content = JsonContent.Create(Feedback);
             _ = HttpClient.PostAsync("/v1/feedback", content);
             SubmitLoading = false;
         }
