@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Pages
 {
@@ -12,6 +13,9 @@ namespace MixApp.Shared.Pages
 
         [Inject]
         ILocalStorageService LocalStorage { get; set; } = default!;
+
+        [Inject]
+        GlobalEvent GlobalEvent { get; set; } = default!;
 
         // Locale setting
 
@@ -40,8 +44,11 @@ namespace MixApp.Shared.Pages
             set
             {
                 selectedTheme = value;
-                LocalStorage.SetItemAsStringAsync("theme", value?.Value).AsTask();
-                JSRunTime!.InvokeVoidAsync("reload").AsTask();
+                Task.Run(async () =>
+                {
+                    await LocalStorage.SetItemAsStringAsync("theme", value?.Value);
+                    GlobalEvent.ChangeTheme();
+                });
             }
         }
 
@@ -57,8 +64,11 @@ namespace MixApp.Shared.Pages
             set
             {
                 selectedColor = value;
-                LocalStorage.SetItemAsStringAsync("color", value).AsTask();
-                JSRunTime!.InvokeVoidAsync("reload").AsTask();
+                Task.Run(async () => 
+                {
+                    await LocalStorage.SetItemAsStringAsync("color", value);
+                    GlobalEvent.ChangeTheme();
+                });
             }
         }
 

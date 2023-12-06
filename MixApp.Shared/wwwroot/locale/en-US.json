@@ -33,6 +33,7 @@
     "c.request_permission.close": "Don't remind me again",
 
     "c.side_bar.home": "Home",
+    "c.side_bar.collections": "Collections",
     "c.side_bar.apps": "Apps",
     "c.side_bar.library": "Library",
     "c.side_bar.setting": "Setting",

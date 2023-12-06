@@ -28,7 +28,10 @@
 
         @if(IsLoading)
         {
-            <FluentProgressRing class="progress"></FluentProgressRing>
+            if(!IsFirstRender)
+            {
+                <FluentProgressRing class="progress"></FluentProgressRing>
+            }
         }
         else
         {
