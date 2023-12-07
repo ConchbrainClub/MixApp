@@ -6,39 +6,49 @@
     @if(SelectedCollection == null)
     {
         <div class="group">
-            @foreach(var collection in Collections)
+             @if (Collections.Count == 0)
             {
-                <FluentCard class="collection">
-                    <div class="content">
-                        <div class="left">
-                            <h2>@collection.Name</h2>
-                            <p class="intro">@collection.Introduction</p>
+                for (int index = 0; index < 4; index++)
+                {
+                    <SkeletonCollection />
+                }
+            }
+            else
+            {
+                @foreach(var collection in Collections)
+                {
+                    <FluentCard class="collection">
+                        <div class="content">
+                            <div class="left">
+                                <h2>@collection.Name</h2>
+                                <p class="intro">@collection.Introduction</p>
 
-                            <FluentButton OnClick=@(_ => SelectedCollection = collection) 
-                                Appearance="Appearance.Outline">
-                                Discover More
-                            </FluentButton>
-                        </div>
+                                <FluentButton OnClick=@(_ => SelectedCollection = collection) 
+                                    Appearance="Appearance.Outline">
+                                    Discover More
+                                </FluentButton>
+                            </div>
 
-                        <div class="right">
-                            @foreach(Software software in JsonSerializer.Deserialize<List<Software>>(collection.Softwares!) ?? [])
-                            {
-                                @if(software.Pin ?? false)
+                            <div class="right">
+                                @foreach(Software software in JsonSerializer.Deserialize<List<Software>>(collection.Softwares!) ?? [])
                                 {
-                                    <img id="@software.PackageIdentifier" class="icon" 
-                                        src="@RemoteAssets.GetIcon(software)" 
-                                        @onclick=@(_ => GlobalEvent.OpenSoftware(software))
-                                        fetchpriority="low" loading="lazy" 
-                                        onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
-                                    
-                                    <FluentTooltip Anchor="@software.PackageIdentifier">
-                                        @software.PackageName
-                                    </FluentTooltip>
+                                    @if(software.Pin ?? false)
+                                    {
+                                        <img id="@software.PackageIdentifier" class="icon" 
+                                            src="@RemoteAssets.GetIcon(software)" 
+                                            @onclick=@(_ => GlobalEvent.OpenSoftware(software))
+                                            fetchpriority="low" loading="lazy" 
+                                            onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+
+                                        <FluentTooltip Anchor="@software.PackageIdentifier">
+                                            @software.PackageName
+                                        </FluentTooltip>
+                                    }
                                 }
-                            }
+                            </div>
                         </div>
-                    </div>
-                </FluentCard>
+                    </FluentCard>
+                }
             }
         </div>
     }
