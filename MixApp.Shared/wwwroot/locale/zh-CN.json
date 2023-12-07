@@ -4,6 +4,7 @@
     "n.global_event.download_failed": "下载失败",
     "n.global_event.add_to_waitlist": "添加到待下载列表",
     "n.global_event.remove_from_waitlist": "从待下载列表中移除",
+    "n.global_event.submit": "提交",
 
     "c.detail.identifier": "标识",
     "c.detail.latest": "最新",
@@ -29,9 +30,10 @@
     "c.request_permission.recommended_to_enable": "<i>MixStore 推荐您开启以下权限</i>",
     "c.request_permission.allow_notification": "允许 <u><strong>通知</strong></u> 权限来提醒您软件的下载状态",
     "c.request_permission.allow": "允许",
-    "c.request_permission.close": "关闭",
+    "c.request_permission.close": "不再提醒",
 
     "c.side_bar.home": "主页",
+    "c.side_bar.collections": "合集",
     "c.side_bar.apps": "软件",
     "c.side_bar.library": "库",
     "c.side_bar.setting": "设置",
@@ -86,5 +88,9 @@
 
     "p.help.help": "帮助",
     "p.help.about": "关于",
-    "p.help.feedback": "反馈"
+    "p.help.feedback": "反馈",
+
+    "p.help.feedback_page_title": "问题反馈",
+    "p.help.feedback_contact_placeholder": "联系方式",
+    "p.help.feedback_content_placeholder": "详细描述要反馈的问题"
 }

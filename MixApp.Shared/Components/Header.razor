@@ -16,10 +16,21 @@
     {
         <div class="searchContent animate__animated animate__fadeInDown">
             <FluentDataGrid class="searchResult" Items="@SearchResults.AsQueryable()" GridTemplateColumns="1fr 1fr 2fr 1fr" ResizableColumns=true Virtualize="true" >
-                <PropertyColumn Title=@LM.Scripts["c.search_box.identifier"] Property="@(i => i.PackageIdentifier)" />
-                <PropertyColumn Title=@LM.Scripts["c.search_box.name"] Property="@(i => i.PackageName)" />
-                <PropertyColumn Title=@LM.Scripts["c.search_box.description"] Property="@(i => i.ShortDescription)" />
-                <PropertyColumn Title=@LM.Scripts["c.search_box.publisher"] Property="@(i => i.Publisher)" />
+                <TemplateColumn Title=@LM.Scripts["c.search_box.identifier"]>
+                    <FluentBadge @onclick=@(_ => OpenSoftware(context)) Appearance="Appearance.Accent" Fill="highlight">@context.PackageIdentifier</FluentBadge>
+                </TemplateColumn>
+
+                <TemplateColumn Title=@LM.Scripts["c.search_box.name"]>
+                    <FluentBadge @onclick=@(_ => OpenSoftware(context)) Appearance="Appearance.Accent" Fill="highlight">@context.PackageName</FluentBadge>
+                </TemplateColumn>
+
+                <TemplateColumn Title=@LM.Scripts["c.search_box.description"]>
+                    <FluentBadge @onclick=@(_ => OpenSoftware(context)) Appearance="Appearance.Accent" Fill="highlight">@context.ShortDescription</FluentBadge>
+                </TemplateColumn>
+
+                <TemplateColumn Title=@LM.Scripts["c.search_box.publisher"]>
+                    <FluentBadge @onclick=@(_ => OpenSoftware(context)) Appearance="Appearance.Accent" Fill="highlight">@context.Publisher</FluentBadge>
+                </TemplateColumn>
                 
                 <TemplateColumn Title=@LM.Scripts["c.search_box.open"]>
                     <FluentBadge @onclick=@(_ => OpenSoftware(context)) Appearance="Appearance.Accent" Fill="highlight">@LM.Scripts["c.search_box.open"]</FluentBadge>
@@ -68,14 +79,13 @@
 
     .mixHeader .searchContent {
         position: absolute;
-        margin: 50px;
+        margin: 60px;
         overflow-y: scroll;
         text-align: left;
-        max-height: 50vh;
+        max-height: calc(100vh - 200px);
         z-index: 10;
         box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
-        background-color: rgb(61 61 61 / 50%);
-        backdrop-filter: saturate(110%) blur(10px);
+        background-color: var(--fill-color);
         border-radius: 5px;
     }
 

@@ -34,6 +34,17 @@ namespace MixApp.Shared.Shared
                 StateHasChanged();
             };
 
+            GlobalEvent.OnThemeChanged += async () => 
+            {
+                await InitTheme();
+                StateHasChanged();
+            };
+
+            await InitTheme();
+        }
+
+        private async Task InitTheme()
+        {
             string theme = await LocalStorage.GetItemAsStringAsync("theme");
 
             if (string.IsNullOrEmpty(theme))

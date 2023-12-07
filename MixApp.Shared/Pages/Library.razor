@@ -83,40 +83,48 @@
     <div class="list">
         <h1>@LM.Scripts["p.library.download_history"]</h1>
 
-        <FluentDataGrid Items="@GlobalEvent.HistoryQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 8fr 1fr 1fr 3fr 2fr" ResizableColumns=true>
-            <TemplateColumn Title=@LM.Scripts["p.library.logo"]>
-                <img class="icon" 
-                    src=@("https://icon.horse/icon/" + new Uri(context.Manifest.PackageUrl ?? "https://www.conchbrain.club").Host) 
-                    onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" 
-                    />
-            </TemplateColumn>
+        @if(GlobalEvent.HistoryQueue.Count() > 0) 
+        {
+            <FluentDataGrid Items="@GlobalEvent.HistoryQueue.AsQueryable()" GridTemplateColumns="1fr 2fr 8fr 1fr 1fr 3fr 2fr" ResizableColumns=true>
+                <TemplateColumn Title=@LM.Scripts["p.library.logo"]>
+                    <img class="icon" 
+                        src=@("https://icon.horse/icon/" + new Uri(context.Manifest.PackageUrl ?? "https://www.conchbrain.club").Host) 
+                        onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" 
+                        />
+                </TemplateColumn>
 
-            <TemplateColumn Title=@LM.Scripts["p.library.package_name"] >
-                <p class="line">@context.Manifest.PackageName</p>
-            </TemplateColumn>
+                <TemplateColumn Title=@LM.Scripts["p.library.package_name"] >
+                    <p class="line">@context.Manifest.PackageName</p>
+                </TemplateColumn>
 
-            <TemplateColumn Title=@LM.Scripts["p.library.description"]>
-                <p class="line">@context.Manifest.ShortDescription</p>
-            </TemplateColumn>
+                <TemplateColumn Title=@LM.Scripts["p.library.description"]>
+                    <p class="line">@context.Manifest.ShortDescription</p>
+                </TemplateColumn>
 
-            <TemplateColumn Title=@LM.Scripts["p.library.version"]>
-                <p class="line">@context.Manifest.PackageVersion</p>
-            </TemplateColumn>
+                <TemplateColumn Title=@LM.Scripts["p.library.version"]>
+                    <p class="line">@context.Manifest.PackageVersion</p>
+                </TemplateColumn>
 
-            <TemplateColumn Title=@LM.Scripts["p.library.architecture"]>
-                <p class="line">@context.Installer.Architecture</p>
-            </TemplateColumn>
+                <TemplateColumn Title=@LM.Scripts["p.library.architecture"]>
+                    <p class="line">@context.Installer.Architecture</p>
+                </TemplateColumn>
 
-            <TemplateColumn Title=@LM.Scripts["p.library.publisher"]>
-                <p class="line">@context.Manifest.Publisher</p>
-            </TemplateColumn>
+                <TemplateColumn Title=@LM.Scripts["p.library.publisher"]>
+                    <p class="line">@context.Manifest.Publisher</p>
+                </TemplateColumn>
 
-            <TemplateColumn Title=@LM.Scripts["p.library.action"]>
-                @* <FluentButton Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.AppsAddIn())" /> *@
-                <FluentButton OnClick="(_ => GlobalEvent.DownloadInstaller(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowReset())" />
-                <FluentButton OnClick="(_ => GlobalEvent.RemoveFromHistoryQueue(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
-            </TemplateColumn>
-        </FluentDataGrid>
+                <TemplateColumn Title=@LM.Scripts["p.library.action"]>
+                    <FluentButton OnClick="(_ => GlobalEvent.DownloadInstaller(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Regular.Size20.ArrowReset())" />
+                    <FluentButton OnClick="(_ => GlobalEvent.RemoveFromHistoryQueue(context))" Appearance="Appearance.Stealth" IconEnd="@(new Icons.Filled.Size20.Dismiss())" />
+                </TemplateColumn>
+            </FluentDataGrid>
+        }
+        else 
+        {
+            <div>
+                <lottie-player src="/icons/notfound.json" background="##fff" speed="1" loop autoplay direction="1" mode="normal"></lottie-player>
+            </div>
+        }
     </div>
 </div>
 
@@ -143,5 +151,11 @@
         height: 30px;
         line-height: 30px;
         margin-bottom: 0;
+    }
+
+    .page lottie-player {
+        margin: 200px auto; 
+        width: 180px; 
+        height: 180px
     }
 </style>

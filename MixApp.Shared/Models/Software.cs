@@ -36,4 +36,9 @@ public class Software
     /// 封面
     /// </summary>
     public string? Cover { get; set; }
+
+    /// <summary>
+    /// Pin the software (For Collections)
+    /// </summary>
+    public bool? Pin { get; set; }
 }

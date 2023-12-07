@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.FluentUI.AspNetCore.Components;
+using Microsoft.FluentUI.AspNetCore.Components.Components.Tooltip;
 using Microsoft.JSInterop;
 using MixApp.Shared;
 using MixApp.Shared.Services;
@@ -43,5 +44,7 @@ builder.Services.AddBlazoredLocalStorageAsSingleton();
 builder.Services.AddNotifications();
 
 builder.Services.AddFluentUIComponents();
+
+builder.Services.AddScoped<ITooltipService, TooltipService>();
 
 await builder.Build().RunAsync();

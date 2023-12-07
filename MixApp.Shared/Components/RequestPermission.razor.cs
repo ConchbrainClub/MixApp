@@ -1,6 +1,7 @@
 using Append.Blazor.Notifications;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace MixApp.Shared.Components
 {
@@ -26,10 +27,18 @@ namespace MixApp.Shared.Components
 
         protected async override Task OnInitializedAsync()
         {
-            if (!await NotificationService.IsSupportedByBrowserAsync()) return;
-            if (!string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("NotificationPermission"))) return;
+            if (string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("NotificationPermissionDialog")))
+            {
+                if (!await NotificationService.IsSupportedByBrowserAsync()) return;
+                if (!string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("NotificationPermission"))) return;
+                ShowDialog = true;
+            }
+        }
 
-            ShowDialog = true;
+        public async void NoLongerShowDialog()
+        {
+            await LocalStorage.SetItemAsStringAsync("NotificationPermissionDialog", "false");
+            ShowDialog = false;
         }
 
         public async void RequestPermission()
