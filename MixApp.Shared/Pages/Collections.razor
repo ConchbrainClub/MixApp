@@ -101,13 +101,18 @@
         animation: 10s movement linear infinite;
         height: 220px;
         width: calc(50% - 6px);
-        min-width: 580px;
         background-image: 
             radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
             radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
             radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
             radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
             radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
+    }
+
+    @@media only screen and (max-width: 1280px) {
+        .page .collection {
+            width: 100%;
+        }
     }
 
     @@keyframes movement {
