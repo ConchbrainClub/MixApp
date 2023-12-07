@@ -6,39 +6,49 @@
     @if(SelectedCollection == null)
     {
         <div class="group">
-            @foreach(var collection in Collections)
+             @if (Collections.Count == 0)
             {
-                <FluentCard class="collection">
-                    <div class="content">
-                        <div class="left">
-                            <h2>@collection.Name</h2>
-                            <p class="intro">@collection.Introduction</p>
+                for (int index = 0; index < 4; index++)
+                {
+                    <SkeletonCollection />
+                }
+            }
+            else
+            {
+                @foreach(var collection in Collections)
+                {
+                    <FluentCard class="collection">
+                        <div class="content">
+                            <div class="left">
+                                <h2>@collection.Name</h2>
+                                <p class="intro">@collection.Introduction</p>
 
-                            <FluentButton OnClick=@(_ => SelectedCollection = collection) 
-                                Appearance="Appearance.Outline">
-                                Discover More
-                            </FluentButton>
-                        </div>
+                                <FluentButton OnClick=@(_ => SelectedCollection = collection) 
+                                    Appearance="Appearance.Outline">
+                                    Discover More
+                                </FluentButton>
+                            </div>
 
-                        <div class="right">
-                            @foreach(Software software in JsonSerializer.Deserialize<List<Software>>(collection.Softwares!) ?? [])
-                            {
-                                @if(software.Pin ?? false)
+                            <div class="right">
+                                @foreach(Software software in JsonSerializer.Deserialize<List<Software>>(collection.Softwares!) ?? [])
                                 {
-                                    <img id="@software.PackageIdentifier" class="icon" 
-                                        src="@RemoteAssets.GetIcon(software)" 
-                                        @onclick=@(_ => GlobalEvent.OpenSoftware(software))
-                                        fetchpriority="low" loading="lazy" 
-                                        onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
-                                    
-                                    <FluentTooltip Anchor="@software.PackageIdentifier">
-                                        @software.PackageName
-                                    </FluentTooltip>
+                                    @if(software.Pin ?? false)
+                                    {
+                                        <img id="@software.PackageIdentifier" class="icon" 
+                                            src="@RemoteAssets.GetIcon(software)" 
+                                            @onclick=@(_ => GlobalEvent.OpenSoftware(software))
+                                            fetchpriority="low" loading="lazy" 
+                                            onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+
+                                        <FluentTooltip Anchor="@software.PackageIdentifier">
+                                            @software.PackageName
+                                        </FluentTooltip>
+                                    }
                                 }
-                            }
+                            </div>
                         </div>
-                    </div>
-                </FluentCard>
+                    </FluentCard>
+                }
             }
         </div>
     }
@@ -91,13 +101,18 @@
         animation: 10s movement linear infinite;
         height: 220px;
         width: calc(50% - 6px);
-        min-width: 580px;
         background-image: 
             radial-gradient(closest-side,rgb(43, 66, 163),rgba(235,105,78,0)), 
             radial-gradient(closest-side,rgb(122, 64, 143),rgba(243,11,164,0)),
             radial-gradient(closest-side,rgb(91, 49, 160),rgba(254,234,131,0)),
             radial-gradient(closest-side,rgb(69, 143, 149),rgba(170,142,245,0)),
             radial-gradient(closest-side,rgb(59, 95, 147),rgba(248,192,147,0));
+    }
+
+    @@media only screen and (max-width: 1280px) {
+        .page .collection {
+            width: 100%;
+        }
     }
 
     @@keyframes movement {
