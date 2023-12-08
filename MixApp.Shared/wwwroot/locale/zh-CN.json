@@ -47,14 +47,17 @@
     "c.search_box.open": "打开",
 
     "c.software_card.more_info": "更多信息",
-    "p.softwares.load_more": "加载更多",
     
     "p.index.home": "主页",
     "p.index.more_info": "更多信息",
     "p.index.recommend_for_you": "为你推荐",
     "p.index.recently_updated": "最近更新",
 
+    "p.collections.discover_more": "发现更多",
+    "p.collections.back": "返回",
+
     "p.softwares.softwares": "软件",
+    "p.softwares.load_more": "加载更多",
 
     "p.library.library": "库",
     "p.library.waiting_queue": "待下载",

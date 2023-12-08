@@ -2,6 +2,8 @@
 @inherits MixApp.Shared.Pages.CollectionsBase
 @using System.Text.Json;
 
+@inject LocaleManager LM
+
 <div class="page">
     @if(SelectedCollection == null)
     {
@@ -18,14 +20,14 @@
                 @foreach(var collection in Collections)
                 {
                     <FluentCard class="collection">
-                        <div class="content">
+                        <div class="content animate__animated animate__fadeIn">
                             <div class="left">
                                 <h2>@collection.Name</h2>
                                 <p class="intro">@collection.Introduction</p>
 
                                 <FluentButton OnClick=@(_ => SelectedCollection = collection) 
                                     Appearance="Appearance.Outline">
-                                    Discover More
+                                    @LM.Scripts["p.collections.discover_more"]
                                 </FluentButton>
                             </div>
 
@@ -54,11 +56,11 @@
     }
     else
     {
-        <div class="detail">
+        <div class="detail animate__animated animate__fadeIn">
             <div class="header">
                 <FluentButton Appearance="Appearance.Outline" OnClick="@(_ => SelectedCollection = null)"
                     IconStart="@(new Icons.Regular.Size16.ArrowLeft())">
-                    Back
+                    @LM.Scripts["p.collections.back"]
                 </FluentButton>
 
                 <FluentBadge Appearance="Appearance.Accent" Height="25px" >
@@ -136,12 +138,19 @@
 
     .collection .content {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         height: 100%;
+        padding: 0 50px;
     }
 
     .collection .content > div {
         margin: auto 0;
+    }
+
+    @@media only screen and (max-width: 750px) {
+        .content .right {
+            display: none;
+        }
     }
 
     .left .intro {
