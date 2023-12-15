@@ -90,10 +90,12 @@
     "p.setting.reset_now":"Reset",
 
     "p.help.help": "Help",
-    "p.help.about": "About",
-    "p.help.feedback": "Feedback",
-
-    "p.help.feedback_page_title": "Problem feedback",
+    "p.help.feedback_title": "Problem feedback",
     "p.help.feedback_contact_placeholder": "Contact information",
-    "p.help.feedback_content_placeholder": "Provide a detailed description of the issues to be fed back"
+    "p.help.feedback_content_placeholder": "Provide a detailed description of the issues to be fed back",
+    "p.help.submit": "Submit",
+    "p.help.success": "Thanks for your feedback!",
+    "p.help.failed": "Feedback Failed",
+    "p.help.warning": "Please complete your feedback content",
+    "p.help.ok": "OK"
 }

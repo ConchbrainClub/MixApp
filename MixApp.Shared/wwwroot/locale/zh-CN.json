@@ -90,10 +90,12 @@
     "p.setting.reset_now":"立即重置",
 
     "p.help.help": "帮助",
-    "p.help.about": "关于",
-    "p.help.feedback": "反馈",
-
-    "p.help.feedback_page_title": "问题反馈",
+    "p.help.feedback_title": "问题反馈",
     "p.help.feedback_contact_placeholder": "联系方式",
-    "p.help.feedback_content_placeholder": "详细描述要反馈的问题"
+    "p.help.feedback_content_placeholder": "详细描述要反馈的问题",
+    "p.help.submit": "提交",
+    "p.help.success": "感谢您的反馈！",
+    "p.help.failed": "反馈失败",
+    "p.help.warning": "请完善反馈内容",
+    "p.help.ok": "确认"
 }
