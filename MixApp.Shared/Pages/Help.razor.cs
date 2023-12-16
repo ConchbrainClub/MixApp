@@ -1,7 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.FluentUI.AspNetCore.Components;
+using MixApp.Shared.Services;
 
 namespace MixApp.Shared.Pages
 {
@@ -19,20 +22,41 @@ namespace MixApp.Shared.Pages
     public class HelpBase : ComponentBase
     {
         [Inject]
-        public HttpClient HttpClient { get; set; } = new HttpClient();
+        HttpClient HttpClient { get; set; } = default!;
 
-        public bool SubmitLoading { get; set; } = false;
+        [Inject]
+        LocaleManager LM { get; set; } = default!;
+
+        public bool Loading { get; set; } = false;
+
+        public string? ShowWarning { get; set; } = string.Empty;
 
         public Feedback Feedback { get; set; } = new();
 
-        public void SubmitFeedback()
+        public async Task SubmitFeedback()
         {
-            if (!Validator.TryValidateObject(Feedback, new ValidationContext(Feedback), null)) return;
+            if (!Validator.TryValidateObject(Feedback, new ValidationContext(Feedback), null))
+            {
+                ShowWarning = LM.Scripts["p.help.warning"];
+                return;
+            }
 
-            SubmitLoading = true;
+            Loading = true;
+
             JsonContent content = JsonContent.Create(Feedback);
-            _ = HttpClient.PostAsync("/v1/feedback", content);
-            SubmitLoading = false;
+            HttpResponseMessage response = await HttpClient.PostAsync("/v1/feedback", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Feedback = new();
+                ShowWarning = LM.Scripts["p.help.success"];
+            }
+            else
+            {
+                ShowWarning = LM.Scripts["p.help.failed"];
+            }
+            
+            Loading = false;
         }
     }
 }
