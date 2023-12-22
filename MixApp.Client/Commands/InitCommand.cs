@@ -1,17 +1,16 @@
 using System.CommandLine;
 
-namespace delivr.Commands
+namespace MixApp.Client.Commands;
+
+internal class InitCommand : Command
 {
-    internal class InitCommand : Command
+    public InitCommand() : base("init", "Initialize")
     {
-        public InitCommand() : base("init", "Initialize")
-        {
-            this.SetHandler(Execute);
-        }
+        this.SetHandler(Execute);
+    }
 
-        private void Execute()
-        {
+    private void Execute()
+    {
 
-        }
     }
 }

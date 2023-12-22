@@ -1,4 +1,4 @@
-﻿using JSDelivrCLI.Extensions;
+﻿using MixApp.Client.Extensions;
 using PhotinoNET;
 using System.CommandLine;
 using System.Drawing;
