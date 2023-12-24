@@ -32,7 +32,7 @@ window.initHighLight = (card) => {
 
         this.addEventListener('mousemove', function (e) {
             var x = e.pageX - this.offsetLeft - light.offsetWidth / 2
-            var y = e.pageY + document.querySelector('.page').scrollTop - this.offsetTop - light.offsetHeight / 2
+            var y = e.pageY + document.querySelector('.container').scrollTop - this.offsetTop - light.offsetHeight / 2
             light.style.left = x + 'px'
             light.style.top = y + 'px'
         })
