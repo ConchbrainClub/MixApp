@@ -26,7 +26,6 @@ namespace MixApp.Shared.Pages
         public async void LoadData()
         {
             Collections = await HttpClient.GetFromJsonAsync<List<Collection>>("/v1/collection") ?? [];
-            Collections.ForEach(i => Console.WriteLine(i.Name));
             StateHasChanged();
         }
     }
