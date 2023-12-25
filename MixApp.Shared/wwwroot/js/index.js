@@ -7,7 +7,7 @@ catch (error) {
 }
 
 window.initPageSoftware = (dotnet) => {
-    let scrollBox = document.querySelector('.page')
+    let scrollBox = document.querySelector('.container')
 
     // 内存泄漏 ！！！！！！！！！
     // dispose dotnet
