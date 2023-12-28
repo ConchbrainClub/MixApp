@@ -1,0 +1,39 @@
+.page {
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-gap: 1em;
+}
+
+@media only screen and (max-width: 1400px) {
+    .content {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .content {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .content {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .content {
+        width: 100%;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+}
+
+::deep .progress {
+    margin: 20px; 
+}

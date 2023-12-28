@@ -7,7 +7,7 @@
 <PageTitle>@LM.Scripts["p.softwares.softwares"]</PageTitle>
 
 <BaseLayerLuminance>
-    <FluentStack class="page" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
+    <div class="page" >
         
         <div class="content">
             @if (Softwares.Count == 0)
@@ -26,62 +26,20 @@
             }
         </div>
 
-        @if(IsLoading)
-        {
-            if(!IsFirstRender)
+        <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
+            @if(IsLoading)
             {
-                <FluentProgressRing class="progress"></FluentProgressRing>
+                if(!IsFirstRender)
+                {
+                    <FluentProgressRing class="progress"></FluentProgressRing>
+                }
             }
-        }
-        else
-        {
-            <FluentButton class="progress" OnClick="(_ => LoadData())" Appearance="Appearance.Outline">
-                @LM.Scripts["p.softwares.load_more"]
-            </FluentButton>
-        }
-    </FluentStack>
+            else
+            {
+                <FluentButton class="progress" OnClick="(_ => LoadData())" Appearance="Appearance.Outline">
+                    @LM.Scripts["p.softwares.load_more"]
+                </FluentButton>
+            }
+        </FluentStack>
+    </div>
 </BaseLayerLuminance>
-
-<style>
-    .page {
-        height: 100%;
-        padding: 10px 20px;
-        overflow-y: scroll;
-    }
-    
-    .content {
-        display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        grid-gap: 1em;
-        width: 100%;
-    }
-
-    @@media only screen and (max-width: 1400px) {
-        .content {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
-    }
-
-    @@media only screen and (max-width: 1200px) {
-        .content {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-    }
-
-    @@media only screen and (max-width: 950px) {
-        .content {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-    }
-
-    @@media only screen and (max-width: 700px) {
-        .content {
-            width: 100%;
-            grid-template-columns: repeat(1, minmax(0, 1fr));
-        }
-    }
-
-    .progress {
-        margin: 20px; 
-    }
-</style>

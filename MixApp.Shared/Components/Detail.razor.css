@@ -1,4 +1,4 @@
-.detailSkeleton{
+.detailSkeleton {
     display: flex;
     box-sizing: border-box;
 }
@@ -8,15 +8,15 @@
     padding: 20px;
 }
 
-.firstOnLeft {
+::deep .firstOnLeft {
     margin-bottom: 12px;
 }
 
-.secondOnLeft {
+::deep .secondOnLeft {
     margin-bottom: 16px;
 }
 
-.buttonOnLeft {
+::deep .buttonOnLeft {
     margin-bottom: 16px;
 }
 
@@ -28,7 +28,7 @@
     width: 135px;
 }
 
-.detailSkeletonButtonRight  .detailSkeletonRight{
+::deep .detailSkeletonButtonRight  .detailSkeletonRight{
     margin: 5px;
 }
 
@@ -95,7 +95,7 @@
     padding: 30px;
 }
 
-.detail .head > div fluent-button+fluent-button {
+::deep .detail .head > div fluent-button+fluent-button {
     margin-left: 10px;
 }
 
@@ -125,11 +125,11 @@
     margin-bottom: 0;
 }
 
-.detail .info fluent-text-field {
+::deep .detail .info fluent-text-field {
     width: 300px;
 }
 
-.detail .info fluent-data-grid {
+::deep .detail .info fluent-data-grid {
     max-height: 400px;
     overflow-y: scroll;
 }
