@@ -1,61 +1,16 @@
-<FluentCard class="collectionSkeleton" Shimmer="true">
-    <div class="left">
-        <div>
-            <FluentSkeleton class="collectionSkeletonTitle" Width="205px" Height="36px" Shape="SkeletonShape.Rect" Shimmer="true"></FluentSkeleton>
-            <FluentSkeleton class="collectionSkeletonIntro" Width="180px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-            <FluentSkeleton class="collectionSkeletonButton" Width="90px" Height="40px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-         </div>
-     </div>
-    <div class="right">
-        <FluentSkeleton class="collectionSkeletonFirstSign" Width="50px" Height="50px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-        <FluentSkeleton class="collectionSkeletonSecondSign" Width="50px" Height="50px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-        <FluentSkeleton class="collectionSkeletonThirdSign" Width="50px" Height="50px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
-    </div>
-</FluentCard>
-
-<style>
-    .collectionSkeleton{
-        margin: 0;
-        height: 220px;
-        width: calc(50% - 6px);
-        padding: 21px;
-        display: flex;
-        display: flex;
-        justify-content: space-around;
-    }
-
-    @@media only screen and (max-width: 1280px) {
-        .collectionSkeleton {
-            width: 100%;
-        }
-    }
-
-    .left{
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .collectionSkeletonTitle{
-        width: 205px;
-        height: 36px;
-        margin-bottom: 12px;
-    }
-
-    .collectionSkeletonIntro{
-        width: 205px;
-        height: 20px;
-        margin-bottom: 12px;
-    }
-    
-    .right{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .collectionSkeletonFirstSign, .collectionSkeletonSecondSign, .collectionSkeletonThirdSign{
-        margin: 5px;
-    }
-</style>
+<div class="skeleton">
+    <FluentCard Shimmer="true" class="collectionSkeleton">
+        <div class="left">
+            <div>
+                <FluentSkeleton class="collectionSkeletonTitle" Width="205px" Height="36px" Shape="SkeletonShape.Rect" Shimmer="true"></FluentSkeleton>
+                <FluentSkeleton class="collectionSkeletonIntro" Width="180px" Height="20px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+                <FluentSkeleton class="collectionSkeletonButton" Width="90px" Height="40px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+            </div>
+        </div>
+        <div class="right">
+            <FluentSkeleton class="collectionSkeletonFirstSign" Width="50px" Height="50px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+            <FluentSkeleton class="collectionSkeletonSecondSign" Width="50px" Height="50px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+            <FluentSkeleton class="collectionSkeletonThirdSign" Width="50px" Height="50px" Shape="SkeletonShape.Rect"  Shimmer="true"></FluentSkeleton>
+        </div>
+    </FluentCard>
+</div>

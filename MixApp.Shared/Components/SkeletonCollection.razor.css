@@ -1,0 +1,47 @@
+.skeleton {
+    width: calc(50% - 6px);
+}
+
+::deep .collectionSkeleton {
+    height: 220px;
+    display: flex;
+    justify-content: space-around;
+    padding: 21px;
+}
+
+@media only screen and (max-width: 1280px) {
+    ::deep .collectionSkeleton {
+        width: 100%;
+    }
+}
+
+::deep .left{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+::deep .collectionSkeletonTitle{
+    width: 205px;
+    height: 36px;
+    margin-bottom: 12px;
+}
+
+::deep .collectionSkeletonIntro{
+    width: 205px;
+    height: 20px;
+    margin-bottom: 12px;
+}
+
+::deep .right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+::deep .collectionSkeletonFirstSign, 
+::deep .collectionSkeletonSecondSign, 
+::deep .collectionSkeletonThirdSign {
+    margin: 5px;
+}

@@ -1,0 +1,48 @@
+::deep .skeleton {
+    height: 300px;
+    position: relative;
+    padding: 20px 20px 60px 20px;
+    box-sizing: border-box;
+}
+
+::deep .packageSkeleton{
+    border-radius: 7px;
+    margin-bottom: 16px;
+}
+
+::deep .titleSkeleton{
+    float: left;
+    margin: 0.75rem 0;
+}
+
+::deep .iconSkeleton{
+    float: right;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+::deep .firmSkeleton{
+    margin-bottom: 10px;
+}
+
+::deep .introSkeleton{
+    margin: 5px 0 6px 0;
+}
+
+::deep .buttonSkeleton{
+    float: left;
+    position: absolute;
+    bottom: 30px;
+}
+
+::deep .moreSkeleton{
+    left: 105px;
+}
+
+::deep .starSkeleton{
+    left: 20px;
+}
+
+::deepBox{
+    width: 5000px;
+}

@@ -1,0 +1,33 @@
+.layout {
+    height: 100vh;
+}
+
+.main {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    text-decoration: none;
+}
+
+.container {
+    height: calc(100vh - 60px);
+    width: calc(100% - 70px);
+    text-align: left;
+    overflow-y: scroll;
+}
+
+@media only screen and (max-width: 950px) {
+    .main {
+        width: 100%;
+        margin: 0;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .container .page {
+        padding: 0;
+    }
+}

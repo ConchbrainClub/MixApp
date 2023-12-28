@@ -2,10 +2,10 @@
 
 @inject LocaleManager LM
 
-<div class="mixHeader">
-    <div class="mix">
-        <img src="/favicon.png" class="mixIcon"/>
-        <span class="mixInfo">Mix Store</span>
+<div class="header">
+    <div class="left">
+        <img src="/favicon.png" class="icon"/>
+        <span class="info">Mix Store</span>
     </div>
     <FluentSearch @bind-Value="@Keyword" 
         @oninput="@(e => Keyword = e.Value?.ToString())"
@@ -39,67 +39,3 @@
         </div>
     }
 </div>
-
-<style>
-    .mixHeader {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        background-color: var(--neutral-fill-layer-rest);
-        position: relative;
-        height: 60px;
-    }
-
-    .mix{
-        position: absolute;
-        left: 25px;
-        top: 15px;
-    }
-
-    .mix .mixIcon{
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .mix .mixInfo{
-        padding-left: 10px;
-        font-size: 15px;
-        font-weight: bold;
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .mixHeader .search {
-        width: 50%; 
-        margin: 15px;
-        margin-right: 10px;
-    }
-
-    .mixHeader .searchContent {
-        position: absolute;
-        margin: 60px;
-        overflow-y: scroll;
-        text-align: left;
-        max-height: calc(100vh - 200px);
-        z-index: 10;
-        box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
-        background-color: var(--fill-color);
-        border-radius: 5px;
-    }
-
-    .mixHeader ::-webkit-scrollbar {
-        display: none;
-    }
-
-    .mixHeader .searchResult {
-        padding: 20px;
-    }
-
-    @@media only screen and (max-width: 950px) {
-        .mixHeader .search {
-            display: none;
-        }
-    }
-</style>
