@@ -22,7 +22,7 @@ namespace MixApp.Shared.Shared
 
         public Software? Software { get; set; }
 
-        public string Theme { get; set; } = "#333333";
+        public string Theme { get; set; } = "#272727";
 
         public string Color { get; set; } = "#82ddfd";
 
@@ -50,7 +50,7 @@ namespace MixApp.Shared.Shared
             if (string.IsNullOrEmpty(theme))
             {
                 bool isDark = await JS.InvokeAsync<bool>("systemIsDarkTheme");
-                Theme = isDark ? "#333333" : "#f5f5f5";
+                Theme = isDark ? "#272727" : "#f5f5f5";
             }
             else
             {
