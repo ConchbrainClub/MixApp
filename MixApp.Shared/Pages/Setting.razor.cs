@@ -125,8 +125,8 @@ namespace MixApp.Shared.Pages
             ThemeOptions =
             [
                 new Option<string> { Text = "p.setting.theme_auto", Value = "" },
-                new Option<string> { Text = "p.setting.light", Value = "#f5f5f5" },
-                new Option<string> { Text = "p.setting.dark", Value = "#333333" }
+                new Option<string> { Text = "p.setting.dark", Value = "#272727" },
+                new Option<string> { Text = "p.setting.light", Value = "#f5f5f5" }
             ];
 
             string theme = await LocalStorage.GetItemAsStringAsync("theme").AsTask();
