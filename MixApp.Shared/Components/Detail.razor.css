@@ -76,7 +76,7 @@
 
 .detail .cover {
     object-fit: cover;
-    height: 50vh;
+    height: 45vh;
     width: 100%;
     border-radius: 5px;
 }
@@ -84,7 +84,7 @@
 .detail .mask {
     position: absolute;
     top: 0;
-    height: 50vh;
+    height: 45vh;
     width: 100%;
     background: linear-gradient(to top, var(--fill-color), rgba(255, 255, 255, 0));
 }

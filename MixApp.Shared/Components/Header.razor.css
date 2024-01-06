@@ -55,7 +55,7 @@
 }
 
 @media only screen and (max-width: 950px) {
-    .header .search {
+    ::deep .search {
         display: none;
     }
 }
