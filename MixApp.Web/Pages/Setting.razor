@@ -1,0 +1,89 @@
+@page "/Setting"
+@inherits MixApp.Web.Pages.SettingBase
+
+@inject LocaleManager LM
+@inject IConfiguration Configuration
+
+<PageTitle>@LM.Scripts["p.setting.setting"]</PageTitle>
+
+<div class="page">
+    <h1>@LM.Scripts["p.setting.setting"]</h1>
+
+    <FluentAccordion>
+        <FluentAccordionItem Heading=@LM.Scripts["p.setting.interface"] Expanded="true">
+            <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.Globe())" Color=Color.Neutral />
+
+            <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                <p class="title">@LM.Scripts["p.setting.locale"]</p>
+                <FluentSpacer />
+
+                <FluentSelect TOption="Option<string>" Items="LocaleOptions" @bind-SelectedOption="SelectedLocale"
+                    OptionText="@(i => LM.Scripts[i.Text!])" />
+            </FluentStack>
+
+            <FluentDivider />
+
+            <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                <p class="title">@LM.Scripts["p.setting.theme"]</p>
+                <FluentSpacer />
+
+                <FluentSelect TOption="Option<string>" Items="ThemeOptions" @bind-SelectedOption="SelectedTheme"
+                    OptionText="@(i => LM.Scripts[i.Text!])" />
+            </FluentStack>
+
+            <FluentDivider />
+
+            <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                <p class="title">@LM.Scripts["p.setting.color"]</p>
+                <FluentSpacer />
+
+                <input type="color"  @bind-value="@SelectedColor" />
+            </FluentStack>
+        </FluentAccordionItem>
+
+        <FluentAccordionItem Heading=@LM.Scripts["p.setting.download"] Expanded="true">
+            <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.ArrowCircleDown())" Color="@Color.Neutral" />
+
+            <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                <p class="title">@LM.Scripts["p.setting.enable_download_proxy"]</p>
+                <FluentSpacer />
+
+                <FluentSwitch @bind-Value="EnableProxy" />
+            </FluentStack>
+
+            @if(EnableProxy)
+            {
+                <FluentDivider />
+
+                <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                    <p class="title">@LM.Scripts["p.setting.download_proxy_server"]</p>
+                    <FluentSpacer />
+
+                    <FluentButton 
+                        IconEnd="@(new Icons.Regular.Size20.ArrowReset())"
+                        Appearance="Appearance.Stealth" 
+                        OnClick="(_ => DownloadProxy = string.Empty)" >
+                    </FluentButton>
+
+                    <FluentTextField 
+                        style="width: 250px;" 
+                        Placeholder="@(Configuration.GetValue<string>("DownloadProxy") ?? string.Empty)"
+                        @bind-Value="DownloadProxy" >
+                    </FluentTextField>
+                </FluentStack>
+            }
+        </FluentAccordionItem>
+
+        <FluentAccordionItem Heading=@LM.Scripts["p.setting.reset_setting"] Expanded="true">
+            <FluentIcon Slot="start" Value="@(new Icons.Regular.Size24.ArrowReset())" Color="@Color.Neutral" />
+
+            <FluentStack class="content" VerticalAlignment="VerticalAlignment.Center">
+                <p class="title">@LM.Scripts["p.setting.reset_to_default_setting"]</p>
+                <FluentSpacer />
+
+                <FluentButton Appearance="Appearance.Accent" OnClick="(_ => CleanUpNow())" >@LM.Scripts["p.setting.reset_now"]</FluentButton>
+            </FluentStack>
+        </FluentAccordionItem>
+    </FluentAccordion>
+
+</div>

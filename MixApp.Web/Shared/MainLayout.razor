@@ -1,0 +1,27 @@
+﻿@inherits MixApp.Web.Shared.MainLayoutBase
+
+<FluentDesignSystemProvider NeutralBaseColor="#1a1a1a" 
+    FillColor="@Theme" 
+    AccentBaseColor="@Color" 
+    BaseLayerLuminance="0">
+    
+    <div class="layout animate__animated animate__fadeIn">
+        <Header />
+        
+        <div class="main">
+            <SideBar />
+
+            <div class="container">
+                <FluentStack Orientation="Orientation.Vertical"
+                    HorizontalAlignment="HorizontalAlignment.Center">
+                    @Body
+                </FluentStack>
+            </div>
+        </div>
+
+        <Detail Software=@Software OnDismiss="@(args => Software = null)" />
+        <RequestPermission />
+    </div>
+
+    <FluentTooltipProvider />
+</FluentDesignSystemProvider>

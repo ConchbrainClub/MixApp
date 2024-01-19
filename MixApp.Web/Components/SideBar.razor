@@ -1,0 +1,50 @@
+@inherits MixApp.Web.Components.SideBarBase
+
+@inject LocaleManager LM
+
+<nav class="sidebar">
+    <div class="top">
+        @foreach (RouteInfo info in Top)
+        {
+            <NavLink Href="@info.Href">
+                <div @onclick=@(_ => CurrentHref = info.Href) class=@(CurrentHref == info.Href ? "active top-sidebar":"top-sidebar")>
+                    @if (CurrentHref == info.Href)
+                    {
+                        <FluentIcon Value="@info.IconFilled" class="animate__animated animate__rubberBand" />
+                    }
+                    else
+                    {
+                        <FluentIcon Value="@info.IconRegular" />
+                    }
+                    <span>@LM.Scripts[info.Name]</span>
+                    
+                    @if (info.Href == "/Library" && @GlobalEvent.DownloadQueue.Count > 0)
+                    {
+                        <div id="counter-into" >
+                            @GlobalEvent.DownloadQueue.Count
+                        </div>
+                    }
+                </div>
+            </NavLink>
+        }
+    </div>
+
+    <div class="bottom">
+        @foreach (RouteInfo info in Bottom)
+        {
+            <NavLink Href="@info.Href">
+                <div @onclick=@(_ => CurrentHref = info.Href) class=@(CurrentHref == info.Href ? "active":string.Empty)>
+                    @if (CurrentHref == info.Href)
+                    {
+                        <FluentIcon Value="@info.IconFilled" class="animate__animated animate__rubberBand" />
+                    }
+                    else
+                    {
+                        <FluentIcon Value="@info.IconRegular" />
+                    }
+                    <span>@LM.Scripts[info.Name]</span>
+                </div>
+            </NavLink>
+        }
+    </div>
+</nav>

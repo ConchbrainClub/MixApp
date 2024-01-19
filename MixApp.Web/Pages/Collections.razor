@@ -1,0 +1,81 @@
+@page "/Collections"
+@inherits MixApp.Web.Pages.CollectionsBase
+@using System.Text.Json;
+
+@inject LocaleManager LM
+
+<div class="page">
+    @if(SelectedCollection == null)
+    {
+        <div class="group">
+             @if (Collections.Count == 0)
+            {
+                for (int index = 0; index < 4; index++)
+                {
+                    <SkeletonCollection />
+                }
+            }
+            else
+            {
+                @foreach(var collection in Collections)
+                {
+                    <FluentCard class="collection">
+                        <div class="content animate__animated animate__fadeIn">
+                            <div class="left">
+                                <h2>@collection.Name</h2>
+                                <p class="intro">@collection.Introduction</p>
+
+                                <FluentButton OnClick=@(_ => SelectedCollection = collection) 
+                                    Appearance="Appearance.Outline">
+                                    @LM.Scripts["p.collections.discover_more"]
+                                </FluentButton>
+                            </div>
+
+                            <div class="right">
+                                @foreach(Software software in JsonSerializer.Deserialize<List<Software>>(collection.Softwares!) ?? [])
+                                {
+                                    @if(software.Pin ?? false)
+                                    {
+                                        <img id="@software.PackageIdentifier" class="icon" 
+                                            src="@RemoteAssets.GetIcon(software)" 
+                                            @onclick=@(_ => GlobalEvent.OpenSoftware(software))
+                                            fetchpriority="low" loading="lazy" 
+                                            onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'">
+
+                                        <FluentTooltip Anchor="@software.PackageIdentifier">
+                                            @software.PackageName
+                                        </FluentTooltip>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </FluentCard>
+                }
+            }
+        </div>
+    }
+    else
+    {
+        <div class="detail animate__animated animate__fadeIn">
+            <div class="header">
+                <FluentButton Appearance="Appearance.Outline" OnClick="@(_ => SelectedCollection = null)"
+                    IconStart="@(new Icons.Regular.Size16.ArrowLeft())">
+                    @LM.Scripts["p.collections.back"]
+                </FluentButton>
+
+                <FluentBadge Appearance="Appearance.Accent" Height="25px" >
+                    <strong>
+                        &nbsp;&nbsp; @SelectedCollection?.Name &nbsp;&nbsp;
+                    </strong>
+                </FluentBadge>
+            </div>
+
+            <div class="content">
+                @foreach(var software in JsonSerializer.Deserialize<List<Software>>(SelectedCollection?.Softwares!) ?? [])
+                {
+                    <SoftwareCard Software="software" />
+                }
+            </div>
+        </div>
+    }
+</div>

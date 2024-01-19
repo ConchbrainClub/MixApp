@@ -1,0 +1,94 @@
+﻿@page "/"
+@inherits MixApp.Web.Pages.IndexBase
+
+@inject LocaleManager LM
+@inject RemoteAssets RemoteAssets
+
+<PageTitle>@LM.Scripts["p.index.home"]</PageTitle>
+
+<BaseLayerLuminance>
+    <div class="page">
+
+        <FluentHorizontalScroll class="banner animate__animated animate__fadeInRight" @ref="HorizontalScroll"
+            Speed="2000" Easing=ScrollEasing.EaseInOut>
+            @if (TrendingSoftwares.Count == 0)
+            {
+                for (int index = 0; index < 2; index++)
+                {
+                    <SkeletonBanner />
+                }
+            }
+            else
+            {
+                @foreach (Software software in TrendingSoftwares)
+                {
+                    <FluentCard Appearance="Appearance.Accent" @onclick="(_ => ScrollToFirst(software))">
+                        <div class="bannerDesc">
+                            <img src="@(RemoteAssets.GetIcon(software))" />
+                            <h2>@software.PackageName</h2>
+                            <p>
+                                @if (software.ShortDescription?.Length > 150)
+                                {
+                                    @(software.ShortDescription?.Substring(0, 150) + "...")
+                                }
+                                else
+                                {
+                                    @software.ShortDescription
+                                }
+                            </p>
+                            <FluentButton Appearance="Appearance.Outline" @onclick=@(_ => GlobalEvent.OpenSoftware(software))>
+                                @LM.Scripts["p.index.more_info"]
+                            </FluentButton>
+                        </div>
+                        <img src=@(RemoteAssets.GetAssets(software.Cover)) class="cover">
+                        <div class="mask" />
+                    </FluentCard>
+                }
+            }
+        </FluentHorizontalScroll>
+
+        <div class="recommended">
+            <p class="text">
+                @LM.Scripts["p.index.recommend_for_you"] &gt;
+            </p>
+        </div>
+
+        <div class="content">
+            @if (RandomSoftwares.Count == 0)
+            {
+                for (int index = 0; index < 5; index++)
+                {
+                    <SkeletonCard />
+                }
+            }
+            else
+            {
+                @foreach (Software software in RandomSoftwares)
+                {
+                    <SoftwareCard Software="software" />
+                }
+            }
+        </div>
+
+        <div class="recommended">
+            <p class="text">
+                @LM.Scripts["p.index.recently_updated"] &gt;
+            </p>
+        </div>
+
+        <div class="content">
+            @foreach (Software software in RecentlyUpdatedSoftwares)
+            {
+                <SoftwareCard Software="software" />
+            }
+        </div>
+
+        <FluentStack class="footer" Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center">
+            <p>
+                <span>© 2024 - Conchbrain Club</span>
+                &nbsp;<strong><a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备18041216号-5</a></strong>
+            </p>
+        </FluentStack>
+
+    </div>
+</BaseLayerLuminance>
