@@ -20,8 +20,8 @@ public class RemoteAssets(IConfiguration configuration)
         return $"https://icon.horse/icon/{uri.Host}";
     }
 
-    public string GetAssets(string? path)
+    public string GetAssets(string? PackageIdentifier)
     {
-        return baseAddress + path ?? string.Empty;
+        return baseAddress + $"/assets/{PackageIdentifier ?? string.Empty}.png";
     }
 }
