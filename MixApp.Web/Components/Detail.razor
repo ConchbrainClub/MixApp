@@ -16,7 +16,7 @@
         @onclick="(_ => { OnDismiss.Invoke(new DialogEventArgs()); Software = null; })"/>
 
     <div class="detail">
-        <img src="@(RemoteAssets.GetAssets(Software?.Cover))"
+        <img src="@(RemoteAssets.GetAssets(Software?.PackageIdentifier))"
             class="cover animate__animated animate__fadeInDown"
             fetchpriority="low"
             loading="lazy"
