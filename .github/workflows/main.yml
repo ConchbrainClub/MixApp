@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Check out Git repository
+      uses: actions/checkout@v1
 
-    - uses: actions/checkout@master
     - uses: manyuanrong/setup-ossutil@v2.0
       with:
         endpoint: "oss-cn-shenzhen.aliyuncs.com"
