@@ -45,7 +45,7 @@ namespace MixApp.Web.Shared
 
         private async Task InitTheme()
         {
-            string theme = await LocalStorage.GetItemAsStringAsync("theme");
+            string? theme = await LocalStorage.GetItemAsStringAsync("theme");
 
             if (string.IsNullOrEmpty(theme))
             {
@@ -57,7 +57,7 @@ namespace MixApp.Web.Shared
                 Theme = theme;
             }
 
-            string color = await LocalStorage.GetItemAsStringAsync("color");
+            string? color = await LocalStorage.GetItemAsStringAsync("color");
 
             if (!string.IsNullOrEmpty(color))
             {
