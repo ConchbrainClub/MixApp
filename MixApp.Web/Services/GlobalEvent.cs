@@ -228,7 +228,7 @@ namespace MixApp.Web.Services
             string url = DownloadProxy + installer?.InstallerUrl;
 
             // Check if user set the custome download proxy
-            string customeProxy = await LocalStorage.GetItemAsStringAsync("download_proxy").AsTask();
+            string? customeProxy = await LocalStorage.GetItemAsStringAsync("download_proxy").AsTask();
             if (!string.IsNullOrEmpty(customeProxy))
             {
                 url = customeProxy + installer?.InstallerUrl;

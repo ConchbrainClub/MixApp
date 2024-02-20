@@ -27,8 +27,11 @@ namespace MixApp.Web.Pages
             set
             {
                 selectedLocale = value;
-                LocalStorage.SetItemAsStringAsync("locale", value?.Value).AsTask();
-                JSRunTime!.InvokeVoidAsync("reload").AsTask();
+                Task.Run(async () =>
+                {
+                    await LocalStorage.SetItemAsStringAsync("locale", value?.Value ?? string.Empty);
+                    _ = JSRunTime!.InvokeVoidAsync("reload").AsTask();
+                });
             }
         }
 
@@ -46,7 +49,7 @@ namespace MixApp.Web.Pages
                 selectedTheme = value;
                 Task.Run(async () =>
                 {
-                    await LocalStorage.SetItemAsStringAsync("theme", value?.Value);
+                    await LocalStorage.SetItemAsStringAsync("theme", value?.Value ?? string.Empty);
                     GlobalEvent.ChangeTheme();
                 });
             }
@@ -66,7 +69,7 @@ namespace MixApp.Web.Pages
                 selectedColor = value;
                 Task.Run(async () => 
                 {
-                    await LocalStorage.SetItemAsStringAsync("color", value);
+                    await LocalStorage.SetItemAsStringAsync("color", value ?? string.Empty);
                     GlobalEvent.ChangeTheme();
                 });
             }
@@ -101,7 +104,7 @@ namespace MixApp.Web.Pages
                 // =============================================
                 // Check Download proxy is correct 
 
-                LocalStorage.SetItemAsStringAsync("download_proxy", value).AsTask();
+                LocalStorage.SetItemAsStringAsync("download_proxy", value ?? string.Empty).AsTask();
                 downloadProxy = value;
             }
         }
@@ -117,7 +120,7 @@ namespace MixApp.Web.Pages
                 new Option<string> { Text = "p.setting.en_us", Value = "en-US" }
             ];
 
-            string locale = await LocalStorage.GetItemAsStringAsync("locale").AsTask();
+            string? locale = await LocalStorage.GetItemAsStringAsync("locale").AsTask();
             selectedLocale = LocaleOptions.SingleOrDefault(i => i.Value == locale);
 
             // Init theme options
@@ -129,14 +132,14 @@ namespace MixApp.Web.Pages
                 new Option<string> { Text = "p.setting.light", Value = "#f5f5f5" }
             ];
 
-            string theme = await LocalStorage.GetItemAsStringAsync("theme").AsTask();
+            string? theme = await LocalStorage.GetItemAsStringAsync("theme").AsTask();
             
             selectedTheme = ThemeOptions.SingleOrDefault(i => i.Value == theme)
                 ?? ThemeOptions.Single(i => i.Text == "p.setting.theme_auto");
 
             // Init base color
             
-            string color = await LocalStorage.GetItemAsStringAsync("color").AsTask();
+            string? color = await LocalStorage.GetItemAsStringAsync("color").AsTask();
 
             if (string.IsNullOrEmpty(color))
             {
