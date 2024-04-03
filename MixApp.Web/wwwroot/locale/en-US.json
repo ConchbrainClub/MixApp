@@ -29,6 +29,7 @@
     "c.request_permission.better_experience": "Get a better user experience",
     "c.request_permission.recommended_to_enable": "<i>MixStore recommends that you enable the following permissions</i>",
     "c.request_permission.allow_notification": "Allow <u><strong>notifications</strong></u> permissions to remind you of the download status of the software",
+    "c.request_permission.enable_proxy_server": "<i><strong>Enable download proxy</i></strong> <br/> After closing, the <u><strong>local network</u></strong> will be used for downloading. You can modify it again in the <u><strong>setting</u></strong>.",
     "c.request_permission.allow": "Allow",
     "c.request_permission.close": "Don't remind me again",
 

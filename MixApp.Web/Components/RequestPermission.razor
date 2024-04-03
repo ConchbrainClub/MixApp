@@ -12,6 +12,11 @@
     <FluentDialogBody>
         <p>@(new MarkupString(LM.Scripts["c.request_permission.recommended_to_enable"]))</p>
         <p>@(new MarkupString(LM.Scripts["c.request_permission.allow_notification"]))</p>
+        <p>
+            <FluentCheckbox @bind-Value=EnableProxy >
+                @(new MarkupString(LM.Scripts["c.request_permission.enable_proxy_server"]))
+            </FluentCheckbox>
+        </p>
     </FluentDialogBody>
 
     <div class="dialogFooter">

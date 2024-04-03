@@ -25,6 +25,25 @@ namespace MixApp.Web.Components
             }
         }
 
+        private bool enableProxy;
+
+        public bool EnableProxy
+        {
+            get => enableProxy;
+            set
+            {
+                if (value)
+                {
+                    LocalStorage.RemoveItemAsync("disable_proxy").AsTask();
+                }
+                else
+                {
+                    LocalStorage.SetItemAsStringAsync("disable_proxy", "true").AsTask();
+                }
+                enableProxy = value;
+            }
+        }
+
         protected async override Task OnInitializedAsync()
         {
             if (string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("NotificationPermissionDialog")))
@@ -33,6 +52,8 @@ namespace MixApp.Web.Components
                 if (!string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("NotificationPermission"))) return;
                 ShowDialog = true;
             }
+
+            enableProxy = string.IsNullOrEmpty(await LocalStorage.GetItemAsStringAsync("disable_proxy").AsTask());
         }
 
         public async void NoLongerShowDialog()
