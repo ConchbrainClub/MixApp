@@ -29,6 +29,7 @@
     "c.request_permission.better_experience": "获得更好的使用体验",
     "c.request_permission.recommended_to_enable": "<i>MixStore 推荐您开启以下权限</i>",
     "c.request_permission.allow_notification": "允许 <u><strong>通知</strong></u> 权限来提醒您软件的下载状态",
+    "c.request_permission.enable_proxy_server": "<i><strong>启用下载代理</i></strong> <br/>关闭后将使用 <u><strong>本地网络</strong></u> 进行下载，您可以在 <u><strong>设置</strong></u> 中重新修改",
     "c.request_permission.allow": "允许",
     "c.request_permission.close": "不再提醒",
 
