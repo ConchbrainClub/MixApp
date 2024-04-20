@@ -17,8 +17,8 @@
 
 ::deep .banner fluent-card {
     margin-right: 10px;
-    height: 550px;
-    width: 950px;
+    height: 52vh;
+    width: 900px;
     position: relative;
 }
 
@@ -30,7 +30,7 @@
 }
 
 ::deep .banner .cover {
-    height: 100%;
+    width: 100%;
     transition: all .2s ease-out;
 }
 
