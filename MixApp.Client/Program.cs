@@ -1,5 +1,5 @@
 ﻿using MixApp.Client.Extensions;
-using PhotinoNET;
+using Photino.NET;
 using System.CommandLine;
 using System.Drawing;
 
