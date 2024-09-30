@@ -16,7 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.8" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics" Version="8.0.0" />
     <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.10.0" />
-    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.10.0" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.10.1" />
   </ItemGroup>
 
   <ItemGroup>
