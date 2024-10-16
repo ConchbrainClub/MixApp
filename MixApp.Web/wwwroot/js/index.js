@@ -125,30 +125,30 @@ window.reload = () => {
     location.reload()
 }
 
-async function init() {
-    let registration = await navigator.serviceWorker.register('service-worker.js')
+// async function init() {
+//     let registration = await navigator.serviceWorker.register('service-worker.js')
 
-    registration.onupdatefound = () => {
-        let installingWorker = registration.installing
+//     registration.onupdatefound = () => {
+//         let installingWorker = registration.installing
 
-        registration.installing.onstatechange = () => {
-            if (installingWorker.state != 'installed') return
+//         registration.installing.onstatechange = () => {
+//             if (installingWorker.state != 'installed') return
 
-            if (!localStorage.getItem('isInstalled')) {
-                console.log('first install')
-                localStorage.setItem('isInstalled', 'true')
-                return
-            }
+//             if (!localStorage.getItem('isInstalled')) {
+//                 console.log('first install')
+//                 localStorage.setItem('isInstalled', 'true')
+//                 return
+//             }
 
-            let updateReload = document.querySelector('#update-reload')
-            updateReload.style.display = 'flex'
+//             let updateReload = document.querySelector('#update-reload')
+//             updateReload.style.display = 'flex'
 
-            document.querySelector('#upgrade').onclick = () => {
-                registration.waiting.postMessage('SKIP_WAITING')
-                setTimeout(window.reload, 1000)
-            }
-        }
-    }
-}
+//             document.querySelector('#upgrade').onclick = () => {
+//                 registration.waiting.postMessage('SKIP_WAITING')
+//                 setTimeout(window.reload, 1000)
+//             }
+//         }
+//     }
+// }
 
-init()
+// init()

@@ -17,7 +17,7 @@ public class RemoteAssets(IConfiguration configuration)
     public static string GetIcon(string packageUrl)
     {
         Uri uri = new(packageUrl ?? "https://www.conchbrain.club");
-        return $"https://icon.horse/icon/{uri.Host}";
+        return $"https://cors.conchbrain.club?https://icon.horse/icon/{uri.Host}";
     }
 
     public string GetAssets(string? PackageIdentifier)

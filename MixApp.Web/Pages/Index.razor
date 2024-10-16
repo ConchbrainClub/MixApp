@@ -40,7 +40,11 @@
                                 @LM.Scripts["p.index.more_info"]
                             </FluentButton>
                         </div>
-                        <img src=@(RemoteAssets.GetAssets(software.PackageIdentifier)) class="cover">
+
+                        <img src=@(RemoteAssets.GetAssets(software.PackageIdentifier)) 
+                            class="cover" 
+                            onerror="javascript:this.src='https://www.conchbrain.club/images/notfound.png'" />
+
                         <div class="mask" />
                     </FluentCard>
                 }
