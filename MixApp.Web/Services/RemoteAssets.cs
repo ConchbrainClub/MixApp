@@ -22,6 +22,6 @@ public class RemoteAssets(IConfiguration configuration)
 
     public string GetAssets(string? PackageIdentifier)
     {
-        return baseAddress + $"/assets/{PackageIdentifier ?? string.Empty}.png";
+        return baseAddress + $"/{PackageIdentifier ?? string.Empty}.png";
     }
 }
