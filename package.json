@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@lottiefiles/lottie-player": "^2.0.2",
+    "@lottiefiles/lottie-player": "^2.0.4",
     "animate.css": "^4.1.1"
   }
 }
