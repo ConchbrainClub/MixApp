@@ -23,4 +23,4 @@ jobs:
       run: bash ./.build.sh
 
     - name: upload to oss
-      run: ossutil cp -rf ./MixApp.Web/bin/Release/net8.0/publish/wwwroot oss://mixstore
+      run: ossutil cp -rf ./MixApp.Web/bin/Release/net9.0/publish/wwwroot oss://mixstore

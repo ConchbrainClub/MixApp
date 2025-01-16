@@ -6,40 +6,38 @@
 
 <PageTitle>@LM.Scripts["p.softwares.softwares"]</PageTitle>
 
-<BaseLayerLuminance>
-    <div class="page" >
-        
-        <div class="content">
-            @if (Softwares.Count == 0)
+<div class="page" >
+    
+    <div class="content">
+        @if (Softwares.Count == 0)
+        {
+            for (int index = 0; index < 10; index++)
             {
-                for (int index = 0; index < 10; index++)
-                {
-                    <SkeletonCard />
-                }
+                <SkeletonCard />
             }
-            else
+        }
+        else
+        {
+            @foreach (Software software in Softwares)
             {
-                @foreach (Software software in Softwares)
-                {
-                    <SoftwareCard Software="software" />
-                }
+                <SoftwareCard Software="software" />
             }
-        </div>
-
-        <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
-            @if(IsLoading)
-            {
-                if(!IsFirstRender)
-                {
-                    <FluentProgressRing class="progress"></FluentProgressRing>
-                }
-            }
-            else
-            {
-                <FluentButton class="progress" OnClick="(_ => LoadData())" Appearance="Appearance.Outline">
-                    @LM.Scripts["p.softwares.load_more"]
-                </FluentButton>
-            }
-        </FluentStack>
+        }
     </div>
-</BaseLayerLuminance>
+
+    <FluentStack Orientation="Orientation.Vertical" HorizontalAlignment="HorizontalAlignment.Center" >
+        @if(IsLoading)
+        {
+            if(!IsFirstRender)
+            {
+                <FluentProgressRing class="progress"></FluentProgressRing>
+            }
+        }
+        else
+        {
+            <FluentButton class="progress" OnClick="(_ => LoadData())" Appearance="Appearance.Outline">
+                @LM.Scripts["p.softwares.load_more"]
+            </FluentButton>
+        }
+    </FluentStack>
+</div>

@@ -3,40 +3,38 @@
 @inject LocaleManager LM
 @inject GlobalEvent GlobalEvent
 
-<BaseLayerLuminance>
-    <div class="card" @ref="cardReference">
-        <FluentCard Width="100%" BackReference="@context" class="animate__animated animate__fadeIn">
-            <div>
-                <p>@Software.PackageIdentifier</p>
-                <FluentDivider></FluentDivider>
-                
-                <img class="icon" 
-                    src=@(RemoteAssets.GetIcon(Software)) 
-                    fetchpriority="low"
-                    loading="lazy"
-                    onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" />
+<div class="card" @ref="cardReference">
+    <FluentCard Width="100%" class="animate__animated animate__fadeIn">
+        <div>
+            <p>@Software.PackageIdentifier</p>
+            <FluentDivider></FluentDivider>
+            
+            <img class="icon" 
+                src=@(RemoteAssets.GetIcon(Software)) 
+                fetchpriority="low"
+                loading="lazy"
+                onerror="javascript:this.src='https://www.conchbrain.club/favicon.ico'" />
 
-                <h3 class="title">@Software.PackageName</h3>
-                <FluentBadge Appearance="Appearance.Neutral">@Software.Publisher</FluentBadge>
-                <p class="desc">@Software.ShortDescription</p>
-            </div>
+            <h3 class="title">@Software.PackageName</h3>
+            <FluentBadge Appearance="Appearance.Neutral">@Software.Publisher</FluentBadge>
+            <p class="desc">@Software.ShortDescription</p>
+        </div>
 
-            <div class="action">
-                <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(Software)) Appearance="Appearance.Accent">
-                    @LM.Scripts["c.software_card.more_info"]
-                </FluentButton>
+        <div class="action">
+            <FluentButton @onclick=@(_ => GlobalEvent.OpenSoftware(Software)) Appearance="Appearance.Accent">
+                @LM.Scripts["c.software_card.more_info"]
+            </FluentButton>
 
-                @if(GlobalEvent.WaitQueue.FindIndex(i => Software.PackageIdentifier == i.Software?.PackageIdentifier) < 0)
-                {
-                    <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software)) IconEnd="@(new Icons.Regular.Size20.Add())" Appearance="Appearance.Stealth" Title=@LM.Scripts["n.global_event.add_to_waitlist"] />
-                }
-                else
-                {
-                    <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software)) IconEnd="@(new Icons.Filled.Size20.Dismiss())" Appearance="Appearance.Stealth" Title=@LM.Scripts["n.global_event.remove_from_waitlist"] />
-                }
-            </div>
+            @if(GlobalEvent.WaitQueue.FindIndex(i => Software.PackageIdentifier == i.Software?.PackageIdentifier) < 0)
+            {
+                <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software)) IconEnd="@(new Icons.Regular.Size20.Add())" Appearance="Appearance.Stealth" Title=@LM.Scripts["n.global_event.add_to_waitlist"] />
+            }
+            else
+            {
+                <FluentButton @onclick=@(_ => GlobalEvent.Add2WaitQueue(Software)) IconEnd="@(new Icons.Filled.Size20.Dismiss())" Appearance="Appearance.Stealth" Title=@LM.Scripts["n.global_event.remove_from_waitlist"] />
+            }
+        </div>
 
-            <div class="light"></div>
-        </FluentCard>
-    </div>
-</BaseLayerLuminance>
+        <div class="light"></div>
+    </FluentCard>
+</div>

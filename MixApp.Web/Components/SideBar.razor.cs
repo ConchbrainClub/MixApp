@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.FluentUI.AspNetCore.Components;
+using Icons = Microsoft.FluentUI.AspNetCore.Components.Icons;
 using MixApp.Web.Models;
 using MixApp.Web.Services;
 
