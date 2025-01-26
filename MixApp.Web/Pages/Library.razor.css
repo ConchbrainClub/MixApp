@@ -22,6 +22,10 @@
     margin-bottom: 0;
 }
 
+::deep .fluent-data-grid-row td {
+    height: 100% !important;
+}
+
 .page lottie-player {
     margin: 200px auto; 
     width: 180px; 

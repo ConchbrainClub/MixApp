@@ -1,5 +1,10 @@
 .layout {
     height: 100vh;
+    background-image: 
+        radial-gradient(90.68% 40.04% at 80.38% 45.37%, #29dff80f 0%, #4473eb00 100%), 
+        radial-gradient(31.2% 31.19% at 49.79% 29.97%, #237bff14 0%, #4473eb00 100%), 
+        radial-gradient(circle at 44.03% 100%, #a151ff1a 0%, #ff2fde00 50%), 
+        linear-gradient(#232527 0% 100%);
 }
 
 .main {

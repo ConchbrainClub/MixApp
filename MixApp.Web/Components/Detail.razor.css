@@ -129,7 +129,7 @@
     width: 300px;
 }
 
-::deep .detail .info fluent-data-grid {
+::deep .detail .info .fluent-data-grid {
     max-height: 400px;
     overflow-y: scroll;
 }
